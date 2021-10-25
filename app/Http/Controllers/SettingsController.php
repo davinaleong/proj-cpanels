@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Source;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -13,6 +14,6 @@ class SettingsController extends Controller
 
     public function sourceIndex()
     {
-        return view('settings.sources.index');
+        return view('settings.sources.index', ['sources' => Source::all()]);
     }
 }
