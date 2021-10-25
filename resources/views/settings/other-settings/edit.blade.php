@@ -13,7 +13,7 @@
 @section('content')
     <form method="POST" action="{{ route('settings.other-settings.update') }}">
         <div class="table-responsive">
-            <table class="table">
+            <table id="other-settings-table" class="table">
                 <thead>
                 <tr>
                     <th>Key</th>
@@ -36,6 +36,15 @@
                     </tr>
                 @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-end">
+                            <button type="button" class="btn btn-outline-primary" onclick="addRow()">
+                                <i class="fa fa-plus fa-fw"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
 
@@ -46,4 +55,30 @@
             <a href="{{ route('settings.other-settings.index') }}" class="btn btn-outline-secondary">Cancel <i class="fa fa-ban fa-fw"></i></a>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script>
+        let key = {{ $otherSettingsCount }};
+
+        function addRow() {
+            const newRow = `
+                <tr>
+                    <td>
+                        <input type="text" name="otherSettings[${key}][key]"
+                               class="form-control" value=""
+                               placeholder="Key*" required>
+                    </td>
+                    <td>
+                        <input type="text" name="otherSettings[${key}][value]"
+                               class="form-control" value=""
+                               placeholder="Value*" required>
+                    </td>
+                </tr>
+            `;
+            $("#other-settings-table tbody").append(newRow);
+
+            key++;
+        }
+    </script>
 @endsection
