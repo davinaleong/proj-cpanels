@@ -27,7 +27,7 @@
                     <tr>
                         <td>
                             <input type="text" name="otherSettings[{{ $key }}][key]"
-                                   class="form-control" value="{{ $otherSetting->value }}"
+                                   class="form-control" value="{{ $otherSetting->key }}"
                                    placeholder="Key*" required>
                         </td>
                         <td>
