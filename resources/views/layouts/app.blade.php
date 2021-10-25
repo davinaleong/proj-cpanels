@@ -30,9 +30,12 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="login.html">
-                                <i class="fas fa-sign-out-alt fa-fw"></i> Logout
-                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                    <i class="fas fa-sign-out-alt fa-fw"></i> Logout
+                                </a>
+                            </form>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('dashboard') }}">
