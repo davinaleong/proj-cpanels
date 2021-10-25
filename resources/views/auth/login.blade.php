@@ -15,7 +15,7 @@
                 <input type="password" name="password" class="form-control" id="password" required>
             </div>
 
-            @include('errors')
+            @include('components.errors')
 
             <button type="submit" class="btn btn-primary">Log-in <i class="fa fa-sign-in-alt fa-fw"></i></button>
         </form>
