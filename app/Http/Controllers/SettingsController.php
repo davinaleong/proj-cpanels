@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OtherSettings;
 use App\Models\Source;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,12 @@ class SettingsController extends Controller
 
     public function otherSettingsIndex()
     {
-        return view('settings.other-settings.index');
+        return view('settings.other-settings.index', ['otherSettings' => OtherSettings::all()]);
+    }
+
+    public function otherSettingsEdit()
+    {
+        return view('settings.other-settings.edit', ['otherSettings' => OtherSettings::all()]);
     }
 
     public function sourceIndex()

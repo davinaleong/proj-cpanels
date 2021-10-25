@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])->name('settings.other-settings.index');
+        Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])->name('settings.other-settings.edit');
         Route::get('/sources', [SettingsController::class, 'sourceIndex'])->name('settings.sources.index');
     });
 });
