@@ -12,5 +12,6 @@
     <div class="setting-links">
         <a href="{{ route('settings.sources.index') }}">Sources</a>
         <a href="#" class="ml-3">Project Types</a>
+        <a href="{{ route('settings.other-settings.index') }}">Other Settings</a>
     </div>
 @endsection

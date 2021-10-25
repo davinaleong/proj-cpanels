@@ -7,13 +7,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class SourceTest extends TestCase
+class SettingsOtherTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_guest_gets_redirected()
     {
-        $this->get('/settings/sources')
+        $this->get('/settings/other-settings')
             ->assertStatus(302)
             ->assertRedirect('/login');
     }
@@ -23,7 +23,7 @@ class SourceTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->get('/settings/sources')
+            ->get('/settings/other-settings')
             ->assertOk();
     }
 }
