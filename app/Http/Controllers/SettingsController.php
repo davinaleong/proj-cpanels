@@ -10,4 +10,9 @@ class SettingsController extends Controller
     {
         return view('settings.index');
     }
+
+    public function sourceIndex()
+    {
+        return view('settings.sources.index');
+    }
 }

@@ -10,8 +10,5 @@
 @endsection
 
 @section('content')
-    <div class="setting-links">
-        <a href="#">Sources</a>
-        <a href="#" class="ml-3">Project Types</a>
-    </div>
+    //
 @endsection

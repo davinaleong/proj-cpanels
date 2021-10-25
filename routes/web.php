@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
+        Route::get('/sources', [SettingsController::class, 'sourceIndex'])->name('settings.sources.index');
     });
 });
 
