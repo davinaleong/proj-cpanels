@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('page-title', 'Blank')
+@section('heading')
+    <h1>Blank</h1>
+@endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page">Blank</li>

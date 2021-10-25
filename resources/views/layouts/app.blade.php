@@ -19,7 +19,7 @@
 
 <main>
     <div class="container-fluid">
-        <h1>@yield('page-title')</h1>
+        @yield('heading')
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
