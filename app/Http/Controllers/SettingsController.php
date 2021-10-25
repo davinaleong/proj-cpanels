@@ -20,7 +20,13 @@ class SettingsController extends Controller
 
     public function otherSettingsEdit()
     {
-        return view('settings.other-settings.edit', ['otherSettings' => OtherSettings::all()]);
+        $otherSettings = OtherSettings::all();
+
+        return view('settings.other-settings.edit',
+            [
+                'otherSettings' => $otherSettings,
+                'otherSettingsCount' => $otherSettings->count()
+            ]);
     }
 
     public function sourceIndex()
