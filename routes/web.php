@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/blank', function () {
         return view('blank');
     })->name('blank');
+
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
+    });
 });
 
 require __DIR__.'/auth.php';
