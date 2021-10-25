@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Settings;
 
+use App\Models\Activity;
+use App\Models\OtherSettings;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -43,8 +45,38 @@ class SettingsOtherTest extends TestCase
             ->assertOk();
     }
 
-//    public function test_admin_can_edit_other_settings()
-//    {
-//
-//    }
+    /**
+     * @group new
+     */
+    public function test_admin_can_edit_other_settings()
+    {
+        $user = User::factory()->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Modified other settings.',
+            'link' => route('settings.other-settings.index'),
+            'label' => 'View records'
+        ]);
+        $otherSettings = OtherSettings::factory()->count(2)->make();
+
+        $this->actingAs($user)
+            ->post('/settings/other-settings/edit', [
+                'otherSettings' => $otherSettings->toArray()
+            ])
+            ->assertRedirect('/settings/other-settings')
+            ->assertSessionHas('message', 'Other Settings updated.');
+
+        $this->assertDatabaseHas('other_settings', [
+            'key' => $otherSettings[0]->key,
+            'value' => $otherSettings[0]->value
+        ]);
+        $this->assertDatabaseHas('other_settings', [
+            'key' => $otherSettings[1]->key,
+            'value' => $otherSettings[1]->value
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label,
+        ]);
+    }
 }

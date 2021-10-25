@@ -12,6 +12,8 @@
 
 @section('content')
     <form method="POST" action="{{ route('settings.other-settings.update') }}">
+        @csrf
+
         <div class="table-responsive">
             <table id="other-settings-table" class="table">
                 <thead>

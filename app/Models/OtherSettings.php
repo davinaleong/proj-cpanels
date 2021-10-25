@@ -10,4 +10,10 @@ class OtherSettings extends Model
     use HasFactory;
 
     protected $table = 'other_settings';
+
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
 }

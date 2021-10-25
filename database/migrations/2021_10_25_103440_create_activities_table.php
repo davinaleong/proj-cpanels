@@ -15,9 +15,9 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('log');
-            $table->string('link');
-            $table->string('label');
+            $table->text('log')->nullable();
+            $table->text('link')->nullable();
+            $table->string('label', 255)->nullable();
             $table->timestamps();
         });
     }

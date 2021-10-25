@@ -23,8 +23,9 @@ class ActivityFactory extends Factory
     public function definition()
     {
         return [
-            'source_id' => Source::factory(),
-            'message' => $this->faker->sentence()
+            'message' => $this->faker->sentence(),
+            'link' => $this->faker->url(),
+            'label' => $this->faker->sentence()
         ];
     }
 }
