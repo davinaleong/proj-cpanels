@@ -45,9 +45,6 @@ class SettingsOtherTest extends TestCase
             ->assertOk();
     }
 
-    /**
-     * @group new
-     */
     public function test_admin_can_edit_other_settings()
     {
         $user = User::factory()->create();
@@ -78,5 +75,20 @@ class SettingsOtherTest extends TestCase
             'link' => $activity->link,
             'label' => $activity->label,
         ]);
+    }
+
+    /**
+     * @group new
+     */
+    public function test_edit_other_settings_validation() {
+        $user = User::factory()->create();
+        $this->actingAs($user)
+            ->post('/settings/other-settings/edit', [
+                'otherSettings' => []
+            ])
+            ->assertSessionHasErrors([
+                'otherSettings.*.key',
+                'otherSettings.*.value'
+            ]);
     }
 }
