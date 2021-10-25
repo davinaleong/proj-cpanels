@@ -15,7 +15,7 @@ class CreateOtherSettingsTable extends Migration
     {
         Schema::create('other_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('key', 255)->unique();
+            $table->string('key', 255);
             $table->string('value', 255);
             $table->timestamps();
         });

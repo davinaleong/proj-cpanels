@@ -42,4 +42,9 @@ class SettingsOtherTest extends TestCase
             ->get('/settings/other-settings/edit')
             ->assertOk();
     }
+
+//    public function test_admin_can_edit_other_settings()
+//    {
+//
+//    }
 }

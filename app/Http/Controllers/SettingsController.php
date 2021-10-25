@@ -28,9 +28,4 @@ class SettingsController extends Controller
                 'otherSettingsCount' => $otherSettings->count()
             ]);
     }
-
-    public function sourceIndex()
-    {
-        return view('settings.sources.index', ['sources' => Source::all()]);
-    }
 }

@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\Activity;
 use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class SourceFactory extends Factory
+class ActivityFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Source::class;
+    protected $model = Activity::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,9 @@ class SourceFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->name();
         return [
-            'name' => $name,
-            'table' => Str::snake($name)
+            'source_id' => Source::factory(),
+            'message' => $this->faker->sentence()
         ];
     }
 }

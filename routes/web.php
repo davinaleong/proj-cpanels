@@ -32,7 +32,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])->name('settings.other-settings.index');
         Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])->name('settings.other-settings.edit');
         Route::post('/other-settings/edit', [SettingsController::class, 'otherSettingsUpdate'])->name('settings.other-settings.update');
-        Route::get('/sources', [SettingsController::class, 'sourceIndex'])->name('settings.sources.index');
     });
 });
 
