@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">{{ env('APP_NAME', 'CPanels') }}</a>
+        <a class="navbar-brand" href="{{ route('activities.index') }}">{{ env('APP_NAME', 'CPanels') }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,7 +25,7 @@
                             </form>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('dashboard') }}">
+                            <a class="dropdown-item" href="{{ route('activities.index') }}">
                                 <i class="fas fa-file-alt fa-fw"></i> View Logs
                             </a>
                         </li>
