@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\OtherSettings;
+use App\Models\ProjectType;
 use App\Models\Source;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class SettingsController extends Controller
     #region Project Types
     public function projectTypeIndex()
     {
-        //
+        return view('settings.project-types.index', ['projectTypes' => ProjectType::all()]);
     }
     #endregion
 
