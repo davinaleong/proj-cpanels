@@ -89,4 +89,35 @@ class ProjectTypeTest extends TestCase
             ])
             ->assertSessionHasErrors(['name']);
     }
+
+    /** @group new */
+    public function test_guest_gets_redirected_from_edit()
+    {
+        $projectType = ProjectType::factory()->create();
+
+        $this->get('/settings/project-types/' . $projectType->id . '/edit')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    /** @group new */
+    public function test_admin_can_access_edit()
+    {
+        $user = User::factory()->create();
+        $projectType = ProjectType::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/settings/project-types/' . $projectType->id . '/edit')
+            ->assertOk();
+    }
+
+    /** @group new */
+    public function test_accessing_non_existent_project_type_returns_404()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/settings/project-types/1/edit')
+            ->assertStatus(404);
+    }
 }

@@ -48,7 +48,7 @@ class SettingsController extends Controller
 
     public function projectTypeEdit(ProjectType $projectType)
     {
-        //
+        return view('settings.project-types.edit', ['projectType' => $projectType]);
     }
     #endregion
 

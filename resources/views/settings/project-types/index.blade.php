@@ -32,7 +32,7 @@
                     <td>{{ $projectType->getCreatedAt() }}</td>
                     <td>{{ $projectType->getUpdatedAt() }}</td>
                     <td>
-                        <a href="#" class="btn btn-outline-primary">
+                        <a href="{{ route('settings.project-types.edit', ['projectType' => $projectType]) }}" class="btn btn-outline-primary">
                             <i class="fa fa-pen fa-fw"></i>
                         </a>
                     </td>
