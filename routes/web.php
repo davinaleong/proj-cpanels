@@ -29,11 +29,21 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
 
-        Route::get('/project-types', [SettingsController::class, 'projectTypeIndex'])->name('settings.project-types.index');
+        Route::get('/project-types', [SettingsController::class, 'projectTypeIndex'])
+            ->name('settings.project-types.index');
+        Route::get('/project-types/create', [SettingsController::class, 'projectTypeCreate'])
+            ->name('settings.project-types.create');
+        Route::post('/project-types', [SettingsController::class, 'projectTypeStore'])
+            ->name('settings.project-types.store');
+        Route::get('/project-types/{projectType}', [SettingsController::class, 'projectTypeShow'])
+            ->name('settings.project-types.show');
 
-        Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])->name('settings.other-settings.index');
-        Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])->name('settings.other-settings.edit');
-        Route::post('/other-settings/edit', [SettingsController::class, 'otherSettingsUpdate'])->name('settings.other-settings.update');
+        Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
+            ->name('settings.other-settings.index');
+        Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])
+            ->name('settings.other-settings.edit');
+        Route::post('/other-settings/edit', [SettingsController::class, 'otherSettingsUpdate'])
+            ->name('settings.other-settings.update');
     });
 });
 

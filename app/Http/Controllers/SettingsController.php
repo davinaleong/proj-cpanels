@@ -20,6 +20,36 @@ class SettingsController extends Controller
     {
         return view('settings.project-types.index', ['projectTypes' => ProjectType::all()]);
     }
+
+    public function projectTypeCreate()
+    {
+        return view('settings.project-types.create');
+    }
+
+    public function projectTypeStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $projectType = ProjectType::create([
+            'name' => $request->input(['name'])
+        ]);
+
+        Activity::create([
+            'log' => 'New project type created.',
+            'link' => route('settings.project-types.show', ['projectType' => $projectType]),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('settings.project-types.show', ['projectType' => $projectType]))
+            ->with('message', 'New project type created.');
+    }
+
+    public function projectTypeShow(ProjectType $projectType)
+    {
+        //
+    }
     #endregion
 
     #region Other Settings

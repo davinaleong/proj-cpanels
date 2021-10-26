@@ -3,7 +3,7 @@
 @section('heading')
     <h1>
         Project Types
-        <a href="#" class="btn btn-outline-primary">Create <i class="fas fa-plus fa-fw"></i></a>
+        <a href="{{ route('settings.project-types.create') }}" class="btn btn-outline-primary">Create <i class="fas fa-plus fa-fw"></i></a>
     </h1>
 @endsection
 
