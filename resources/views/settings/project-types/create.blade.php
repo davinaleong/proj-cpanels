@@ -19,6 +19,8 @@
             <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
         </div>
 
+        @include('components.errors')
+        
         <p>* required fields</p>
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
