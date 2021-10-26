@@ -43,8 +43,8 @@ class SettingsController extends Controller
             OtherSettings::truncate();
             for ($i = 0; $i < $count; $i++) {
                 OtherSettings::create([
-                    'key' => $request->input('otherSettings.' . $i . '.key'),
-                    'value' => $request->input('otherSettings.' . $i . '.value')
+                    'key' => trim($request->input('otherSettings.' . $i . '.key')),
+                    'value' => trim($request->input('otherSettings.' . $i . '.value'))
                 ]);
             }
         }
