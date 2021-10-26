@@ -77,18 +77,29 @@ class SettingsOtherTest extends TestCase
         ]);
     }
 
-    /**
-     * @group new
-     */
     public function test_edit_other_settings_validation() {
         $user = User::factory()->create();
+
         $this->actingAs($user)
             ->post('/settings/other-settings/edit', [
                 'otherSettings' => []
             ])
             ->assertSessionHasErrors([
-                'otherSettings.*.key',
-                'otherSettings.*.value'
+                'otherSettings'
+            ]);
+
+        $this->actingAs($user)
+            ->post('/settings/other-settings/edit', [
+                'otherSettings' => [
+                    [
+                        'key' => '',
+                        'value' => ''
+                    ]
+                ]
+            ])
+            ->assertSessionHasErrors([
+                'otherSettings.0.key',
+                'otherSettings.0.value'
             ]);
     }
 }

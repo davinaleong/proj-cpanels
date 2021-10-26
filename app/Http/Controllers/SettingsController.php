@@ -32,6 +32,7 @@ class SettingsController extends Controller
 
     public function otherSettingsUpdate(Request $request) {
         $request->validate([
+            'otherSettings' => 'required|array',
             'otherSettings.*.key' => 'required|string',
             'otherSettings.*.value' => 'required|string'
         ]);
