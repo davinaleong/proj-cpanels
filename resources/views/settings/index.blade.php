@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="setting-links">
-        <a href="#" class="ml-3">Project Types</a>
+        <a href="{{ route('settings.project-types.index') }}" class="ml-3">Project Types</a>
         <a href="{{ route('settings.other-settings.index') }}">Other Settings</a>
     </div>
 @endsection

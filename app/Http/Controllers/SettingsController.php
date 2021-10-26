@@ -14,6 +14,14 @@ class SettingsController extends Controller
         return view('settings.index');
     }
 
+    #region Project Types
+    public function projectTypeIndex()
+    {
+        //
+    }
+    #endregion
+
+    #region Other Settings
     public function otherSettingsIndex()
     {
         return view('settings.other-settings.index', ['otherSettings' => OtherSettings::all()]);
@@ -58,4 +66,5 @@ class SettingsController extends Controller
         return redirect(route('settings.other-settings.index'))
             ->with('message', 'Other Settings updated.');
     }
+    #endregion
 }
