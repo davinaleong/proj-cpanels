@@ -42,13 +42,18 @@ class SettingsController extends Controller
             'label' => 'View record'
         ]);
 
-        return redirect(route('settings.project-types.edit', ['projectType' => $projectType]))
+        return redirect(route('settings.project-types.index'))
             ->with('message', 'New project type created.');
     }
 
     public function projectTypeEdit(ProjectType $projectType)
     {
         return view('settings.project-types.edit', ['projectType' => $projectType]);
+    }
+
+    public function projectTypeUpdate(Request $request, ProjectType $projectType)
+    {
+        //
     }
     #endregion
 

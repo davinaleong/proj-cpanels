@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.project-types.store');
         Route::get('/project-types/{projectType}/edit', [SettingsController::class, 'projectTypeEdit'])
             ->name('settings.project-types.edit');
+        Route::patch('/project-types/{projectType}', [SettingsController::class, 'projectTypeUpdate'])
+            ->name('settings.project-types.update');
 
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');
