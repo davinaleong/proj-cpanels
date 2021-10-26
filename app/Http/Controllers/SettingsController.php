@@ -37,7 +37,7 @@ class SettingsController extends Controller
         ]);
 
         Activity::create([
-            'log' => 'New project type created.',
+            'log' => 'Created ' . $projectType->name . ' project type.',
             'link' => route('settings.project-types.edit', ['projectType' => $projectType]),
             'label' => 'View record'
         ]);

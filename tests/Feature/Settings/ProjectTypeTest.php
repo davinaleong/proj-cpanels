@@ -47,25 +47,26 @@ class ProjectTypeTest extends TestCase
             ->assertOk();
     }
 
+    /** @group new */
     public function test_admin_can_create_a_project_type()
     {
         $user = User::factory()->create();
-        $project_type = ProjectType::factory()->make();
+        $projectType = ProjectType::factory()->make();
         $activity = Activity::factory()->make([
-            'log' => 'New project type created.',
+            'log' => 'Created ' . $projectType->name . ' project type.',
             'link' => route('settings.project-types.edit', ['projectType' => 1]),
             'label' => 'View record'
         ]);
 
         $this->actingAs($user)
             ->post('/settings/project-types', [
-                'name' => $project_type->name
+                'name' => $projectType->name
             ])
             ->assertStatus(302)
             ->assertRedirect('/settings/project-types/1/edit');
 
         $this->assertDatabaseHas('project_types', [
-            'name' => $project_type->name
+            'name' => $projectType->name
         ]);
         $this->assertDatabaseHas('activities', [
             'log' => $activity->log,
@@ -90,7 +91,6 @@ class ProjectTypeTest extends TestCase
             ->assertSessionHasErrors(['name']);
     }
 
-    /** @group new */
     public function test_guest_gets_redirected_from_edit()
     {
         $projectType = ProjectType::factory()->create();
@@ -100,7 +100,6 @@ class ProjectTypeTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @group new */
     public function test_admin_can_access_edit()
     {
         $user = User::factory()->create();
@@ -111,7 +110,6 @@ class ProjectTypeTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_accessing_non_existent_project_type_returns_404()
     {
         $user = User::factory()->create();
@@ -120,4 +118,6 @@ class ProjectTypeTest extends TestCase
             ->get('/settings/project-types/1/edit')
             ->assertStatus(404);
     }
+
+    /**  */
 }
