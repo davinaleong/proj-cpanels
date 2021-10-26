@@ -9,6 +9,6 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        return view('activities.index', ['activities' => Activity::limit(50)->get()]);
+        return view('activities.index', ['activities' => Activity::orderByDesc('created_at')->limit(50)->get()]);
     }
 }
