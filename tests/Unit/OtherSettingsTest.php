@@ -37,4 +37,38 @@ class OtherSettingsTest extends TestCase
 
         $this->assertEquals($expected, $actual->toArray());
     }
+
+    /** @group new */
+    public function test_can_get_default_date_format()
+    {
+        $this->assertEquals(env('DEFAULT_DT_FORMAT'), OtherSettings::getDatetimeFormat());
+    }
+
+    /** @group new */
+    public function test_can_get_date_format()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => 'Datetime Format',
+            'value' => 'd M Y H:i:s'
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getDatetimeFormat());
+    }
+
+    /** @group new */
+    public function test_can_get_default_db_date_format()
+    {
+        $this->assertEquals(env('DB_DT_FORMAT'), OtherSettings::getDbDatetimeFormat());
+    }
+
+    /** @group new */
+    public function test_can_get_db_date_format()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => 'DB Datetime Format',
+            'value' => 'd M Y H:i:s'
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getDbDatetimeFormat());
+    }
 }

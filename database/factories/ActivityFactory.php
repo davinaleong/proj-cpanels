@@ -23,7 +23,7 @@ class ActivityFactory extends Factory
     public function definition()
     {
         return [
-            'message' => $this->faker->sentence(),
+            'log' => $this->faker->sentence(),
             'link' => $this->faker->url(),
             'label' => $this->faker->sentence()
         ];
