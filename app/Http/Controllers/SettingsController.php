@@ -38,15 +38,15 @@ class SettingsController extends Controller
 
         Activity::create([
             'log' => 'New project type created.',
-            'link' => route('settings.project-types.show', ['projectType' => $projectType]),
+            'link' => route('settings.project-types.edit', ['projectType' => $projectType]),
             'label' => 'View record'
         ]);
 
-        return redirect(route('settings.project-types.show', ['projectType' => $projectType]))
+        return redirect(route('settings.project-types.edit', ['projectType' => $projectType]))
             ->with('message', 'New project type created.');
     }
 
-    public function projectTypeShow(ProjectType $projectType)
+    public function projectTypeEdit(ProjectType $projectType)
     {
         //
     }

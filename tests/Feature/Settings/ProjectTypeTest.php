@@ -53,7 +53,7 @@ class ProjectTypeTest extends TestCase
         $project_type = ProjectType::factory()->make();
         $activity = Activity::factory()->make([
             'log' => 'New project type created.',
-            'link' => route('settings.project-types.show', ['projectType' => 1]),
+            'link' => route('settings.project-types.edit', ['projectType' => 1]),
             'label' => 'View record'
         ]);
 
@@ -62,7 +62,7 @@ class ProjectTypeTest extends TestCase
                 'name' => $project_type->name
             ])
             ->assertStatus(302)
-            ->assertRedirect('/settings/project-types/1');
+            ->assertRedirect('/settings/project-types/1/edit');
 
         $this->assertDatabaseHas('project_types', [
             'name' => $project_type->name

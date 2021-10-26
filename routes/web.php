@@ -35,8 +35,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.project-types.create');
         Route::post('/project-types', [SettingsController::class, 'projectTypeStore'])
             ->name('settings.project-types.store');
-        Route::get('/project-types/{projectType}', [SettingsController::class, 'projectTypeShow'])
-            ->name('settings.project-types.show');
+        Route::get('/project-types/{projectType}/edit', [SettingsController::class, 'projectTypeEdit'])
+            ->name('settings.project-types.edit');
 
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');
