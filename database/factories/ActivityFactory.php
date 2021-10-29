@@ -24,8 +24,8 @@ class ActivityFactory extends Factory
     {
         return [
             'log' => $this->faker->sentence(),
-            'link' => $this->faker->url(),
-            'label' => $this->faker->sentence()
+            'link' => null,
+            'label' => null
         ];
     }
 }

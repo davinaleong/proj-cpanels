@@ -118,7 +118,6 @@ class ProjectTypeTest extends TestCase
             ->assertStatus(404);
     }
 
-    /** @group new */
     public function test_admin_can_update_a_project_type()
     {
         $user = User::factory()->create();
@@ -148,7 +147,6 @@ class ProjectTypeTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_update_project_type_validation()
     {
         $user = User::factory()->create();
@@ -165,5 +163,28 @@ class ProjectTypeTest extends TestCase
                 'name' => Str::random(256)
             ])
             ->assertSessionHasErrors(['name']);
+    }
+
+    /** @group new */
+    public function test_admin_can_delete_a_project_type()
+    {
+        $user = User::factory()->create();
+        $projectType = ProjectType::factory()->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $projectType->name . ' project type.'
+        ]);
+
+        $this->actingAs($user)
+            ->delete('/settings/project-types/' . $projectType->id)
+            ->assertStatus(302)
+            ->assertRedirect('/settings/project-types')
+            ->assertSessionHas('message', 'Project type deleted.');
+
+        $this->assertSoftDeleted('project_types', [
+            'id' => $projectType->id
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
     }
 }

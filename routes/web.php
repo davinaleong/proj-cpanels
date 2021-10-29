@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.project-types.edit');
         Route::patch('/project-types/{projectType}', [SettingsController::class, 'projectTypeUpdate'])
             ->name('settings.project-types.update');
+        Route::delete('/project-types/{projectType}', [SettingsController::class, 'projectTypeDestroy'])
+            ->name('settings.project-types.destroy');
 
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');

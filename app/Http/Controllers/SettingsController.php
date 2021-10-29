@@ -69,6 +69,20 @@ class SettingsController extends Controller
         return redirect(route('settings.project-types.index'))
             ->with('message', 'Project type modified.');
     }
+
+    public function projectTypeDestroy(ProjectType $projectType)
+    {
+        $projectName = $projectType->name;
+
+        $projectType->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $projectName . ' project type.'
+        ]);
+
+        return redirect(route('settings.project-types.index'))
+            ->with('message', 'Project type deleted.');
+    }
     #endregion
 
     #region Other Settings
