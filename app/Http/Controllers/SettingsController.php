@@ -53,7 +53,21 @@ class SettingsController extends Controller
 
     public function projectTypeUpdate(Request $request, ProjectType $projectType)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $projectType->name = $request->input('name');
+        $projectType->save();
+
+        Activity::create([
+            'log' => 'Modified ' . $projectType->name . ' project type.',
+            'link' => route('settings.project-types.index'),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('settings.project-types.index'))
+            ->with('message', 'Project type modified.');
     }
     #endregion
 

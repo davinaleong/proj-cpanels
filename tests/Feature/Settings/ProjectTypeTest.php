@@ -125,8 +125,8 @@ class ProjectTypeTest extends TestCase
         $projectType = ProjectType::factory()->create();
         $editedProjectType = ProjectType::factory()->make();
         $activity = Activity::factory()->make([
-            'log' => 'Edited ' . $editedProjectType->name . ' project type.',
-            'link' => route('settings.project-types.edit', ['projectType' => $projectType]),
+            'log' => 'Modified ' . $editedProjectType->name . ' project type.',
+            'link' => route('settings.project-types.index'),
             'label' => 'View record'
         ]);
 
