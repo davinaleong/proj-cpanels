@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('settings.folders.edit', ['folder' => $folder]) }}">
+    <form method="POST" action="{{ route('settings.folders.update', ['folder' => $folder]) }}">
         @csrf
         @method('PATCH')
 

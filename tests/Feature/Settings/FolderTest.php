@@ -90,7 +90,6 @@ class FolderTest extends TestCase
             ->assertSessionHasErrors(['name']);
     }
 
-    /** @group new */
     public function test_guest_gets_redirected_from_edit()
     {
         $folder = Folder::factory()->create();
@@ -100,7 +99,6 @@ class FolderTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @group new */
     public function test_admin_can_access_edit()
     {
         $user = User::factory()->create();
@@ -111,7 +109,6 @@ class FolderTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_accessing_non_existent_folder_returns_404()
     {
         $user = User::factory()->create();
@@ -119,5 +116,54 @@ class FolderTest extends TestCase
         $this->actingAs($user)
             ->get('/settings/folders/1/edit')
             ->assertStatus(404);
+    }
+
+    /** @group new */
+    public function test_admin_can_update_a_folder()
+    {
+        $user = User::factory()->create();
+        $folder = Folder::factory()->create();
+        $editedFolder = Folder::factory()->make();
+        $activity = Activity::factory()->make([
+            'log' => 'Modified ' . $editedFolder->name . ' folder.',
+            'link' => route('settings.folders.index'),
+            'label' => 'View record'
+        ]);
+
+        $this->actingAs($user)
+            ->patch('/settings/folders/' . $folder->id, [
+                'name' => $editedFolder->name
+            ])
+            ->assertRedirect('/settings/folders')
+            ->assertSessionHas('message', 'Folder modified.');
+
+        $this->assertDatabaseHas('folders', [
+            'id' => $folder->id,
+            'name' => $editedFolder->name
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label
+        ]);
+    }
+
+    /** @group new */
+    public function test_update_folder_validation()
+    {
+        $user = User::factory()->create();
+        $folder = Folder::factory()->create();
+
+        $this->actingAs($user)
+            ->patch('settings/folders/' . $folder->id, [
+                'name' => ''
+            ])
+            ->assertSessionHasErrors(['name']);
+
+        $this->actingAs($user)
+            ->patch('settings/folders/' . $folder->id, [
+                'name' => Str::random(256)
+            ])
+            ->assertSessionHasErrors(['name']);
     }
 }

@@ -124,6 +124,27 @@ class SettingsController extends Controller
     {
         return view('settings.folders.edit', ['folder' => $folder]);
     }
+
+    public function folderUpdate(Request $request, Folder $folder)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $folder->name = Str::slug($request->input('name'));
+        $folder->save();
+
+        File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+
+        Activity::create([
+            'log' => 'Modified ' . $folder->name . ' folder.',
+            'link' => route('settings.folders.index'),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('settings.folders.index'))
+            ->with('message', 'Folder modified.');
+    }
     #endregion
 
     #region Other Settings
