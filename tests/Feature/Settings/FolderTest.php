@@ -165,7 +165,6 @@ class FolderTest extends TestCase
             ->assertSessionHasErrors(['name']);
     }
 
-    /** @group new */
     public function test_admin_can_delete_a_folder()
     {
         $user = User::factory()->create();

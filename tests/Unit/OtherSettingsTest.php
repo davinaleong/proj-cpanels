@@ -46,7 +46,7 @@ class OtherSettingsTest extends TestCase
     public function test_can_get_date_format()
     {
         $expected = OtherSettings::factory()->create([
-            'key' => 'Datetime Format',
+            'key' => OtherSettings::$KEY_DATETIME_FORMAT,
             'value' => 'd M Y H:i:s'
         ]);
 
@@ -61,10 +61,44 @@ class OtherSettingsTest extends TestCase
     public function test_can_get_db_date_format()
     {
         $expected = OtherSettings::factory()->create([
-            'key' => 'DB Datetime Format',
+            'key' => OtherSettings::$KEY_DB_DATETIME_FORMAT,
             'value' => 'd M Y H:i:s'
         ]);
 
         $this->assertEquals($expected->value, OtherSettings::getDbDatetimeFormat());
+    }
+
+    /** @group new */
+    public function test_can_get_default_list_per_page()
+    {
+        $this->assertEquals(env('LIST_PER_PAGE'), OtherSettings::getListPerPage());
+    }
+
+    /** @group new */
+    public function test_can_get_list_per_page()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => OtherSettings::$KEY_LIST_PER_PAGE,
+            'value' => 'd M Y H:i:s'
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getListPerPage());
+    }
+
+    /** @group new */
+    public function test_can_get_default_card_per_page()
+    {
+        $this->assertEquals(env('CARD_PER_PAGE'), OtherSettings::getCardPerPage());
+    }
+
+    /** @group new */
+    public function test_can_get_card_per_page()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => OtherSettings::$KEY_CARD_PER_PAGE,
+            'value' => 'd M Y H:i:s'
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getCardPerPage());
     }
 }

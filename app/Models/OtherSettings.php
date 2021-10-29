@@ -11,6 +11,8 @@ class OtherSettings extends Model
 
     public static $KEY_DATETIME_FORMAT = 'Datetime Format';
     public static $KEY_DB_DATETIME_FORMAT = 'DB Datetime Format';
+    public static $KEY_LIST_PER_PAGE = 'List per page';
+    public static $KEY_CARD_PER_PAGE = 'Card per page';
 
     protected $table = 'other_settings';
 
@@ -53,5 +55,29 @@ class OtherSettings extends Model
         }
 
         return $datetime_format;
+    }
+
+    public static function getListPerPage()
+    {
+        $value = env('LIST_PER_PAGE');
+        $settings = OtherSettings::getByKey(OtherSettings::$KEY_LIST_PER_PAGE);
+
+        if (filled($settings)) {
+            $value = $settings->value;
+        }
+
+        return $value;
+    }
+
+    public static function getCardPerPage()
+    {
+        $value = env('CARD_PER_PAGE');
+        $settings = OtherSettings::getByKey(OtherSettings::$KEY_CARD_PER_PAGE);
+
+        if (filled($settings)) {
+            $value = $settings->value;
+        }
+
+        return $value;
     }
 }
