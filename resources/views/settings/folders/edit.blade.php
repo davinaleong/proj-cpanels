@@ -2,7 +2,7 @@
 
 @section('heading')
     <h1>
-        Edit Project Type
+        Edit Folder
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
             Delete <i class="fas fa-trash-alt fa-fw"></i>
         </button>
@@ -11,34 +11,34 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('settings.index') }}">Settings</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('settings.project-types.index') }}">Project Types</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Edit Project Type</li>
+    <li class="breadcrumb-item"><a href="{{ route('settings.folders.index') }}">Folders</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Folder</li>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('settings.project-types.update', ['projectType' => $projectType]) }}">
+    <form method="POST" action="{{ route('settings.folders.edit', ['folder' => $folder]) }}">
         @csrf
         @method('PATCH')
 
         <div class="mb-3">
             <label for="id" class="form-label">ID</label>
-            <input type="text" readonly class="form-control-plaintext" id="id" value="{{ $projectType->id }}">
+            <input type="text" readonly class="form-control-plaintext" id="id" value="{{ $folder->id }}">
         </div>
 
         <div class="mb-3">
             <label for="name" class="form-label">Name*</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Name"
-                   value="{{ old('name') ? old('name') : $projectType->name }}" required>
+                   value="{{ old('name') ? old('name') : $folder->name }}" required>
         </div>
 
         <div class="mb-3">
             <label for="created_at" class="form-label">Created At</label>
-            <input type="text" readonly class="form-control-plaintext" id="created_at" value="{{ $projectType->getCreatedAt() }}">
+            <input type="text" readonly class="form-control-plaintext" id="created_at" value="{{ $folder->getCreatedAt() }}">
         </div>
 
         <div class="mb-3">
             <label for="updated_at" class="form-label">Updated At</label>
-            <input type="text" readonly class="form-control-plaintext" id="updated_at" value="{{ $projectType->getUpdatedAt() }}">
+            <input type="text" readonly class="form-control-plaintext" id="updated_at" value="{{ $folder->getUpdatedAt() }}">
         </div>
 
         @include('components.errors')
@@ -46,14 +46,14 @@
         <p>* required fields</p>
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
-            <a href="{{ route('settings.project-types.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
+            <a href="{{ route('settings.folders.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
         </div>
     </form>
 
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('settings.project-types.destroy', ['projectType' => $projectType]) }}" class="modal-content">
+            <form method="POST" action="{{ route('settings.folders.destroy', ['folder' => $folder]) }}" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Delete Project Type</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

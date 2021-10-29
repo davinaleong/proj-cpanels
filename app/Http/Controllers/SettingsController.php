@@ -119,6 +119,11 @@ class SettingsController extends Controller
         return redirect(route('settings.folders.index'))
             ->with('message', 'Folder created.');
     }
+
+    public function folderEdit(Folder $folder)
+    {
+        return view('settings.folders.edit', ['folder' => $folder]);
+    }
     #endregion
 
     #region Other Settings
