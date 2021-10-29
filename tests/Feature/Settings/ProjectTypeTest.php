@@ -43,7 +43,6 @@ class ProjectTypeTest extends TestCase
 
         $this->actingAs($user)
             ->get('/settings/project-types/create')
-            ->assertSessionHas('message', 'New project type created.')
             ->assertOk();
     }
 
@@ -165,7 +164,6 @@ class ProjectTypeTest extends TestCase
             ->assertSessionHasErrors(['name']);
     }
 
-    /** @group new */
     public function test_admin_can_delete_a_project_type()
     {
         $user = User::factory()->create();
