@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Folder;
 use App\Models\OtherSettings;
 use App\Models\ProjectType;
 use App\Models\Source;
@@ -82,6 +83,13 @@ class SettingsController extends Controller
 
         return redirect(route('settings.project-types.index'))
             ->with('message', 'Project type deleted.');
+    }
+    #endregion
+
+    #region Folders
+    public function folderIndex()
+    {
+        return view('settings.folders.index', ['folders' => Folder::all()]);
     }
     #endregion
 

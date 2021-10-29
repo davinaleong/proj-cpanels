@@ -42,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/project-types/{projectType}', [SettingsController::class, 'projectTypeDestroy'])
             ->name('settings.project-types.destroy');
 
+        Route::get('/folders', [SettingsController::class, 'folderIndex'])
+            ->name('settings.folders.index');
+
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');
         Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])
