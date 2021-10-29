@@ -32,4 +32,6 @@
             </tbody>
         </table>
     </div>
+
+    {{ $activities->links() }}
 @endsection
