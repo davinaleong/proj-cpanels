@@ -32,7 +32,7 @@
                     <td>{{ $folder->getCreatedAt() }}</td>
                     <td>{{ $folder->getUpdatedAt() }}</td>
                     <td>
-                        <a href="{{ route('settings.project-types.edit', ['folder' => $folder]) }}" class="btn btn-outline-primary">
+                        <a href="{{ route('settings.folders.edit', ['folder' => $folder]) }}" class="btn btn-outline-primary">
                             <i class="fa fa-pen fa-fw"></i>
                         </a>
                     </td>

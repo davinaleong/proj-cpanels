@@ -108,7 +108,7 @@ class SettingsController extends Controller
             'name' => Str::slug($request->input(['name']))
         ]);
 
-        File::ensureDirectoryExists(public_path($folder->name . '/'));
+        File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
 
         Activity::create([
             'log' => 'Created ' . $folder->name . ' folder.',
@@ -117,7 +117,7 @@ class SettingsController extends Controller
         ]);
 
         return redirect(route('settings.folders.index'))
-            ->with('message', 'Project type created.');
+            ->with('message', 'Folder created.');
     }
     #endregion
 

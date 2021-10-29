@@ -62,7 +62,8 @@ class FolderTest extends TestCase
                 'name' => $folder->name
             ])
             ->assertStatus(302)
-            ->assertRedirect('/settings/folders/');
+            ->assertRedirect('/settings/folders/')
+            ->assertSessionHas('message', 'Folder created.');
 
         $this->assertDatabaseHas('folders', [
             'name' => $folder->name
