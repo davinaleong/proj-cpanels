@@ -108,7 +108,9 @@ class SettingsController extends Controller
             'name' => Str::slug($request->input(['name']))
         ]);
 
-        File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+        if (env('APP_ENV') !== 'testing') {
+            File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+        }
 
         Activity::create([
             'log' => 'Created ' . $folder->name . ' folder.',
@@ -134,7 +136,9 @@ class SettingsController extends Controller
         $folder->name = Str::slug($request->input('name'));
         $folder->save();
 
-        File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+        if (env('APP_ENV') !== 'testing') {
+            File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+        }
 
         Activity::create([
             'log' => 'Modified ' . $folder->name . ' folder.',
@@ -144,6 +148,20 @@ class SettingsController extends Controller
 
         return redirect(route('settings.folders.index'))
             ->with('message', 'Folder modified.');
+    }
+
+    public function folderDestroy(Folder $folder)
+    {
+        $folderName = $folder->name;
+
+        $folder->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $folderName . ' folder.'
+        ]);
+
+        return redirect(route('settings.folders.index'))
+            ->with('message', 'Folder deleted.');
     }
     #endregion
 

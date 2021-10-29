@@ -118,7 +118,6 @@ class FolderTest extends TestCase
             ->assertStatus(404);
     }
 
-    /** @group new */
     public function test_admin_can_update_a_folder()
     {
         $user = User::factory()->create();
@@ -148,7 +147,6 @@ class FolderTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_update_folder_validation()
     {
         $user = User::factory()->create();
@@ -165,5 +163,28 @@ class FolderTest extends TestCase
                 'name' => Str::random(256)
             ])
             ->assertSessionHasErrors(['name']);
+    }
+
+    /** @group new */
+    public function test_admin_can_delete_a_folder()
+    {
+        $user = User::factory()->create();
+        $folder = Folder::factory()->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $folder->name . ' folder.'
+        ]);
+
+        $this->actingAs($user)
+            ->delete('/settings/folders/' . $folder->id)
+            ->assertStatus(302)
+            ->assertRedirect('/settings/folders')
+            ->assertSessionHas('message', 'Folder deleted.');
+
+        $this->assertSoftDeleted('folders', [
+            'id' => $folder->id
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
     }
 }
