@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
 
+        #region Project Types
         Route::get('/project-types', [SettingsController::class, 'projectTypeIndex'])
             ->name('settings.project-types.index');
         Route::get('/project-types/create', [SettingsController::class, 'projectTypeCreate'])
@@ -41,16 +42,31 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.project-types.update');
         Route::delete('/project-types/{projectType}', [SettingsController::class, 'projectTypeDestroy'])
             ->name('settings.project-types.destroy');
+        #endregion
 
+        #region Folders
         Route::get('/folders', [SettingsController::class, 'folderIndex'])
             ->name('settings.folders.index');
+        Route::get('/folders/create', [SettingsController::class, 'folderCreate'])
+            ->name('settings.folders.create');
+        Route::post('/folders', [SettingsController::class, 'folderStore'])
+            ->name('settings.folders.store');
+        Route::get('/folders/{folder}/edit', [SettingsController::class, 'folderEdit'])
+            ->name('settings.folders.edit');
+        Route::patch('/folders/{folder}', [SettingsController::class, 'folderUpdate'])
+            ->name('settings.folders.update');
+        Route::delete('/folders/{folder}', [SettingsController::class, 'folderDestroy'])
+            ->name('settings.folders.destroy');
+        #endregion
 
+        #region Other Settings
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');
         Route::get('/other-settings/edit', [SettingsController::class, 'otherSettingsEdit'])
             ->name('settings.other-settings.edit');
         Route::post('/other-settings/edit', [SettingsController::class, 'otherSettingsUpdate'])
             ->name('settings.other-settings.update');
+        #endregion
     });
 });
 

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class FolderFactory extends Factory
 {
@@ -22,7 +23,7 @@ class FolderFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name()
+            'name' => Str::slug($this->faker->name())
         ];
     }
 }

@@ -6,8 +6,9 @@ use App\Models\Activity;
 use App\Models\Folder;
 use App\Models\OtherSettings;
 use App\Models\ProjectType;
-use App\Models\Source;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
@@ -44,7 +45,7 @@ class SettingsController extends Controller
         ]);
 
         return redirect(route('settings.project-types.index'))
-            ->with('message', 'New project type created.');
+            ->with('message', 'Project type created.');
     }
 
     public function projectTypeEdit(ProjectType $projectType)
@@ -90,6 +91,33 @@ class SettingsController extends Controller
     public function folderIndex()
     {
         return view('settings.folders.index', ['folders' => Folder::all()]);
+    }
+
+    public function folderCreate()
+    {
+        return view('settings.folders.create');
+    }
+
+    public function folderStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $folder = Folder::create([
+            'name' => Str::slug($request->input(['name']))
+        ]);
+
+        File::ensureDirectoryExists(public_path($folder->name . '/'));
+
+        Activity::create([
+            'log' => 'Created ' . $folder->name . ' folder.',
+            'link' => route('settings.folders.edit', ['folder' => $folder]),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('settings.folders.index'))
+            ->with('message', 'Project type created.');
     }
     #endregion
 

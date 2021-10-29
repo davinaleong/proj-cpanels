@@ -61,7 +61,8 @@ class ProjectTypeTest extends TestCase
                 'name' => $projectType->name
             ])
             ->assertStatus(302)
-            ->assertRedirect('/settings/project-types/');
+            ->assertRedirect('/settings/project-types/')
+            ->assertSessionHas('message', 'Project type created.');
 
         $this->assertDatabaseHas('project_types', [
             'name' => $projectType->name
