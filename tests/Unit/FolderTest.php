@@ -12,7 +12,6 @@ class FolderTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @group new */
     public function test_can_get_formatted_created_at()
     {
         $dateFormat = OtherSettings::factory()->create([
@@ -31,7 +30,6 @@ class FolderTest extends TestCase
         $this->assertEquals($datetime->format($dateFormat->value), $folder->getCreatedAt());
     }
 
-    /** @group new */
     public function test_can_get_formatted_updated_at()
     {
         $dateFormat = OtherSettings::factory()->create([
