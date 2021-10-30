@@ -188,7 +188,7 @@ class SettingsController extends Controller
 
         if ($request->file()) {
             $folder = Folder::find($request->input('folder_id'));
-            $filename = now()->format('YmdHis') . '-' . $request->file->getClientOriginalName();
+            $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
             $request->file('file')->storeAs(Image::$FOLDER . $folder->name . '/', $filename, 'public');
 
             $image = Image::create([

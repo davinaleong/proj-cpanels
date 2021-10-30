@@ -56,7 +56,7 @@ class ImageTest extends TestCase
 
         $user = User::factory()->create();
         $image = Image::factory()->make([
-            'filename' => 'test.jpg'
+            'filename' => 'hello world.jpg'
         ]);
         $activity = Activity::factory()->make([
             'log' => 'Created ' . $image->name . ' image.',
@@ -74,12 +74,12 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images/')
             ->assertSessionHas('message', 'Image created.');
 
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . $image->filename);
+        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
 
         $this->assertDatabaseHas('images', [
             'folder_id' => $image->folder_id,
             'name' => $image->name,
-            'filename' => now()->format('YmdHis') . '-' . $image->filename
+            'filename' => now()->format('YmdHis') . '-' . urlencode($image->filename)
         ]);
         $this->assertDatabaseHas('activities', [
             'log' => $activity->log,
@@ -88,7 +88,6 @@ class ImageTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_create_validation_errors()
     {
         $user = User::factory()->create();
