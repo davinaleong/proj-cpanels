@@ -3,6 +3,7 @@
 namespace Tests\Feature\Settings;
 
 use App\Models\Activity;
+use App\Models\Folder;
 use App\Models\Image;
 use App\Models\User;
 use Carbon\Carbon;
@@ -87,7 +88,7 @@ class ImageTest extends TestCase
         ]);
     }
 
-    public function test_create_validation_errors()
+    public function test_create_image_validation()
     {
         $user = User::factory()->create();
         $this->actingAs($user)
@@ -142,4 +143,87 @@ class ImageTest extends TestCase
             ->get('/settings/images/1/edit')
             ->assertStatus(404);
     }
+
+    public function test_admin_can_update_an_image()
+    {
+        Storage::fake('public');
+
+        $user = User::factory()->create();
+
+        $folder = Folder::factory()->create();
+        $image = Image::factory()->create([
+            'filename' => now()->format('YmdHis') . '-' . urlencode('hello world.jpg')
+        ]);
+        $editedImage = Image::factory()->make([
+            'name' => 'New image',
+            'filename' => 'hello earth.jpg'
+        ]);
+        $activity = Activity::factory()->make([
+            'log' => 'Modified ' . $editedImage->name . ' folder.',
+            'link' => route('settings.images.index'),
+            'label' => 'View record'
+        ]);
+
+        $this->actingAs($user)
+            ->patch('/settings/folders/' . $folder->id, [
+                'name' => $editedImage->name,
+                'file' => UploadedFile::fake()->image($editedImage->filename)
+            ])
+            ->assertRedirect('/settings/images')
+            ->assertSessionHas('message', 'Image modified.');
+
+        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
+        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
+
+        $this->assertDatabaseHas('images', [
+            'id' => $folder->id,
+            'name' => $editedImage->name,
+            'filename' => now()->format('YmdHis') . urlencode($editedImage->filename)
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label
+        ]);
+    }
+
+    public function test_update_image_validation()
+    {
+        $user = User::factory()->create();
+        $folder = Folder::factory()->create();
+
+        $this->actingAs($user)
+            ->patch('settings/folders/' . $folder->id, [
+                'name' => ''
+            ])
+            ->assertSessionHasErrors(['name']);
+
+        $this->actingAs($user)
+            ->patch('settings/folders/' . $folder->id, [
+                'name' => Str::random(256)
+            ])
+            ->assertSessionHasErrors(['name']);
+    }
+
+    // public function test_admin_can_delete_an_image()
+    // {
+    //     $user = User::factory()->create();
+    //     $image = Image::factory()->create();
+    //     $activity = Activity::factory()->make([
+    //         'log' => 'Deleted ' . $image->name . ' image.'
+    //     ]);
+
+    //     $this->actingAs($user)
+    //         ->delete('/settings/images/' . $image->id)
+    //         ->assertStatus(302)
+    //         ->assertRedirect('/settings/images')
+    //         ->assertSessionHas('message', 'Image deleted.');
+
+    //     $this->assertSoftDeleted('images', [
+    //         'id' => $image->id
+    //     ]);
+    //     $this->assertDatabaseHas('activities', [
+    //         'log' => $activity->log
+    //     ]);
+    // }
 }
