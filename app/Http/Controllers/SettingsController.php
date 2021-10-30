@@ -207,6 +207,11 @@ class SettingsController extends Controller
         return redirect(route('settings.images.index'))
             ->with('message', 'Image created.');
     }
+
+    public function imageEdit(Request $request, Image $image)
+    {
+        return view('settings.images.edit', ['image' => $image]);
+    }
     #endregion
 
     #region Other Settings

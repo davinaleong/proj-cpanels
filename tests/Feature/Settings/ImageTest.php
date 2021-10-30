@@ -49,7 +49,6 @@ class ImageTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_admin_can_create_an_image()
     {
         Storage::fake('public');
@@ -114,5 +113,33 @@ class ImageTest extends TestCase
                 'folder_id',
                 'file'
             ]);
+    }
+
+    public function test_guest_gets_redirected_from_edit()
+    {
+        $image = Image::factory()->create();
+
+        $this->get('/settings/images/' . $image->id . '/edit')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_edit()
+    {
+        $user = User::factory()->create();
+        $image = Image::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/settings/images/' . $image->id . '/edit')
+            ->assertOk();
+    }
+
+    public function test_accessing_non_existent_image_returns_404()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/settings/images/1/edit')
+            ->assertStatus(404);
     }
 }
