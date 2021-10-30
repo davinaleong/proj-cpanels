@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Folder;
 use App\Models\Image;
 use App\Models\OtherSettings;
 use Carbon\Carbon;
@@ -13,12 +14,28 @@ class ImageTest extends TestCase
     use RefreshDatabase;
 
     /** @group new */
-    public function test_can_get_placeholder_image()
+    public function test_has_folder()
     {
         $image = Image::factory()->create();
 
-        $this->assertEquals(public_path(OtherSettings::getImagePlaceholder()), $image->getFile());
+        $this->assertInstanceOf(Folder::class, $image->folder);
     }
+
+    /** @group new */
+    public function test_can_get_folder_name()
+    {
+        $image = Image::factory()->create();
+
+        $this->assertEquals($image->folder->name, $image->getFolderName());
+    }
+
+    /** @group new */
+    // public function test_can_get_placeholder_image()
+    // {
+    //     $image = Image::factory()->create();
+
+    //     $this->assertEquals(public_path(OtherSettings::getImagePlaceholder()), $image->getFile());
+    // }
 
     public function test_can_get_formatted_created_at()
     {

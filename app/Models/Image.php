@@ -19,6 +19,16 @@ class Image extends Model
         'deleted_at'
     ];
 
+    public function folder()
+    {
+        return $this->belongsTo('App\Models\Folder');
+    }
+
+    public function getFolderName()
+    {
+        return filled($this->folder) ? $this->folder->name : '';
+    }
+
     public function getFile()
     {
         $url = public_path(OtherSettings::getImagePlaceholder());
