@@ -44,5 +44,14 @@ class DatabaseSeeder extends Seeder
                 'value' => 'images/placeholder.png'
             ]
         ]);
+
+        DB::table('folders')->insert([
+            [
+                'name' => 'cpanels'
+            ],
+            [
+                'name' => 'projects'
+            ]
+        ]);
     }
 }
