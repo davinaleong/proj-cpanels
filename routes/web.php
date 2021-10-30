@@ -59,6 +59,21 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.folders.destroy');
         #endregion
 
+        #region Images
+        Route::get('/images', [SettingsController::class, 'imageIndex'])
+            ->name('settings.images.index');
+        Route::get('/images/create', [SettingsController::class, 'imageCreate'])
+            ->name('settings.images.create');
+        Route::post('/images', [SettingsController::class, 'imageStore'])
+            ->name('settings.images.store');
+        Route::get('/images/{image}/edit', [SettingsController::class, 'imageEdit'])
+            ->name('settings.images.edit');
+        Route::patch('/images/{image}', [SettingsController::class, 'imageUpdate'])
+            ->name('settings.images.update');
+        Route::delete('/images/{image}', [SettingsController::class, 'imageDestroy'])
+            ->name('settings.images.destroy');
+        #endregion
+
         #region Other Settings
         Route::get('/other-settings', [SettingsController::class, 'otherSettingsIndex'])
             ->name('settings.other-settings.index');

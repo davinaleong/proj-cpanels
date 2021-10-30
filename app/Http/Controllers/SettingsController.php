@@ -165,6 +165,13 @@ class SettingsController extends Controller
     }
     #endregion
 
+    #region Images
+    public function imageIndex()
+    {
+        //
+    }
+    #endregion
+
     #region Other Settings
     public function otherSettingsIndex()
     {
