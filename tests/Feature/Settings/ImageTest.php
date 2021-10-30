@@ -13,6 +13,7 @@ class ImageTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @group new */
     public function test_guest_gets_redirected_from_index()
     {
         $this->get('/settings/images')
@@ -20,6 +21,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/login');
     }
 
+    /** @group new */
     public function test_admin_can_access_index()
     {
         $user = User::factory()->create();

@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'key' => OtherSettings::$KEY_IMAGE_PLACEHOLDER,
-                'value' => 'images/placeholder.png'
+                'value' => 'placeholder.png'
             ]
         ]);
 

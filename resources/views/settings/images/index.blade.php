@@ -13,5 +13,22 @@
 @endsection
 
 @section('content')
-    //
+    @if(count($images) > 0)
+    <div id="projects">
+        @foreach($images as $image)
+        <div class="card">
+            <img src="{{ $image->getFile() }}" class="card-img-top" alt="{{ $image->name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ $image->name }}</h5>
+              <p><span class="badge bg-secondary">/{{ $image->getFolderName() }}</span></p>
+              <a href="{{ route('settings.image.edit', ['image' => $image]) }}" class="btn btn-primary">View Image <i class="fas fa-eye fa-fw"></i></a>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @else
+    <p class="text-center"><em>No image data.</em></p>
+    @endif
+
+    {{ $images->links() }}
 @endsection
