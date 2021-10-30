@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
 {
@@ -26,16 +27,17 @@ class Image extends Model
 
     public function getFolderName()
     {
-        return filled($this->folder) ? $this->folder->name : '';
+        return filled($this->folder) ? $this->folder->name . '/' : '';
     }
 
     public function getFile()
     {
-        $url = public_path(OtherSettings::getImagePlaceholder());
+        $url = asset(OtherSettings::getImagePlaceholder());
+        $filepath = 'images/' . $this->getFolderName() . $this->filename;
 
-        // if ($this->url ) {
-        //     //
-        // }
+        if (filled($this->filename) && Storage::disk('public')->exists($filepath)) {
+            $url = asset($filepath);
+        }
 
         return $url;
     }

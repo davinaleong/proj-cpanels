@@ -24,8 +24,8 @@ class ImageFactory extends Factory
     {
         return [
             'folder_id' => Folder::factory(),
-            'name' => $this->faker->name(),
-            'url' => $this->faker->image()
+            'name' => 'Test image',
+            'filename' => 'image.png'
         ];
     }
 }

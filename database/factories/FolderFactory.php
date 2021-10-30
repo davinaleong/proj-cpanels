@@ -23,7 +23,7 @@ class FolderFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Str::slug($this->faker->name())
+            'name' => 'test'
         ];
     }
 }

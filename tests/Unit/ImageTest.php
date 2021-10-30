@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use App\Models\Folder;
 use App\Models\Image;
 use App\Models\OtherSettings;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -13,7 +15,6 @@ class ImageTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @group new */
     public function test_has_folder()
     {
         $image = Image::factory()->create();
@@ -21,21 +22,38 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Folder::class, $image->folder);
     }
 
-    /** @group new */
     public function test_can_get_folder_name()
     {
         $image = Image::factory()->create();
 
-        $this->assertEquals($image->folder->name, $image->getFolderName());
+        $this->assertEquals($image->folder->name . '/', $image->getFolderName());
     }
 
     /** @group new */
-    // public function test_can_get_placeholder_image()
-    // {
-    //     $image = Image::factory()->create();
+    public function test_can_get_placeholder_image()
+    {
+        $image = Image::factory()->create();
 
-    //     $this->assertEquals(public_path(OtherSettings::getImagePlaceholder()), $image->getFile());
-    // }
+        $this->assertEquals(asset(env('IMAGE_PLACEHOLDER')), $image->getFile());
+    }
+
+    /** @group new */
+    public function test_can_get_file()
+    {
+        $folder = Folder::factory()->create([
+            'name' => 'test'
+        ]);
+        $image = Image::factory()
+            ->for($folder)
+            ->create([
+                'folder_id' => $folder->id,
+                'filename' => 'test.png'
+            ]);
+
+        $filepath = 'images/' . $folder->name . '/' . $image->filename;
+
+        $this->assertEquals(asset($filepath), $image->getFile());
+    }
 
     public function test_can_get_formatted_created_at()
     {

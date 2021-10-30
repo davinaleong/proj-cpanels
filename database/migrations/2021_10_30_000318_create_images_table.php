@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->foreignId('folder_id')->constrained('folders');
             $table->string('name', 255);
-            $table->text('url');
+            $table->text('filename');
             $table->timestamps();
             $table->softDeletes();
         });
