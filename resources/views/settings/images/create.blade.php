@@ -20,11 +20,11 @@
         </div>
 
         <div class="mb-3">
-            <label for="folder" class="form-label">Folder*</label>
-            <select name="folder" class="form-control" id="folder" required>
+            <label for="folder_id" class="form-label">Folder*</label>
+            <select name="folder_id" class="form-control" id="folder_id" required>
                 <option value="">-- Folders --</option>
                 @foreach($folders as $folder)
-                <option value="{{ $folder->id }}" {{ old('folder') == $folder->id ? 'selected="selected"' : '' }}>{{ $folder->name }}</option>
+                <option value="{{ $folder->id }}" {{ old('folder_id') == $folder->id ? 'selected="selected"' : '' }}>{{ $folder->name }}</option>
                 @endforeach
             </select>
         </div>

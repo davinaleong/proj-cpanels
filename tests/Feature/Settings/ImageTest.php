@@ -5,8 +5,12 @@ namespace Tests\Feature\Settings;
 use App\Models\Activity;
 use App\Models\Image;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ImageTest extends TestCase
@@ -29,7 +33,6 @@ class ImageTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_guest_gets_redirected_from_create()
     {
         $this->get('/settings/images/create')
@@ -37,7 +40,6 @@ class ImageTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @group new */
     public function test_admin_can_access_create()
     {
         $user = User::factory()->create();
@@ -45,5 +47,73 @@ class ImageTest extends TestCase
         $this->actingAs($user)
             ->get('/settings/images/create')
             ->assertOk();
+    }
+
+    /** @group new */
+    public function test_admin_can_create_an_image()
+    {
+        Storage::fake('public');
+
+        $user = User::factory()->create();
+        $image = Image::factory()->make([
+            'filename' => 'test.jpg'
+        ]);
+        $activity = Activity::factory()->make([
+            'log' => 'Created ' . $image->name . ' image.',
+            'link' => route('settings.images.edit', ['image' => 1]),
+            'label' => 'View record'
+        ]);
+
+        $this->actingAs($user)
+            ->post('/settings/images', [
+                'name' => $image->name,
+                'folder_id' => $image->folder->id,
+                'file' => UploadedFile::fake()->image($image->filename)
+            ])
+            ->assertStatus(302)
+            ->assertRedirect('/settings/images/')
+            ->assertSessionHas('message', 'Image created.');
+
+        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . $image->filename);
+
+        $this->assertDatabaseHas('images', [
+            'folder_id' => $image->folder_id,
+            'name' => $image->name,
+            'filename' => now()->format('YmdHis') . '-' . $image->filename
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label
+        ]);
+    }
+
+    /** @group new */
+    public function test_create_validation_errors()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)
+            ->post('/settings/images', [
+                'name' => '',
+                'folder_id' => '',
+                'file' => ''
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'folder_id',
+                'file'
+            ]);
+
+        $this->actingAs($user)
+            ->post('/settings/images', [
+                'name' => Str::random(256),
+                'folder_id' => 1,
+                'file' => UploadedFile::fake()->create('document.pdf', 100)
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'folder_id',
+                'file'
+            ]);
     }
 }

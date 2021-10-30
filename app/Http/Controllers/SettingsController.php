@@ -177,6 +177,36 @@ class SettingsController extends Controller
     {
         return view('settings.images.create', ['folders' => Folder::all()]);
     }
+
+    public function imageStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'folder_id' => 'required|integer|exists:folders,id',
+            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:2048'
+        ]);
+
+        if ($request->file()) {
+            $folder = Folder::find($request->input('folder_id'));
+            $filename = now()->format('YmdHis') . '-' . $request->file->getClientOriginalName();
+            $request->file('file')->storeAs(Image::$FOLDER . $folder->name . '/', $filename, 'public');
+
+            $image = Image::create([
+                'name' => $request->input('name'),
+                'folder_id' => $request->input('folder_id'),
+                'filename' => $filename
+            ]);
+
+            Activity::create([
+                'log' => 'Created ' . $image->name . ' image.',
+                'link' => route('settings.images.edit', ['image' => $image]),
+                'label' => 'View record'
+            ]);
+        }
+
+        return redirect(route('settings.images.index'))
+            ->with('message', 'Image created.');
+    }
     #endregion
 
     #region Other Settings
