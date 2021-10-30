@@ -15,6 +15,7 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('folder_id')->constrained('folders');
             $table->string('name', 255);
             $table->text('url');
             $table->timestamps();

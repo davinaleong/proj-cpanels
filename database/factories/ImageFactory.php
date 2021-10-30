@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Image;
+use App\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImageFactory extends Factory
@@ -22,6 +23,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
+            'folder_id' => Folder::factory(),
             'name' => $this->faker->name(),
             'url' => $this->faker->image()
         ];

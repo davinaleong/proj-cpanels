@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Folder;
 use App\Models\OtherSettings;
 use App\Models\ProjectType;
+use App\Models\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -168,7 +169,8 @@ class SettingsController extends Controller
     #region Images
     public function imageIndex()
     {
-        //
+        $perPage = OtherSettings::getCardPerPage();
+        return view('settings.images.index', ['images' => Image::orderByDesc('created_at')->paginate($perPage)]);
     }
     #endregion
 
