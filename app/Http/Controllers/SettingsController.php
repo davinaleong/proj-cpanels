@@ -172,6 +172,11 @@ class SettingsController extends Controller
         $perPage = OtherSettings::getCardPerPage();
         return view('settings.images.index', ['images' => Image::orderByDesc('created_at')->paginate($perPage)]);
     }
+
+    public function imageCreate()
+    {
+        return view('settings.images.create', ['folders' => Folder::all()]);
+    }
     #endregion
 
     #region Other Settings
