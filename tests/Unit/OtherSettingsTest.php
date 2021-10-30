@@ -85,13 +85,11 @@ class OtherSettingsTest extends TestCase
         $this->assertEquals($expected->value, OtherSettings::getListPerPage());
     }
 
-    /** @group new */
     public function test_can_get_default_card_per_page()
     {
         $this->assertEquals(env('CARD_PER_PAGE'), OtherSettings::getCardPerPage());
     }
 
-    /** @group new */
     public function test_can_get_card_per_page()
     {
         $expected = OtherSettings::factory()->create([
@@ -100,5 +98,20 @@ class OtherSettingsTest extends TestCase
         ]);
 
         $this->assertEquals($expected->value, OtherSettings::getCardPerPage());
+    }
+
+    public function test_can_get_default_image_placeholder()
+    {
+        $this->assertEquals(env('IMAGE_PLACEHOLDER'), OtherSettings::getImagePlaceholder());
+    }
+
+    public function test_can_get_image_placeholder()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => OtherSettings::$KEY_IMAGE_PLACEHOLDER,
+            'value' => 'images/placeholder.png'
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getImagePlaceholder());
     }
 }

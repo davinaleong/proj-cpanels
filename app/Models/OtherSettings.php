@@ -13,6 +13,7 @@ class OtherSettings extends Model
     public static $KEY_DB_DATETIME_FORMAT = 'DB Datetime Format';
     public static $KEY_LIST_PER_PAGE = 'List per page';
     public static $KEY_CARD_PER_PAGE = 'Card per page';
+    public static $KEY_IMAGE_PLACEHOLDER = 'Image placeholder';
 
     protected $table = 'other_settings';
 
@@ -73,6 +74,18 @@ class OtherSettings extends Model
     {
         $value = env('CARD_PER_PAGE');
         $settings = OtherSettings::getByKey(OtherSettings::$KEY_CARD_PER_PAGE);
+
+        if (filled($settings)) {
+            $value = $settings->value;
+        }
+
+        return $value;
+    }
+
+    public static function getImagePlaceholder()
+    {
+        $value = env('IMAGE_PLACEHOLDER');
+        $settings = OtherSettings::getByKey(OtherSettings::$KEY_IMAGE_PLACEHOLDER);
 
         if (filled($settings)) {
             $value = $settings->value;
