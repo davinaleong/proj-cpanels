@@ -10,7 +10,6 @@ class OtherSettingsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @group new */
     public function test_get_static_keys()
     {
         $expected = [
