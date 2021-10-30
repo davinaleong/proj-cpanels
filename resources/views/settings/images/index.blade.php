@@ -20,7 +20,7 @@
             <img src="{{ $image->getFile() }}" class="card-img-top" alt="{{ $image->name }}">
             <div class="card-body">
               <h5 class="card-title">{{ $image->name }}</h5>
-              <p><span class="badge bg-secondary">/{{ $image->getFolderName() }}</span></p>
+              <p><span class="badge bg-secondary">{{ $image->getFolderName() }}</span></p>
               <a href="{{ route('settings.images.edit', ['image' => $image]) }}" class="btn btn-primary">Edit Image <i class="fas fa-pen fa-fw"></i></a>
             </div>
         </div>

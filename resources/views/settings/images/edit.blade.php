@@ -37,9 +37,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="file" class="form-label">File*</label>
+            <label for="file" class="form-label">File</label>
             <img src="{{ $image->getFile() }}" alt="{{ $image->name }}" class="img-fluid img-thumbnail mb-3">
-            <input type="file" class="form-control" name="file" id="file" accept=".jpg,.gif,.png,.jpeg,.bmp" required>
+            <input type="file" class="form-control" name="file" id="file" accept=".jpg,.gif,.png,.jpeg,.bmp">
         </div>
 
         <div class="mb-3">
