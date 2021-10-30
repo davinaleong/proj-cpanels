@@ -29,7 +29,6 @@ class ImageTest extends TestCase
         $this->assertEquals($image->folder->name . '/', $image->getFolderName());
     }
 
-    /** @group new */
     public function test_can_get_placeholder_image()
     {
         $image = Image::factory()->create();
@@ -37,7 +36,6 @@ class ImageTest extends TestCase
         $this->assertEquals(asset(env('IMAGE_PLACEHOLDER')), $image->getFile());
     }
 
-    /** @group new */
     public function test_can_get_file()
     {
         $folder = Folder::factory()->create([
