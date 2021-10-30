@@ -19,6 +19,17 @@ class Image extends Model
         'deleted_at'
     ];
 
+    public function getFile()
+    {
+        $url = public_path(OtherSettings::getImagePlaceholder());
+
+        // if ($this->url ) {
+        //     //
+        // }
+
+        return $url;
+    }
+
     public function getCreatedAt()
     {
         $dbDatetimeFormat = OtherSettings::getDbDatetimeFormat();

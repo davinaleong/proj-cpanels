@@ -7,7 +7,7 @@ use App\Models\Folder;
 use App\Models\OtherSettings;
 use App\Models\ProjectType;
 use App\Models\Image;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -110,7 +110,7 @@ class SettingsController extends Controller
         ]);
 
         if (env('APP_ENV') !== 'testing') {
-            File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+            Storage::makeDirectory('images/' . $folder->name . '/');
         }
 
         Activity::create([
@@ -138,7 +138,7 @@ class SettingsController extends Controller
         $folder->save();
 
         if (env('APP_ENV') !== 'testing') {
-            File::ensureDirectoryExists(public_path('images/' . $folder->name . '/'));
+            Storage::makeDirectory('images/' . $folder->name . '/');
         }
 
         Activity::create([

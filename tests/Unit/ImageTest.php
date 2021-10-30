@@ -17,7 +17,7 @@ class ImageTest extends TestCase
     {
         $image = Image::factory()->create();
 
-        $this->assertEquals(public_path(env('IMAGE_PLACEHOLDER')), $image->getFile());
+        $this->assertEquals(public_path(OtherSettings::getImagePlaceholder()), $image->getFile());
     }
 
     public function test_can_get_formatted_created_at()
