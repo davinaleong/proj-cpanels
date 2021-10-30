@@ -21,7 +21,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ $image->name }}</h5>
               <p><span class="badge bg-secondary">/{{ $image->getFolderName() }}</span></p>
-              <a href="{{ route('settings.image.edit', ['image' => $image]) }}" class="btn btn-primary">View Image <i class="fas fa-eye fa-fw"></i></a>
+              <a href="{{ route('settings.images.edit', ['image' => $image]) }}" class="btn btn-primary">View Image <i class="fas fa-eye fa-fw"></i></a>
             </div>
         </div>
         @endforeach
