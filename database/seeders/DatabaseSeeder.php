@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OtherSettings;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +20,29 @@ class DatabaseSeeder extends Seeder
             'name' => env('ADMIN_NAME', 'admin'),
             'email' => env('ADMIN_EMAIL', 'John Doe'),
             'password' => Hash::make(env('ADMIN_PASSWORD', 'helloWorld')),
+        ]);
+
+        DB::table('other_settings')->insert([
+            [
+                'key' => OtherSettings::$KEY_DATETIME_FORMAT,
+                'value' => 'd-m-Y H:i:s'
+            ],
+            [
+                'key' => OtherSettings::$KEY_DB_DATETIME_FORMAT,
+                'value' => 'Y-m-d H:i:s'
+            ],
+            [
+                'key' => OtherSettings::$KEY_LIST_PER_PAGE,
+                'value' => '50'
+            ],
+            [
+                'key' => OtherSettings::$KEY_CARD_PER_PAGE,
+                'value' => '24'
+            ],
+            [
+                'key' => OtherSettings::$KEY_IMAGE_PLACEHOLDER,
+                'value' => 'images/placeholder.png'
+            ]
         ]);
     }
 }
