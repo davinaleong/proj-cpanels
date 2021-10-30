@@ -34,6 +34,17 @@ class OtherSettings extends Model
         return OtherSettings::all()->pluck('key');
     }
 
+    public static function getStaticKeys()
+    {
+        return [
+            OtherSettings::$KEY_DATETIME_FORMAT,
+            OtherSettings::$KEY_DB_DATETIME_FORMAT,
+            OtherSettings::$KEY_LIST_PER_PAGE,
+            OtherSettings::$KEY_CARD_PER_PAGE,
+            OtherSettings::$KEY_IMAGE_PLACEHOLDER,
+        ];
+    }
+
     public static function getDatetimeFormat()
     {
         $datetime_format = env('DEFAULT_DT_FORMAT');

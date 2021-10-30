@@ -10,6 +10,19 @@ class OtherSettingsTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** @group new */
+    public function test_get_static_keys()
+    {
+        $expected = [
+            OtherSettings::$KEY_DATETIME_FORMAT,
+            OtherSettings::$KEY_DB_DATETIME_FORMAT,
+            OtherSettings::$KEY_LIST_PER_PAGE,
+            OtherSettings::$KEY_CARD_PER_PAGE,
+            OtherSettings::$KEY_IMAGE_PLACEHOLDER,
+        ];
+        $this->assertEquals($expected, OtherSettings::getStaticKeys());
+    }
+
     public function test_can_get_other_settings_by_key()
     {
         $expected = OtherSettings::factory()->create([
@@ -68,13 +81,11 @@ class OtherSettingsTest extends TestCase
         $this->assertEquals($expected->value, OtherSettings::getDbDatetimeFormat());
     }
 
-    /** @group new */
     public function test_can_get_default_list_per_page()
     {
         $this->assertEquals(env('LIST_PER_PAGE'), OtherSettings::getListPerPage());
     }
 
-    /** @group new */
     public function test_can_get_list_per_page()
     {
         $expected = OtherSettings::factory()->create([
