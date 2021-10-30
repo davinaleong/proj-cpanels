@@ -133,6 +133,7 @@ class FolderTest extends TestCase
             ->patch('/settings/folders/' . $folder->id, [
                 'name' => $editedFolder->name
             ])
+            ->assertStatus(302)
             ->assertRedirect('/settings/folders')
             ->assertSessionHas('message', 'Folder modified.');
 

@@ -242,6 +242,21 @@ class SettingsController extends Controller
         return redirect(route('settings.images.index'))
             ->with('message', 'Image modified.');
     }
+
+    public function imageDestroy(Image $image)
+    {
+        Storage::disk('public')->delete(Image::$FOLDER . $image->getFolderName() . $image->filename);
+
+        $imageName = $image->name;
+        $image->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $imageName . ' image.'
+        ]);
+
+        return redirect(route('settings.images.index'))
+            ->with('message', 'Image deleted.');
+    }
     #endregion
 
     #region Other Settings

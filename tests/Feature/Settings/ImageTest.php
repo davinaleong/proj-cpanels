@@ -173,6 +173,7 @@ class ImageTest extends TestCase
                 'name' => $editedImage->name,
                 'file' => UploadedFile::fake()->image($editedImage->filename)
             ])
+            ->assertStatus(302)
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image modified.');
 
@@ -217,25 +218,32 @@ class ImageTest extends TestCase
             ]);
     }
 
-    // public function test_admin_can_delete_an_image()
-    // {
-    //     $user = User::factory()->create();
-    //     $image = Image::factory()->create();
-    //     $activity = Activity::factory()->make([
-    //         'log' => 'Deleted ' . $image->name . ' image.'
-    //     ]);
+    public function test_admin_can_delete_an_image()
+    {
+        Storage::fake('public');
 
-    //     $this->actingAs($user)
-    //         ->delete('/settings/images/' . $image->id)
-    //         ->assertStatus(302)
-    //         ->assertRedirect('/settings/images')
-    //         ->assertSessionHas('message', 'Image deleted.');
+        $user = User::factory()->create();
+        $image = Image::factory()->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $image->name . ' image.'
+        ]);
 
-    //     $this->assertSoftDeleted('images', [
-    //         'id' => $image->id
-    //     ]);
-    //     $this->assertDatabaseHas('activities', [
-    //         'log' => $activity->log
-    //     ]);
-    // }
+        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
+        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+
+        $this->actingAs($user)
+            ->delete('/settings/images/' . $image->id)
+            ->assertStatus(302)
+            ->assertRedirect('/settings/images')
+            ->assertSessionHas('message', 'Image deleted.');
+
+        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
+
+        $this->assertSoftDeleted('images', [
+            'id' => $image->id
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
+    }
 }

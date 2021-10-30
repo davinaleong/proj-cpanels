@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('settings.images.update', ['image' => $image]) }}">
+    <form method="POST" action="{{ route('settings.images.update', ['image' => $image]) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -52,9 +52,10 @@
             <input type="text" readonly class="form-control-plaintext" id="updated_at" value="{{ $image->getUpdatedAt() }}">
         </div>
 
+        <p>* required fields</p>
+
         @include('components.errors')
 
-        <p>* required fields</p>
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
             <a href="{{ route('settings.images.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
