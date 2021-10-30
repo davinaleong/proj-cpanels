@@ -20,7 +20,10 @@
         </div>
 
         <div class="mb-3">
-            <label for="folder_id" class="form-label">Folder*</label>
+            <label for="folder_id" class="form-label">
+                Folder*
+                <a href="{{ route('settings.folders.create') }}">Create Folder</a>
+            </label>
             <select name="folder_id" class="form-control" id="folder_id" required>
                 <option value="">-- Folders --</option>
                 @foreach($folders as $folder)

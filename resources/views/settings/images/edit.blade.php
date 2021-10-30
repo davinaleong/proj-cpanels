@@ -32,7 +32,10 @@
         </div>
 
         <div class="mb-3">
-            <label for="folder" class="form-label">Folder</label>
+            <label for="folder" class="form-label">
+                Folder
+                <a href="{{ route('settings.folders.edit', ['folder' => $image->folder]) }}">View</a>
+            </label>
             <input type="text" readonly class="form-control-plaintext" id="folder" value="{{ $image->getFolderName() }}">
         </div>
 

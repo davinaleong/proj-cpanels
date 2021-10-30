@@ -14,7 +14,7 @@
 
 @section('content')
     @if(count($images) > 0)
-    <div id="projects">
+    <div class="projects">
         @foreach($images as $image)
         <div class="card">
             <img src="{{ $image->getFile() }}" class="card-img-top" alt="{{ $image->name }}">
