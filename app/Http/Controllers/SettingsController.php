@@ -212,6 +212,34 @@ class SettingsController extends Controller
     {
         return view('settings.images.edit', ['image' => $image]);
     }
+
+    public function imageUpdate(Request $request, Image $image)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:2048'
+        ]);
+
+        if ($request->file()) {
+            $folder = Image::$FOLDER . $image->getFolderName();
+            Storage::disk('public')->delete($folder . $image->filename);
+            $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
+            $request->file('file')->storeAs($folder, $filename, 'public');
+
+            $image->name = $request->input('name');
+            $image->filename = $filename;
+            $image->save();
+
+            Activity::create([
+                'log' => 'Modified ' . $image->name . ' image.',
+                'link' => route('settings.images.edit', ['image' => $image]),
+                'label' => 'View record'
+            ]);
+        }
+
+        return redirect(route('settings.images.index'))
+            ->with('message', 'Image modified.');
+    }
     #endregion
 
     #region Other Settings

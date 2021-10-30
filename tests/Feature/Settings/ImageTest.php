@@ -17,6 +17,7 @@ use Tests\TestCase;
 class ImageTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     public function test_guest_gets_redirected_from_index()
     {
@@ -152,33 +153,36 @@ class ImageTest extends TestCase
 
         $folder = Folder::factory()->create();
         $image = Image::factory()->create([
-            'filename' => now()->format('YmdHis') . '-' . urlencode('hello world.jpg')
+            'filename' => now()->format('YmdHis') . '-' . urlencode('hello world.png')
         ]);
         $editedImage = Image::factory()->make([
             'name' => 'New image',
-            'filename' => 'hello earth.jpg'
+            'filename' => 'hello earth.png'
         ]);
         $activity = Activity::factory()->make([
-            'log' => 'Modified ' . $editedImage->name . ' folder.',
-            'link' => route('settings.images.index'),
+            'log' => 'Modified ' . $editedImage->name . ' image.',
+            'link' => route('settings.images.edit', ['image' => $image]),
             'label' => 'View record'
         ]);
 
+        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
+        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+
         $this->actingAs($user)
-            ->patch('/settings/folders/' . $folder->id, [
+            ->patch('/settings/images/' . $folder->id, [
                 'name' => $editedImage->name,
                 'file' => UploadedFile::fake()->image($editedImage->filename)
             ])
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image modified.');
 
-        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
+        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
         Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
 
         $this->assertDatabaseHas('images', [
             'id' => $folder->id,
             'name' => $editedImage->name,
-            'filename' => now()->format('YmdHis') . urlencode($editedImage->filename)
+            'filename' => now()->format('YmdHis') . '-' . urlencode($editedImage->filename)
         ]);
         $this->assertDatabaseHas('activities', [
             'log' => $activity->log,
@@ -190,19 +194,27 @@ class ImageTest extends TestCase
     public function test_update_image_validation()
     {
         $user = User::factory()->create();
-        $folder = Folder::factory()->create();
+        $image = Image::factory()->create();
 
         $this->actingAs($user)
-            ->patch('settings/folders/' . $folder->id, [
-                'name' => ''
+            ->patch('settings/images/' . $image->id, [
+                'name' => '',
+                'file' => ''
             ])
-            ->assertSessionHasErrors(['name']);
+            ->assertSessionHasErrors([
+                'name',
+                'file'
+            ]);
 
         $this->actingAs($user)
-            ->patch('settings/folders/' . $folder->id, [
-                'name' => Str::random(256)
+            ->patch('settings/images/' . $image->id, [
+                'name' => Str::random(256),
+                'file' => UploadedFile::fake()->create('document.pdf', 100)
             ])
-            ->assertSessionHasErrors(['name']);
+            ->assertSessionHasErrors([
+                'name',
+                'file'
+            ]);
     }
 
     // public function test_admin_can_delete_an_image()
