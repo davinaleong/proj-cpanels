@@ -12,6 +12,8 @@ class Cpanel extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public static $SUB_FOLDER = 'cpanels';
+
     protected $guarded = [
         'id',
         'created_at',

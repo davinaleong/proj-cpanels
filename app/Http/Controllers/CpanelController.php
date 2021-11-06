@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cpanel;
+use App\Models\Folder;
 use App\Models\ProjectType;
 use App\Models\Image;
 use App\Models\OtherSettings;
@@ -18,7 +19,15 @@ class CpanelController extends Controller
 
     public function create()
     {
-        //
+        $folder = Folder::where('name', Cpanel::$SUB_FOLDER)->first();
+
+        return view('cpanels.create', [
+            'projectTypes' => ProjectType::orderBy('name')
+                ->get(),
+            'images' => Image::where('folder_id', $folder->id)
+                ->orderBy('name')
+                ->get()
+        ]);
     }
 
     public function store(Request $request)
