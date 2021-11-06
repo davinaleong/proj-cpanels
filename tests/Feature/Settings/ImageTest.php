@@ -199,12 +199,10 @@ class ImageTest extends TestCase
 
         $this->actingAs($user)
             ->patch('settings/images/' . $image->id, [
-                'name' => '',
-                'file' => ''
+                'name' => ''
             ])
             ->assertSessionHasErrors([
-                'name',
-                'file'
+                'name'
             ]);
 
         $this->actingAs($user)
