@@ -79,6 +79,14 @@
 
         <fieldset>
             <legend>Backend Credentials</legend>
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-secondary btn-oc-credentials mr-2">
+                    Use Default OC Credentials
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-wc-credentials">
+                    Use Default WP / WC Credentials
+                </button>
+            </div>
 
             <div class="mb-3">
                 <label for="backend_username" class="form-label">Backend Username</label>
@@ -101,4 +109,12 @@
             <a href="{{ route('cpanels.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+
+    });
+</script>
 @endsection

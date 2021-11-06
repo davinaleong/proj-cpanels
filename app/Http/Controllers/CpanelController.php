@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Cpanel;
 use App\Models\Folder;
@@ -32,7 +33,33 @@ class CpanelController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'project_type_id' => 'required|integer|exists:project_types,id',
+            'image_id' => 'required|integer|exists:images,id',
+            'name' => 'required|string|max:255'
+        ]);
+
+        $cpanel = Cpanel::create([
+            'project_type_id' => request('project_type_id'),
+            'image_id' => request('image_id'),
+            'name' => trim(request('name')),
+            'site_url' => trim(request('site_url')),
+            'admin_url' => trim(request('admin_url')),
+            'cpanel_url' => trim(request('cpanel_url')),
+            'cpanel_username' => trim(request('cpanel_username')),
+            'cpanel_password' => request('cpanel_password'),
+            'backend_username' => trim(request('backend_username')),
+            'backend_password' => request('backend_password')
+        ]);
+
+        Activity::create([
+            'log' => 'Created ' . $cpanel->name . ' cpanel.',
+            'link' => route('cpanels.show', ['cpanel' => $cpanel]),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('cpanels.show', ['cpanel' => $cpanel]))
+            ->with('message', 'CPanel created.');
     }
 
     public function show(Cpanel $cpanel)
