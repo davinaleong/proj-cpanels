@@ -82,4 +82,8 @@ body:not(.authenticate)>main {
   right: 1em;
   z-index: 1;
 }
+
+.nav-link a {
+    text-decoration: none;
+}
 /** Dashboard Page - End **/
