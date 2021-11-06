@@ -86,4 +86,8 @@ body:not(.authenticate)>main {
 .nav-link a {
     text-decoration: none;
 }
+
+.img-table {
+    width: 150px;
+}
 /** Dashboard Page - End **/

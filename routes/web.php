@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\CpanelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('settings.other-settings.update');
         #endregion
     });
+
+    Route::resource('cpanels', CpanelController::class);
 });
 
 require __DIR__.'/auth.php';

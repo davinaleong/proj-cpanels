@@ -17,6 +17,7 @@ class CreateCpanelsTable extends Migration
             $table->id();
             $table->foreignId('project_type_id')->constrained('project_types')->nullable();
             $table->foreignId('image_id')->constrained('images')->nullable();
+            $table->string('name', 255);
             $table->text('site_url')->nullable();
             $table->text('admin_url')->nullable();
             $table->text('cpanel_url')->nullable();

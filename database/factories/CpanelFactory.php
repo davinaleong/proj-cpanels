@@ -27,6 +27,7 @@ class CpanelFactory extends Factory
         return [
             'project_type_id' => ProjectType::factory(),
             'image_id' => Image::factory(),
+            'name' => $this->faker->name(),
             'site_url' => 'https://www.example.com/',
             'admin_url' => 'https://www.example.com/admin/',
             'cpanel_url' => 'https://www.example.com:2083',
