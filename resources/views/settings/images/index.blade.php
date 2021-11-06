@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('settings.index') }}">Settings</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Other Settings</li>
+    <li class="breadcrumb-item active" aria-current="page">Images</li>
 @endsection
 
 @section('content')
