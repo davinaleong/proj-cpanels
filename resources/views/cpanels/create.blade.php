@@ -80,10 +80,10 @@
         <fieldset>
             <legend>Backend Credentials</legend>
             <div class="mb-3">
-                <button type="button" class="btn btn-outline-secondary btn-oc-credentials mr-2">
+                <button id="btn-oc" type="button" class="btn btn-outline-secondary mr-2">
                     Use Default OC Credentials
                 </button>
-                <button type="button" class="btn btn-outline-secondary btn-wc-credentials">
+                <button id="btn-wp" type="button" class="btn btn-outline-secondary">
                     Use Default WP / WC Credentials
                 </button>
             </div>
@@ -114,7 +114,15 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
+        $('#btn-oc').click(function() {
+            $('#backend_username').val('{{ $oc_default_credentials['username'] }}');
+            $('#backend_password').val('{{ $oc_default_credentials['password'] }}');
+        });
 
+        $('#btn-wp').click(function() {
+            $('#backend_username').val('{{ $wp_default_credentials['username'] }}');
+            $('#backend_password').val('{{ $wp_default_credentials['password'] }}');
+        });
     });
 </script>
 @endsection

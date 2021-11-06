@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Cpanel;
+use App\Models\DefaultCredential;
 use App\Models\Folder;
 use App\Models\ProjectType;
 use App\Models\Image;
@@ -27,7 +28,9 @@ class CpanelController extends Controller
                 ->get(),
             'images' => Image::where('folder_id', $folder->id)
                 ->orderBy('name')
-                ->get()
+                ->get(),
+            'oc_default_credentials' => DefaultCredential::getOc(),
+            'wp_default_credentials' => DefaultCredential::getWp()
         ]);
     }
 
