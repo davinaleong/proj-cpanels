@@ -90,4 +90,8 @@ body:not(.authenticate)>main {
 .img-table {
     width: 150px;
 }
+
+td {
+    vertical-align: middle;
+}
 /** Dashboard Page - End **/

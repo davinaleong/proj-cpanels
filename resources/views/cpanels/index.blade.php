@@ -33,7 +33,7 @@
                         <img src="{{ $cpanel->getImage() }}" alt="{{ $cpanel->name }}" class="img-thumbnail img-table">
                     </td>
                     <td>{{ $cpanel->name }}</td>
-                    <td>{{ $cpanel->getProjectType() }}</td>
+                    <td>{{ $cpanel->getProjectTypeName() }}</td>
                     <td>{{ $cpanel->getCreatedAt() }}</td>
                     <td>{{ $cpanel->getUpdatedAt() }}</td>
                     <td>
