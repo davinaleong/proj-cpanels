@@ -39,7 +39,14 @@ class CpanelController extends Controller
         $request->validate([
             'project_type_id' => 'required|integer|exists:project_types,id',
             'image_id' => 'required|integer|exists:images,id',
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'site_url' => 'nullable|string',
+            'admin_url' => 'nullable|string',
+            'cpanel_url' => 'nullable|string',
+            'cpanel_username' => 'nullable|string',
+            'cpanel_password' => 'nullable|string',
+            'backend_username' => 'nullable|string',
+            'backend_password' => 'nullable|string'
         ]);
 
         $cpanel = Cpanel::create([
