@@ -52,7 +52,6 @@ class CpanelTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_admin_can_create_a_cpanel()
     {
         $user = User::factory()->create();
@@ -86,7 +85,6 @@ class CpanelTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_create_cpanel_validation()
     {
         $user = User::factory()->create();
@@ -125,5 +123,24 @@ class CpanelTest extends TestCase
                 'project_type_id',
                 'image_id'
             ]);
+    }
+
+    public function test_guest_gets_redirected_from_show()
+    {
+        $cpanel = Cpanel::factory()->create();
+
+        $this->get('/cpanels/' . $cpanel->id)
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_show()
+    {
+        $user = User::factory()->create();
+        $cpanel = Cpanel::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/cpanels/' . $cpanel->id)
+            ->assertOk();
     }
 }

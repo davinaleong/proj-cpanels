@@ -94,4 +94,15 @@ body:not(.authenticate)>main {
 td {
     vertical-align: middle;
 }
+
+.details {
+    display: flex;
+    margin-bottom: 1em;
+    align-items: center;
+}
+
+.details > .key {
+    margin-right: 1em;
+    width: calc(30% - 1em);
+}
 /** Dashboard Page - End **/

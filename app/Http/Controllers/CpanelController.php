@@ -67,7 +67,7 @@ class CpanelController extends Controller
 
     public function show(Cpanel $cpanel)
     {
-        //
+        return view('cpanels.show', ['cpanel' => $cpanel]);
     }
 
     public function edit(Cpanel $cpanel)

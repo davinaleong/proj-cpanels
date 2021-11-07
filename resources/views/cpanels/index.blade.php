@@ -37,8 +37,8 @@
                     <td>{{ $cpanel->getCreatedAt() }}</td>
                     <td>{{ $cpanel->getUpdatedAt() }}</td>
                     <td>
-                        <a href="{{ route('cpanels.edit', ['cpanel' => $cpanel]) }}" class="btn btn-outline-primary">
-                            Edit <i class="fa fa-pen fa-fw"></i>
+                        <a href="{{ route('cpanels.show', ['cpanel' => $cpanel]) }}" class="btn btn-outline-primary">
+                            <i class="fa fa-eye fa-fw"></i>
                         </a>
                     </td>
                 </tr>
