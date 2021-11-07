@@ -143,4 +143,27 @@ class CpanelTest extends TestCase
             ->get('/cpanels/' . $cpanel->id)
             ->assertOk();
     }
+
+    public function test_guest_gets_redirected_from_edit()
+    {
+        $cpanel = Cpanel::factory()->create();
+
+        $this->get('/cpanels/' . $cpanel->id . '/edit')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_edit()
+    {
+        Folder::factory()
+            ->create([
+                'name' => Cpanel::$SUB_FOLDER
+            ]);
+        $user = User::factory()->create();
+        $cpanel = Cpanel::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/cpanels/' . $cpanel->id . '/edit')
+            ->assertOk();
+    }
 }

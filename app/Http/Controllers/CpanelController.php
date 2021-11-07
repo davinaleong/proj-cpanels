@@ -72,7 +72,18 @@ class CpanelController extends Controller
 
     public function edit(Cpanel $cpanel)
     {
-        //
+        $folder = Folder::where('name', Cpanel::$SUB_FOLDER)->first();
+
+        return view('cpanels.edit', [
+            'cpanel' => $cpanel,
+            'projectTypes' => ProjectType::orderBy('name')
+                ->get(),
+            'images' => Image::where('folder_id', $folder->id)
+                ->orderBy('name')
+                ->get(),
+            'oc_default_credentials' => DefaultCredential::getOc(),
+            'wp_default_credentials' => DefaultCredential::getWp()
+        ]);
     }
 
     public function update(Request $request, Cpanel $cpanel)
