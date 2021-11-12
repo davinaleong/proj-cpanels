@@ -105,4 +105,8 @@ td {
     margin-right: 1em;
     width: calc(30% - 1em);
 }
+
+.h200 {
+    height: 200px;
+}
 /** Dashboard Page - End **/

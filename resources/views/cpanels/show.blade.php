@@ -34,7 +34,7 @@
         <div class="value">
             @if($cpanel->image)
             <a href="{{ route('settings.images.edit', ['image' => $cpanel->image]) }}">
-                <img src="{{ $cpanel->image->getFile() }}" alt="{{ $cpanel->name }}" class="img-fluid">
+                <img src="{{ $cpanel->image->getFile() }}" alt="{{ $cpanel->name }}" class="img-fluid img-thumbnail h200">
             </a>
             @endif
         </div>
