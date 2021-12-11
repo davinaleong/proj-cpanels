@@ -132,6 +132,14 @@ class CpanelController extends Controller
 
     public function destroy(Cpanel $cpanel)
     {
-        //
+        $cpanel_name = $cpanel->name;
+        $cpanel->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $cpanel_name . ' cpanel.'
+        ]);
+
+        return redirect(route('cpanels.index'))
+            ->with('message', 'CPanel deleted.');
     }
 }

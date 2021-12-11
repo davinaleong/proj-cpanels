@@ -242,4 +242,25 @@ class CpanelTest extends TestCase
                 'image_id'
             ]);
     }
+
+    public function test_admin_can_delete_a_cpanel()
+    {
+        $user = User::factory()->create();
+        $cpanel = Cpanel::factory()->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $cpanel->name . ' cpanel.'
+        ]);
+
+        $this->actingAs($user)
+            ->delete('cpanels/' . $cpanel->id)
+            ->assertRedirect('cpanels/')
+            ->assertSessionHas('message', 'CPanel deleted.');
+
+        $this->assertSoftDeleted('cpanels', [
+            'id' => $cpanel->id
+        ]);
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
+    }
 }
