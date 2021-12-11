@@ -95,7 +95,39 @@ class CpanelController extends Controller
 
     public function update(Request $request, Cpanel $cpanel)
     {
-        //
+        $request->validate([
+            'project_type_id' => 'required|integer|exists:project_types,id',
+            'image_id' => 'required|integer|exists:images,id',
+            'name' => 'required|string|max:255',
+            'site_url' => 'nullable|string',
+            'admin_url' => 'nullable|string',
+            'cpanel_url' => 'nullable|string',
+            'cpanel_username' => 'nullable|string',
+            'cpanel_password' => 'nullable|string',
+            'backend_username' => 'nullable|string',
+            'backend_password' => 'nullable|string'
+        ]);
+
+        $cpanel->project_type_id = request('project_type_id');
+        $cpanel->image_id = request('image_id');
+        $cpanel->name = request('name');
+        $cpanel->site_url = request('site_url');
+        $cpanel->admin_url = request('admin_url');
+        $cpanel->cpanel_url = request('cpanel_url');
+        $cpanel->cpanel_username = request('cpanel_username');
+        $cpanel->cpanel_password = request('cpanel_password');
+        $cpanel->backend_username = request('backend_username');
+        $cpanel->backend_password = request('backend_password');
+        $cpanel->save();
+
+        Activity::create([
+            'log' => 'Modified ' . $cpanel->name . ' cpanel.',
+            'link' => route('cpanels.show', ['cpanel' => $cpanel]),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('cpanels.show', ['cpanel' => $cpanel]))
+            ->with('message', 'CPanel modified.');
     }
 
     public function destroy(Cpanel $cpanel)

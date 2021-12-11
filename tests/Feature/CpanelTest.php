@@ -166,4 +166,80 @@ class CpanelTest extends TestCase
             ->get('/cpanels/' . $cpanel->id . '/edit')
             ->assertOk();
     }
+
+    public function test_admin_can_update_a_cpanel()
+    {
+        $user = User::factory()->create();
+        $cpanel = Cpanel::factory()->create();
+        $edit_cpanel = Cpanel::factory()->make();
+        $activity = Activity::factory()->make([
+            'log' => 'Modified ' . $edit_cpanel->name . ' cpanel.',
+            'link' => route('cpanels.show', ['cpanel' => $cpanel->id]),
+            'label' => 'View record'
+        ]);
+
+        $this->actingAs($user)
+            ->patch('cpanels/' . $cpanel->id, [
+                'name' => $edit_cpanel->name,
+                'project_type_id' => $cpanel->project_type_id,
+                'image_id' => $cpanel->image_id
+            ])
+            ->assertStatus(302)
+            ->assertSessionHas('message', 'CPanel modified.')
+            ->assertRedirect('cpanels/' . $cpanel->id);
+
+        $this->assertDatabaseHas('cpanels', [
+            'id' => $cpanel->id,
+            'name' => $edit_cpanel->name,
+            'image_id' => $cpanel->image_id,
+            'project_type_id' => $cpanel->project_type_id
+        ]);
+
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label
+        ]);
+    }
+
+    public function test_update_cpanel_validation()
+    {
+        $user = User::factory()->create();
+        $cpanel = Cpanel::factory()->create();
+
+        $this->actingAs($user)
+            ->patch('cpanels/' . $cpanel->id, [
+                'name' => '',
+                'project_type_id' => '',
+                'image_id' => ''
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'project_type_id',
+                'image_id'
+            ]);
+
+        $this->actingAs($user)
+            ->patch('cpanels/' . $cpanel->id, [
+                'name' => Str::random(256),
+                'project_type_id' => 'project',
+                'image_id' => 'image'
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'project_type_id',
+                'image_id'
+            ]);
+
+        $this->actingAs($user)
+            ->patch('cpanels/' . $cpanel->id, [
+                'name' => $this->faker->name,
+                'project_type_id' => 99,
+                'image_id' => 99
+            ])
+            ->assertSessionHasErrors([
+                'project_type_id',
+                'image_id'
+            ]);
+    }
 }
