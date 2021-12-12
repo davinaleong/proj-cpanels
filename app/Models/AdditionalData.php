@@ -12,7 +12,7 @@ class AdditionalData extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function group()
+    public function additionalDataGroup()
     {
         return $this->belongsTo('App\Models\AdditionalDataGroup', 'additional_data_group_id');
     }

@@ -12,6 +12,11 @@ class AdditionalDataGroup extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function additionalData()
+    {
+        return $this->hasMany('App\Models\AdditionalData', 'additional_data_group_id', 'id');
+    }
+
     public function getCreatedAt()
     {
         $dbDatetimeFormat = OtherSettings::getDbDatetimeFormat();

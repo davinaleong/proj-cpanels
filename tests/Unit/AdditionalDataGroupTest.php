@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\AdditionalDataGroup;
+use App\Models\AdditionalData;
 use App\Models\OtherSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,6 +12,21 @@ use Tests\TestCase;
 class AdditionalDataGroupTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_has_many_additional_data()
+    {
+        $additional_data_count = 3;
+        $additional_data_group = AdditionalDataGroup::factory()->create();
+        AdditionalData::factory()
+            ->for($additional_data_group)
+            ->count($additional_data_count)
+            ->create([
+                'additional_data_group_id' => $additional_data_group->id
+            ]);
+
+        $this->assertEquals($additional_data_count, count($additional_data_group->additionalData));
+        $this->assertInstanceOf(AdditionalData::class, $additional_data_group->additionalData[0]);
+    }
 
     public function test_can_get_formatted_created_at()
     {

@@ -17,7 +17,7 @@ class AdditionalDataTest extends TestCase
     {
         $additional_data = AdditionalData::factory()->create();
 
-        $this->assertInstanceOf(AdditionalDataGroup::class, $additional_data->group);
+        $this->assertInstanceOf(AdditionalDataGroup::class, $additional_data->additionalDataGroup);
     }
 
     public function test_can_get_formatted_created_at()
