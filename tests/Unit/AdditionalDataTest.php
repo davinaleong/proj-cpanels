@@ -2,15 +2,23 @@
 
 namespace Tests\Unit;
 
+use App\Models\AdditionalData;
 use App\Models\AdditionalDataGroup;
 use App\Models\OtherSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AdditionalDataGroupTest extends TestCase
+class AdditionalDataTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_has_a_group()
+    {
+        $additional_data = AdditionalData::factory()->create();
+
+        $this->assertInstanceOf(AdditionalDataGroup::class, $additional_data->group);
+    }
 
     public function test_can_get_formatted_created_at()
     {
@@ -24,10 +32,10 @@ class AdditionalDataGroupTest extends TestCase
             'value' => 'Y-m-d H:i:s'
         ]);
 
-        $additional_data_group = AdditionalDataGroup::factory()->create();
-        $datetime = Carbon::createFromFormat($dbDateFormat->value, $additional_data_group->created_at);
+        $additional_data = AdditionalData::factory()->create();
+        $datetime = Carbon::createFromFormat($dbDateFormat->value, $additional_data->created_at);
 
-        $this->assertEquals($datetime->format($dateFormat->value), $additional_data_group->getCreatedAt());
+        $this->assertEquals($datetime->format($dateFormat->value), $additional_data->getCreatedAt());
     }
 
     public function test_can_get_formatted_updated_at()
@@ -42,9 +50,9 @@ class AdditionalDataGroupTest extends TestCase
             'value' => 'Y-m-d H:i:s'
         ]);
 
-        $additional_data_group = AdditionalDataGroup::factory()->create();
-        $datetime = Carbon::createFromFormat($dbDateFormat->value, $additional_data_group->updated_at);
+        $additional_data = AdditionalData::factory()->create();
+        $datetime = Carbon::createFromFormat($dbDateFormat->value, $additional_data->updated_at);
 
-        $this->assertEquals($datetime->format($dateFormat->value), $additional_data_group->getUpdatedAt());
+        $this->assertEquals($datetime->format($dateFormat->value), $additional_data->getUpdatedAt());
     }
 }
