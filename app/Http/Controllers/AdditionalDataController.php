@@ -18,7 +18,7 @@ class AdditionalDataController extends Controller
 
     public function create()
     {
-        //
+        return view('additionalData.create');
     }
 
     public function store(Request $request)

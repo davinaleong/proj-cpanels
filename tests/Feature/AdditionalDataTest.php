@@ -26,4 +26,20 @@ class AdditionalDataTest extends TestCase
             ->get('/additionalData')
             ->assertOk();
     }
+
+    public function test_guest_gets_redirected_from_create()
+    {
+        $this->get('/additionalData/create')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_create()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/additionalData/create')
+            ->assertOk();
+    }
 }
