@@ -24,8 +24,8 @@ class AdditionalDataFactory extends Factory
     {
         return [
             'additional_data_group_id' => AdditionalDataGroup::factory(),
-            'key' => 'Field Name',
-            'value' => 'Field Value'
+            'key' => $this->faker->name(),
+            'value' => $this->faker->word()
         ];
     }
 }

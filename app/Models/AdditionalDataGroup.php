@@ -12,6 +12,13 @@ class AdditionalDataGroup extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     public function additionalData()
     {
         return $this->hasMany('App\Models\AdditionalData', 'additional_data_group_id', 'id');

@@ -5,12 +5,12 @@
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('additionalData.index') }}">Additional Data</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('additionalDataGroup.index') }}">Additional Data</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Additional Data</li>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('cpanels.store') }}">
+    <form method="POST" action="{{ route('additionalDataGroup.store') }}">
         @csrf
 
         <div class="mb-3">
@@ -53,7 +53,7 @@
         <p>* required fields</p>
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
-            <a href="{{ route('additionalData.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
+            <a href="{{ route('additionalDataGroup.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
         </div>
     </form>
 @endsection

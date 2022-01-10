@@ -87,7 +87,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::resource('cpanels', CpanelController::class);
-    Route::resource('additionalData', AdditionalDataController::class)->except(['show']);
+    Route::resource('additionalDataGroup', AdditionalDataController::class)
+        ->except(['show']);
 });
 
 require __DIR__.'/auth.php';
