@@ -75,7 +75,7 @@ class AdditionalDataTest extends TestCase
             ])
             ->assertStatus(302)
             ->assertRedirect('/additionalDataGroup')
-            ->assertSessionHas('message', 'Created Additional Data.');
+            ->assertSessionHas('message', 'Additional Data created.');
 
         $this->assertDatabaseHas('additional_data_groups', [
             'name' => $additionalDataGroup->name
@@ -173,7 +173,7 @@ class AdditionalDataTest extends TestCase
             ])
             ->assertStatus(302)
             ->assertRedirect('/additionalDataGroup')
-            ->assertSessionHas('message', 'Updated Additional Data.');
+            ->assertSessionHas('message', 'Additional Data updated.');
 
         $this->assertDatabaseHas('additional_data_groups', [
             'id' => $additionalDataGroup->id,
@@ -217,5 +217,36 @@ class AdditionalDataTest extends TestCase
                 'keys',
                 'values'
             ]);
+    }
+
+    public function test_admin_can_delete_an_additional_data_group()
+    {
+        $user = User::factory()->create();
+        $additionalDataGroup = AdditionalDataGroup::factory()
+            ->has(AdditionalData::factory()->count(2))
+            ->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $additionalDataGroup->name . ' additional data.'
+        ]);
+        $manyAdditionalData = $additionalDataGroup->additionalData;
+
+        $this->actingAs($user)
+            ->delete('/additionalDataGroup/' . $additionalDataGroup->id)
+            ->assertRedirect('/additionalDataGroup')
+            ->assertSessionHas('message', 'Additional Data deleted.');
+
+        $this->assertSoftDeleted('additional_data_groups', [
+            'id' => $additionalDataGroup->id
+        ]);
+
+        foreach($manyAdditionalData as $additionalData) {
+            $this->assertSoftDeleted('additional_data', [
+                'id' => $additionalData->id
+            ]);
+        }
+
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
     }
 }

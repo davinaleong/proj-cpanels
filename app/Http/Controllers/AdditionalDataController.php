@@ -53,7 +53,7 @@ class AdditionalDataController extends Controller
         ]);
 
         return redirect(route('additionalDataGroup.index'))
-            ->with('message', 'Created Additional Data.');
+            ->with('message', 'Additional Data created.');
     }
 
     public function edit(AdditionalDataGroup $additionalDataGroup)
@@ -94,11 +94,19 @@ class AdditionalDataController extends Controller
         ]);
 
         return redirect(route('additionalDataGroup.index'))
-            ->with('message', 'Updated Additional Data.');
+            ->with('message', 'Additional Data updated.');
     }
 
     public function destroy(AdditionalDataGroup $additionalDataGroup)
     {
-        //
+        AdditionalData::where('additional_data_group_id', $additionalDataGroup->id)->delete();
+        $additionalDataGroup->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $additionalDataGroup->name . ' additional data.'
+        ]);
+
+        return redirect(route('additionalDataGroup.index'))
+            ->with('message', 'Additional Data deleted.');
     }
 }
