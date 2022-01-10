@@ -1,22 +1,23 @@
 @extends('layouts.app')
 
 @section('heading')
-    <h1>Create Additional Data</h1>
+    <h1>Edit Additional Data</h1>
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('additionalDataGroup.index') }}">Additional Data</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Additional Data</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Additional Data</li>
 @endsection
 
 @section('content')
-    <form method="POST" action="{{ route('additionalDataGroup.store') }}">
+    <form method="POST" action="{{ route('additionalDataGroup.update', ['additionalDataGroup' => $additionalDataGroup]) }}">
         @csrf
+        @method('PATCH')
 
         <div class="mb-3">
             <label for="name" class="form-label">Name*</label>
             <input type="text" class="form-control" name="name" id="name"
-                value="{{ old('name') }}" placeholder="Name" required>
+                value="{{ old('name') ? old('name') : $additionalDataGroup->name }}" placeholder="Name" required>
         </div>
 
         <h2>Additional Data</h2>
@@ -33,6 +34,21 @@
             </tr>
             </thead>
             <tbody>
+                @foreach ($additionalDataGroup->additionalData as $key=>$additionalData)
+                <tr class="row-{{ $key }}">
+                    <td>
+                        <input name="keys[]" type="text" class="form-control" value="{{ $additionalData->key }}" required>
+                    </td>
+                    <td>
+                        <input name="values[]" type="text" class="form-control" value="{{ $additionalData->value }}" required>
+                    </td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-outline-danger" onclick="$('.row-{{ $key }}').remove()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
             <tfoot>
                 <tr>
@@ -57,7 +73,7 @@
 
 @section('scripts')
 <script>
-    let rows = 0;
+    let rows = {{ $additionalDataRow }};
 
     $(document).ready(() => {
         $('.btn-add').click(() => {

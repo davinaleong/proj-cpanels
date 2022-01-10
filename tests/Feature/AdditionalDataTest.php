@@ -97,7 +97,7 @@ class AdditionalDataTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->post('additionalData', [
+            ->post('/additionalDataGroup', [
                 'name' => '',
                 'keys' => '',
                 'values' => ''
@@ -109,7 +109,7 @@ class AdditionalDataTest extends TestCase
             ]);
 
         $this->actingAs($user)
-            ->post('additionalData', [
+            ->post('/additionalDataGroup', [
                 'name' => '',
                 'keys' => 'Hello',
                 'values' => 'Hello'
@@ -119,5 +119,24 @@ class AdditionalDataTest extends TestCase
                 'keys',
                 'values'
             ]);
+    }
+
+    public function test_guest_gets_redirected_from_edit()
+    {
+        $additionalDataGroup = AdditionalDataGroup::factory()->create();
+
+        $this->get('/additionalDataGroup/' . $additionalDataGroup->id . '/edit')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_edit()
+    {
+        $user = User::factory()->create();
+        $additionalDataGroup = AdditionalDataGroup::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/additionalDataGroup/' . $additionalDataGroup->id . '/edit')
+            ->assertOk();
     }
 }

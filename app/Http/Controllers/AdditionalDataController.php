@@ -58,7 +58,10 @@ class AdditionalDataController extends Controller
 
     public function edit(AdditionalDataGroup $additionalDataGroup)
     {
-        //
+        return view('additionalDataGroup.edit', [
+            'additionalDataGroup' => $additionalDataGroup,
+            'additionalDataRow' => $additionalDataGroup->additionalData->count() - 1
+        ]);
     }
 
     public function update(Request $request, AdditionalDataGroup $additionalDataGroup)
