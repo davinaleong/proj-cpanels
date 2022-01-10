@@ -48,12 +48,12 @@ class AdditionalDataController extends Controller
 
         Activity::create([
             'log' => 'Created ' . $additionalDataGroup->name . ' additional data group.',
-            'link' => route('additionalData.index'),
+            'link' => route('additionalDataGroup.index'),
             'label' => 'View record'
         ]);
 
-        return redirect(route('additionalData.index'))
-            ->with('message', 'Additional Data Group created.');
+        return redirect(route('additionalDataGroup.index'))
+            ->with('message', 'Created Additional Data.');
     }
 
     public function edit(AdditionalDataGroup $additionalDataGroup)
@@ -66,7 +66,35 @@ class AdditionalDataController extends Controller
 
     public function update(Request $request, AdditionalDataGroup $additionalDataGroup)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'keys' => 'required|array|min:1',
+            'keys.*' => 'required|string',
+            'values' => 'required|array|min:1',
+            'values.*' => 'required|string'
+        ]);
+
+        $additionalDataGroup->name = request('name');
+        $additionalDataGroup->save();
+
+        AdditionalData::where('additional_data_group_id', $additionalDataGroup->id)->delete();
+        $additionalDataCount = count(request('keys'));
+        for ($i = 0; $i < $additionalDataCount; $i++) {
+            AdditionalData::create([
+                'additional_data_group_id' => $additionalDataGroup->id,
+                'key' => request("keys.$i"),
+                'value' => request("values.$i")
+            ]);
+        }
+
+        Activity::create([
+            'log' => 'Updated ' . $additionalDataGroup->name . ' additional data group.',
+            'link' => route('additionalDataGroup.index'),
+            'label' => 'View record'
+        ]);
+
+        return redirect(route('additionalDataGroup.index'))
+            ->with('message', 'Updated Additional Data.');
     }
 
     public function destroy(AdditionalDataGroup $additionalDataGroup)
