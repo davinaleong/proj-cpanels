@@ -31,10 +31,10 @@ class CpanelFactory extends Factory
             'site_url' => 'https://www.example.com/',
             'admin_url' => 'https://www.example.com/admin/',
             'cpanel_url' => 'https://www.example.com:2083',
-            'cpanel_username' => 'username',
-            'cpanel_password' => Hash::make('password123'),
-            'backend_username' => 'johndoe',
-            'backend_password' => Hash::make('password')
+            'cpanel_username' => 'example_cpanel',
+            'cpanel_password' => 'cp password 123',
+            'backend_username' => 'example',
+            'backend_password' => 'admin password 123'
         ];
     }
 }
