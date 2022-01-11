@@ -19,9 +19,10 @@ class CreateProjectsTable extends Migration
             $table->foreignId('image_id')->constrained('images')->nullable();
             $table->string('name', 255);
             $table->string('project_executive', 255)->nullable();
-            $table->boolean('is_full_project')->default(0);
+            $table->boolean('is_full_project')->default(false);
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
