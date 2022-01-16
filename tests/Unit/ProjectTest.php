@@ -2,9 +2,11 @@
 
 namespace Tests\Unit;
 
+use App\Models\DemoCpanel;
 use App\Models\OtherSettings;
 use App\Models\Project;
 use App\Models\Image;
+use App\Models\LiveCpanel;
 use App\Models\ProjectType;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,6 +28,24 @@ class ProjectTest extends TestCase
         $project = Project::factory()->create();
 
         $this->assertInstanceOf(Image::class, $project->image);
+    }
+
+    public function test_has_a_demo_cpanel()
+    {
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->create();
+
+        $this->assertInstanceOf(DemoCpanel::class, $project->demoCpanel);
+    }
+
+    public function test_has_a_live_cpanel()
+    {
+        $project = Project::factory()
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+
+        $this->assertInstanceOf(LiveCpanel::class, $project->liveCpanel);
     }
 
     public function test_can_get_project_type_name()

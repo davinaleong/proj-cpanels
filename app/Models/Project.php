@@ -31,6 +31,16 @@ class Project extends Model
         return $this->belongsTo('App\Models\Image');
     }
 
+    public function demoCpanel()
+    {
+        return $this->hasOne('App\Models\DemoCpanel');
+    }
+
+    public function liveCpanel()
+    {
+        return $this->hasOne('App\Models\LiveCpanel');
+    }
+
     public function getProjectTypeName()
     {
         return $this->projectType ? $this->projectType->name : '';
