@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CpanelController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AdditionalDataController;
 
 /*
@@ -89,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('cpanels', CpanelController::class);
     Route::resource('additionalDataGroup', AdditionalDataController::class)
         ->except(['show']);
+    Route::resource('projects', ProjectController::class);
 });
 
 require __DIR__.'/auth.php';
