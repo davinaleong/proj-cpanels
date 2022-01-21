@@ -37,12 +37,12 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->getProjectTypeName() }}</td>
                     <td>
-                        @if(filled($project->demoCpanel))
+                        @if(filled($project->demoCpanel->name))
                         <span class="text-info">Active</span>
                         @endif
                     </td>
                     <td>
-                        @if(filled($project->liveCpanel))
+                        @if(filled($project->liveCpanel->name))
                         <span class="text-info">Active</span>
                         @endif
                     </td>
