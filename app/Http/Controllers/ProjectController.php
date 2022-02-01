@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\DefaultCredential;
 use App\Models\Folder;
 use App\Models\ProjectType;
 use App\Models\Image;
@@ -19,7 +20,17 @@ class ProjectController extends Controller
 
     public function create()
     {
-        //
+        $folder = Folder::where('name', Project::$SUB_FOLDER)->first();
+
+        return view('projects.create', [
+            'projectTypes' => ProjectType::orderBy('name')
+                ->get(),
+            'images' => Image::where('folder_id', $folder->id)
+                ->orderBy('name')
+                ->get(),
+            'oc_default_credentials' => DefaultCredential::getOc(),
+            'wp_default_credentials' => DefaultCredential::getWp()
+        ]);
     }
 
     public function store(Request $request)
