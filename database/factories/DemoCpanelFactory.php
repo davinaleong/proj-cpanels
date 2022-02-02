@@ -36,8 +36,8 @@ class DemoCpanelFactory extends Factory
             'db_name' => 'demo_db',
             'backend_username' => 'example',
             'backend_password' => 'admin password 123',
-            'started_at' => '2021-01-01',
-            'ended_at' => '2021-01-09'
+            'started_at' => '2 Jan 2021',
+            'ended_at' => '9 Jan 2021'
         ];
     }
 }

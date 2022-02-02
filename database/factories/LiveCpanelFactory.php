@@ -35,7 +35,7 @@ class LiveCpanelFactory extends Factory
             'admin_panel' => 'admin',
             'backend_username' => 'example',
             'backend_password' => 'admin password 123',
-            'lived_at' => '2021-01-01',
+            'lived_at' => '11 Jan 2021',
         ];
     }
 }
