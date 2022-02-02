@@ -57,67 +57,191 @@
             </label>
         </div>
 
-        <fieldset>
-            <legend>URLs</legend>
+        <!-- Tab Content -->
+        <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="demo-tab" data-bs-toggle="tab" data-bs-target="#demo" type="button" role="tab" aria-controls="demo" aria-selected="true">Demo</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="live-tab" data-bs-toggle="tab" data-bs-target="#live" type="button" role="tab" aria-controls="live" aria-selected="false">Live</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- Demo Tab -->
+            <div class="tab-pane fade show active" id="demo" role="tabpanel" aria-labelledby="demo-tab">
+                <fieldset>
+                    <legend>URLs</legend>
 
-            <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="demo_site_url" class="form-label">Site URL</label>
+                        <input type="text" class="form-control" name="demo[site_url]" id="demo_site_url"
+                            value="{{ old('demo.site_url') }}" placeholder="http://www.example.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_admin_url" class="form-label">Admin URL</label>
+                        <input type="text" class="form-control" name="demo[admin_url]" id="demo_admin_url"
+                            value="{{ old('demo.admin_url') }}" placeholder="http://www.example.com/admin">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_cpanel_url" class="form-label">CPanel URL</label>
+                        <input type="text" class="form-control" name="demo[cpanel_url]" id="demo_cpanel_url"
+                            value="{{ old('demo.cpanel_url') }}" placeholder="http://www.example.com:2083">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_design_url" class="form-label">Design URL</label>
+                        <input type="text" class="form-control" name="demo[design_url]" id="demo_design_url"
+                            value="{{ old('demo.design_url') }}" placeholder="http://www.example.com/design">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_programming_brief_url" class="form-label">Programming Brief URL</label>
+                        <input type="text" class="form-control" name="demo[programming_brief_url]" id="demo_programming_brief_url"
+                            value="{{ old('demo.programming_brief_url') }}" placeholder="http://www.example.com/programming_brief_url">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>CPanel Credentials</legend>
+
+                    <div class="mb-3">
+                        <label for="demo_cpanel_username" class="form-label">CPanel Username</label>
+                        <input type="text" class="form-control" name="demo[cpanel_username]" id="demo_cpanel_username"
+                            value="{{ old('demo.cpanel_username') }}" placeholder="CPanel Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_cpanel_password" class="form-label">CPanel Password</label>
+                        <input type="text" class="form-control" name="demo[cpanel_password]" id="demo_cpanel_password"
+                            value="{{ old('demo.cpanel_password') }}" placeholder="CPanel Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>DB Credentials</legend>
+
+                    <div class="mb-3">
+                        <label for="demo_db_name" class="form-label">DB Name</label>
+                        <input type="text" class="form-control" name="demo[db_name]" id="demo_db_name"
+                            value="{{ old('demo.db_name') }}" placeholder="DB Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_db_username" class="form-label">DB Username</label>
+                        <input type="text" class="form-control" name="demo[db_username]" id="demo_db_username"
+                            value="{{ old('demo.db_username') }}" placeholder="DB Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_db_password" class="form-label">DB Password</label>
+                        <input type="text" class="form-control" name="demo[db_password]" id="demo_db_password"
+                            value="{{ old('demo.db_password') }}" placeholder="DB Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Backend Credentials</legend>
+                    <div class="mb-3">
+                        <button id="btn-demo-oc" type="button" class="btn btn-outline-secondary mr-2">
+                            Use Default OC Credentials
+                        </button>
+                        <button id="btn-demo-wp" type="button" class="btn btn-outline-secondary">
+                            Use Default WP / WC Credentials
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_backend_username" class="form-label">Backend Username</label>
+                        <input type="text" class="form-control" name="demo[backend_username]" id="demo_backend_username"
+                            value="{{ old('demo.backend_username') }}" placeholder="Backend Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_backend_password" class="form-label">Backend Password</label>
+                        <input type="text" class="form-control" name="demo[backend_password]" id="demo_backend_password"
+                            value="{{ old('demo.backend_password') }}" placeholder="Backend Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Timestamps</legend>
+
+                    <div class="mb-3">
+                        <label for="demo_started_at" class="form-label">Started At</label>
+                        <input type="text" class="form-control" name="demo[started_at]" id="demo_started_at"
+                            value="{{ old('demo.started_at') }}" placeholder="DD MMM YYYY">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="demo_ended_at" class="form-label">Ended At</label>
+                        <input type="text" class="form-control" name="demo[ended_at]" id="demo_ended_at"
+                            value="{{ old('demo.ended_at') }}" placeholder="DD MMM YYYY">
+                    </div>
+                </fieldset>
+            </div>
+            <!-- Demo Tab -->
+            <!-- Live Tab -->
+            <div class="tab-pane fade" id="live" role="tabpanel" aria-labelledby="live-tab">
+              <div class="mb-3">
                 <label for="site_url" class="form-label">Site URL</label>
-                <input type="text" class="form-control" name="site_url" id="site_url"
-                    value="{{ old('site_url') }}" placeholder="http://www.example.com">
-            </div>
+                <input type="text" class="form-control" name="site_url" id="site_url" placeholder="Site URL">
+              </div>
 
-            <div class="mb-3">
+              <div class="mb-3">
                 <label for="admin_url" class="form-label">Admin URL</label>
-                <input type="text" class="form-control" name="admin_url" id="admin_url"
-                    value="{{ old('admin_url') }}" placeholder="http://www.example.com/admin">
-            </div>
+                <input type="text" class="form-control" name="admin_url" id="admin_url" placeholder="Admin URL">
+              </div>
 
-            <div class="mb-3">
+              <div class="mb-3">
                 <label for="cpanel_url" class="form-label">CPanel URL</label>
-                <input type="text" class="form-control" name="cpanel_url" id="cpanel_url"
-                    value="{{ old('cpanel_url') }}" placeholder="http://www.example.com:2083">
-            </div>
-        </fieldset>
+                <input type="text" class="form-control" name="cpanel_url" id="cpanel_url" placeholder="CPanel URL">
+              </div>
 
-        <fieldset>
-            <legend>CPanel Credentials</legend>
-
-            <div class="mb-3">
+              <div class="mb-3">
                 <label for="cpanel_username" class="form-label">CPanel Username</label>
-                <input type="text" class="form-control" name="cpanel_username" id="cpanel_username"
-                    value="{{ old('cpanel_username') }}" placeholder="CPanel Username">
-            </div>
+                <input type="text" class="form-control" name="cpanel_username" id="cpnel_username" placeholder="CPanel Username">
+              </div>
 
-            <div class="mb-3">
+              <div class="mb-3">
                 <label for="cpanel_password" class="form-label">CPanel Password</label>
-                <input type="text" class="form-control" name="cpanel_password" id="cpanel_password"
-                    value="{{ old('cpanel_password') }}" placeholder="CPanel Password">
-            </div>
-        </fieldset>
+                <input type="text" class="form-control" name="cpanel_password" id="cpanel_password" placeholder="CPanel Password">
+              </div>
 
-        <fieldset>
-            <legend>Backend Credentials</legend>
-            <div class="mb-3">
-                <button id="btn-oc" type="button" class="btn btn-outline-secondary mr-2">
-                    Use Default OC Credentials
-                </button>
-                <button id="btn-wp" type="button" class="btn btn-outline-secondary">
-                    Use Default WP / WC Credentials
-                </button>
-            </div>
+              <div class="mb-3">
+                <label for="db_username" class="form-label">DB Name</label>
+                <input type="text" class="form-control" name="db_username" id="db_username" placeholder="DB Username">
+              </div>
 
-            <div class="mb-3">
+              <div class="mb-3">
+                <label for="db_username" class="form-label">DB Username</label>
+                <input type="text" class="form-control" name="db_username" id="db_username" placeholder="DB Username">
+              </div>
+
+              <div class="mb-3">
+                <label for="db_password" class="form-label">DB Password</label>
+                <input type="text" class="form-control" name="db_password" id="db_password" placeholder="DB Password">
+              </div>
+
+              <div class="mb-3">
                 <label for="backend_username" class="form-label">Backend Username</label>
-                <input type="text" class="form-control" name="backend_username" id="backend_username"
-                    value="{{ old('backend_username') }}" placeholder="CPanel Username">
-            </div>
+                <input type="text" class="form-control" name="backend_username" id="backend_username" placeholder="Backend Username">
+              </div>
 
-            <div class="mb-3">
+              <div class="mb-3">
                 <label for="backend_password" class="form-label">Backend Password</label>
-                <input type="text" class="form-control" name="backend_password" id="backend_password"
-                    value="{{ old('backend_password') }}" placeholder="Backend Password">
+                <input type="text" class="form-control" name="backend_password" id="backend_password" placeholder="Backend Password">
+              </div>
+
+              <div class="mb-3">
+                <label for="lived_at" class="form-label">Lived At</label>
+                <input type="text" class="form-control" name="lived_at" id="lived_at" placeholder="Lived At">
+              </div>
             </div>
-        </fieldset>
+            <!-- Live Tab -->
+        </div>
+        <!-- Tab Content -->
 
         @include('components.errors')
 
@@ -132,14 +256,14 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#btn-oc').click(function() {
-            $('#backend_username').val('{{ $oc_default_credentials['username'] }}');
-            $('#backend_password').val('{{ $oc_default_credentials['password'] }}');
+        $('#btn-demo-oc').click(function() {
+            $('#demo_backend_username').val('{{ $oc_default_credentials['username'] }}');
+            $('#demo_backend_password').val('{{ $oc_default_credentials['password'] }}');
         });
 
-        $('#btn-wp').click(function() {
-            $('#backend_username').val('{{ $wp_default_credentials['username'] }}');
-            $('#backend_password').val('{{ $wp_default_credentials['password'] }}');
+        $('#btn-demo-wp').click(function() {
+            $('#demo_backend_username').val('{{ $wp_default_credentials['username'] }}');
+            $('#demo_backend_password').val('{{ $wp_default_credentials['password'] }}');
         });
     });
 </script>
