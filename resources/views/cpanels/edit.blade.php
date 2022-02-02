@@ -94,7 +94,7 @@
                 <label for="backend_username" class="form-label">Backend Username</label>
                 <input type="text" class="form-control" name="backend_username" id="backend_username"
                     value="{{ old('backend_username') ? old('backend_username') : $cpanel->backend_username }}"
-                    placeholder="CPanel Username">
+                    placeholder="Backend Username">
             </div>
 
             <div class="mb-3">
