@@ -184,60 +184,99 @@
             <!-- Demo Tab -->
             <!-- Live Tab -->
             <div class="tab-pane fade" id="live" role="tabpanel" aria-labelledby="live-tab">
-              <div class="mb-3">
-                <label for="site_url" class="form-label">Site URL</label>
-                <input type="text" class="form-control" name="site_url" id="site_url" placeholder="Site URL">
-              </div>
+                <fieldset>
+                    <legend>URLs</legend>
 
-              <div class="mb-3">
-                <label for="admin_url" class="form-label">Admin URL</label>
-                <input type="text" class="form-control" name="admin_url" id="admin_url" placeholder="Admin URL">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_site_url" class="form-label">Site URL</label>
+                        <input type="text" class="form-control" name="live[site_url]" id="live_site_url"
+                            value="{{ old('live.site_url') }}" placeholder="http://www.example.com">
+                    </div>
 
-              <div class="mb-3">
-                <label for="cpanel_url" class="form-label">CPanel URL</label>
-                <input type="text" class="form-control" name="cpanel_url" id="cpanel_url" placeholder="CPanel URL">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_admin_url" class="form-label">Admin URL</label>
+                        <input type="text" class="form-control" name="live[admin_url]" id="live_admin_url"
+                            value="{{ old('live.admin_url') }}" placeholder="http://www.example.com/admin">
+                    </div>
 
-              <div class="mb-3">
-                <label for="cpanel_username" class="form-label">CPanel Username</label>
-                <input type="text" class="form-control" name="cpanel_username" id="cpnel_username" placeholder="CPanel Username">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_cpanel_url" class="form-label">CPanel URL</label>
+                        <input type="text" class="form-control" name="live[cpanel_url]" id="live_cpanel_url"
+                            value="{{ old('live.cpanel_url') }}" placeholder="http://www.example.com:2083">
+                    </div>
+                </fieldset>
 
-              <div class="mb-3">
-                <label for="cpanel_password" class="form-label">CPanel Password</label>
-                <input type="text" class="form-control" name="cpanel_password" id="cpanel_password" placeholder="CPanel Password">
-              </div>
+                <fieldset>
+                    <legend>CPanel Credentials</legend>
 
-              <div class="mb-3">
-                <label for="db_username" class="form-label">DB Name</label>
-                <input type="text" class="form-control" name="db_username" id="db_username" placeholder="DB Username">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_cpanel_username" class="form-label">CPanel Username</label>
+                        <input type="text" class="form-control" name="live[cpanel_username]" id="live_cpanel_username"
+                            value="{{ old('live.cpanel_username') }}" placeholder="CPanel Username">
+                    </div>
 
-              <div class="mb-3">
-                <label for="db_username" class="form-label">DB Username</label>
-                <input type="text" class="form-control" name="db_username" id="db_username" placeholder="DB Username">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_cpanel_password" class="form-label">CPanel Password</label>
+                        <input type="text" class="form-control" name="live[cpanel_password]" id="live_cpanel_password"
+                            value="{{ old('live.cpanel_password') }}" placeholder="CPanel Password">
+                    </div>
+                </fieldset>
 
-              <div class="mb-3">
-                <label for="db_password" class="form-label">DB Password</label>
-                <input type="text" class="form-control" name="db_password" id="db_password" placeholder="DB Password">
-              </div>
+                <fieldset>
+                    <legend>DB Credentials</legend>
 
-              <div class="mb-3">
-                <label for="backend_username" class="form-label">Backend Username</label>
-                <input type="text" class="form-control" name="backend_username" id="backend_username" placeholder="Backend Username">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_db_name" class="form-label">DB Name</label>
+                        <input type="text" class="form-control" name="live[db_name]" id="live_db_name"
+                            value="{{ old('live.db_name') }}" placeholder="DB Name">
+                    </div>
 
-              <div class="mb-3">
-                <label for="backend_password" class="form-label">Backend Password</label>
-                <input type="text" class="form-control" name="backend_password" id="backend_password" placeholder="Backend Password">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_db_username" class="form-label">DB Username</label>
+                        <input type="text" class="form-control" name="live[db_username]" id="live_db_username"
+                            value="{{ old('live.db_username') }}" placeholder="DB Username">
+                    </div>
 
-              <div class="mb-3">
-                <label for="lived_at" class="form-label">Lived At</label>
-                <input type="text" class="form-control" name="lived_at" id="lived_at" placeholder="Lived At">
-              </div>
+                    <div class="mb-3">
+                        <label for="live_db_password" class="form-label">DB Password</label>
+                        <input type="text" class="form-control" name="live[db_password]" id="live_db_password"
+                            value="{{ old('live.db_password') }}" placeholder="DB Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Backend Credentials</legend>
+                    <div class="mb-3">
+                        <button id="btn-live-oc" type="button" class="btn btn-outline-secondary mr-2">
+                            Use Default OC Credentials
+                        </button>
+                        <button id="btn-live-wp" type="button" class="btn btn-outline-secondary">
+                            Use Default WP / WC Credentials
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="live_backend_username" class="form-label">Backend Username</label>
+                        <input type="text" class="form-control" name="live[backend_username]" id="live_backend_username"
+                            value="{{ old('live.backend_username') }}" placeholder="Backend Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="live_backend_password" class="form-label">Backend Password</label>
+                        <input type="text" class="form-control" name="live[backend_password]" id="live_backend_password"
+                            value="{{ old('live.backend_password') }}" placeholder="Backend Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Timestamps</legend>
+
+                    <div class="mb-3">
+                        <label for="live_lived_at" class="form-label">Lived At</label>
+                        <input type="text" class="form-control" name="live[lived_at]" id="live_lived_at"
+                            value="{{ old('live.lived_at') }}" placeholder="DD MMM YYYY">
+                    </div>
+                </fieldset>
             </div>
             <!-- Live Tab -->
         </div>
@@ -264,6 +303,16 @@
         $('#btn-demo-wp').click(function() {
             $('#demo_backend_username').val('{{ $wp_default_credentials['username'] }}');
             $('#demo_backend_password').val('{{ $wp_default_credentials['password'] }}');
+        });
+
+        $('#btn-live-oc').click(function() {
+            $('#live_backend_username').val('{{ $oc_default_credentials['username'] }}');
+            $('#live_backend_password').val('{{ $oc_default_credentials['password'] }}');
+        });
+
+        $('#btn-live-wp').click(function() {
+            $('#live_backend_username').val('{{ $wp_default_credentials['username'] }}');
+            $('#live_backend_password').val('{{ $wp_default_credentials['password'] }}');
         });
     });
 </script>
