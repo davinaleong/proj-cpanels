@@ -27,7 +27,7 @@ class CreateLiveCpanelsTable extends Migration
             $table->string('admin_panel', 255)->nullable();
             $table->string('backend_username', 255)->nullable();
             $table->string('backend_password', 255)->nullable();
-            $table->string('lived_at')->nullable();
+            $table->string('lived_at')->nullable()->default('-');
             $table->timestamps();
             $table->softDeletes();
         });

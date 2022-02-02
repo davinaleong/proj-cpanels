@@ -28,8 +28,8 @@ class CreateDemoCpanelsTable extends Migration
             $table->string('db_name', 255)->nullable();
             $table->string('backend_username', 255)->nullable();
             $table->string('backend_password', 255)->nullable();
-            $table->string('started_at')->nullable();
-            $table->string('ended_at')->nullable();
+            $table->string('started_at')->nullable()->default('-');
+            $table->string('ended_at')->nullable()->default('-');
             $table->timestamps();
             $table->softDeletes();
         });

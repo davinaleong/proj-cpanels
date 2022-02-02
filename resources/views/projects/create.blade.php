@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-check">
-            <input name="is_full_project" class="form-check-input" type="checkbox" value="full_project" id="is_full_project">
+            <input name="is_full_project" class="form-check-input" type="checkbox" value="yes" id="is_full_project">
             <label class="form-check-label" for="is_full_project">
               Full Project
             </label>
@@ -99,7 +99,7 @@
                     <div class="mb-3">
                         <label for="demo_programming_brief_url" class="form-label">Programming Brief URL</label>
                         <input type="text" class="form-control" name="demo[programming_brief_url]" id="demo_programming_brief_url"
-                            value="{{ old('demo.programming_brief_url') }}" placeholder="http://www.example.com/programming_brief_url">
+                            value="{{ old('demo.programming_brief_url') }}" placeholder="http://www.example.com/brief">
                     </div>
                 </fieldset>
 
@@ -253,6 +253,12 @@
                         <button id="btn-live-wp" type="button" class="btn btn-outline-secondary">
                             Use Default WP / WC Credentials
                         </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="live_admin_panel" class="form-label">Backend Panel</label>
+                        <input type="text" class="form-control" name="live[admin_panel]" id="live_admin_panel"
+                            value="{{ old('live.admin_panel') }}" placeholder="Backend Panel">
                     </div>
 
                     <div class="mb-3">
