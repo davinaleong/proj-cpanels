@@ -155,7 +155,18 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        //
+        $folder = Folder::where('name', Project::$SUB_FOLDER)->first();
+
+        return view('projects.edit', [
+            'project' => $project,
+            'projectTypes' => ProjectType::orderBy('name')
+                ->get(),
+            'images' => Image::where('folder_id', $folder->id)
+                ->orderBy('name')
+                ->get(),
+            'oc_default_credentials' => DefaultCredential::getOc(),
+            'wp_default_credentials' => DefaultCredential::getWp()
+        ]);
     }
 
     public function update(Request $request, Project $project)

@@ -203,4 +203,33 @@ class ProjectTest extends TestCase
             ->get('/projects/' . $project->id)
             ->assertOk();
     }
+
+    public function test_guest_gets_redirected_from_edit()
+    {
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+
+        $this->get('/projects/' . $project->id . '/edit')
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_edit()
+    {
+        Folder::factory()
+            ->create([
+                'name' => Project::$SUB_FOLDER
+            ]);
+        $user = User::factory()->create();
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+
+        $this->actingAs($user)
+            ->get('/projects/' . $project->id . '/edit')
+            ->assertOk();
+    }
 }

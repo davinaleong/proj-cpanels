@@ -108,6 +108,7 @@
         @include('components.errors')
 
         <p>* required fields</p>
+
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
             <a href="{{ route('cpanels.show', ['cpanel' => $cpanel]) }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>
