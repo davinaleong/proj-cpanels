@@ -183,7 +183,7 @@
             </div>
             <!-- Demo Tab -->
             <!-- Live Tab -->
-            <div class="tab-pane text-primary p-3 fade" id="live" role="tabpanel" aria-labelledby="live-tab">
+            <div class="tab-pane text-info p-3 fade" id="live" role="tabpanel" aria-labelledby="live-tab">
                 <fieldset>
                     <legend>URLs</legend>
 
@@ -291,6 +291,7 @@
         @include('components.errors')
 
         <p>* required fields</p>
+
         <div>
             <button type="submit" class="btn btn-primary">Submit <i class="fas fa-check fa-fw"></i></button>
             <a href="{{ route('cpanels.index') }}" class="btn btn-outline-secondary">Cancel <i class="fas fa-ban fa-fw"></i></a>

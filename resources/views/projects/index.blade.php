@@ -43,7 +43,7 @@
                     </td>
                     <td>
                         @if(filled($project->liveCpanel->site_url))
-                        <span class="text-primary">Active</span>
+                        <span class="text-info">Active</span>
                         @endif
                     </td>
                     <td>{{ $project->getCreatedAt() }}</td>

@@ -148,22 +148,22 @@ class ProjectController extends Controller
             ->with('message', 'Project created.');
     }
 
-    public function show($id)
+    public function show(Project $project)
+    {
+        return view('projects.show', ['project' => $project]);
+    }
+
+    public function edit(Project $project)
     {
         //
     }
 
-    public function edit($id)
+    public function update(Request $request, Project $project)
     {
         //
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
+    public function destroy(Project $project)
     {
         //
     }

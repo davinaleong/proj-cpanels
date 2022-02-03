@@ -181,4 +181,26 @@ class ProjectTest extends TestCase
                 'image_id'
             ]);
     }
+
+    public function test_guest_gets_redirected_from_show()
+    {
+        $project = Project::factory()->create();
+
+        $this->get('/projects/' . $project->id)
+            ->assertStatus(302)
+            ->assertRedirect('/login');
+    }
+
+    public function test_admin_can_access_show()
+    {
+        $user = User::factory()->create();
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+
+        $this->actingAs($user)
+            ->get('/projects/' . $project->id)
+            ->assertOk();
+    }
 }
