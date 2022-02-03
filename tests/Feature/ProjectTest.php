@@ -9,11 +9,13 @@ use App\Models\LiveCpanel;
 use App\Models\Folder;
 use App\Models\User;use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     public function test_guest_gets_redirected_from_index()
     {
@@ -51,7 +53,6 @@ class ProjectTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_admin_can_create_a_project()
     {
         $user = User::factory()->create();
@@ -117,18 +118,18 @@ class ProjectTest extends TestCase
             ->assertRedirect('/projects/1');
 
         $this->assertDatabaseHas('projects', [
-            'project_id' => 1,
+            'id' => (string) 1,
             'name' => $project->name,
-            'image_id' => $project->image_id,
-            'project_type_id' => $project->project_type_id
+            'image_id' => (string) $project->image_id,
+            'project_type_id' => (string) $project->project_type_id
         ]);
 
         $this->assertDatabaseHas('demo_cpanels', [
-            'project_id' => 1,
+            'project_id' => (string) 1,
         ]);
 
         $this->assertDatabaseHas('live_cpanels', [
-            'project_id' => 1,
+            'project_id' => (string) 1,
         ]);
 
         $this->assertDatabaseHas('activities', [
@@ -138,7 +139,6 @@ class ProjectTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_create_project_validation()
     {
         $user = User::factory()->create();

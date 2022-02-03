@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             @foreach($projects as $project)
-                <tr @if($projects->is_full_project)class="table-primary"@endif>
+                <tr @if($project->is_full_project)class="table-primary"@endif>
                     <td>{{ $project->id }}</td>
                     <td>
                         <img src="{{ $project->getImage() }}" alt="{{ $project->name }}" class="img-thumbnail img-table">
@@ -37,13 +37,13 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->getProjectTypeName() }}</td>
                     <td>
-                        @if(filled($project->demoCpanel->name))
-                        <span class="text-info">Active</span>
+                        @if(filled($project->demoCpanel->site_url))
+                        <span class="text-secondary">Active</span>
                         @endif
                     </td>
                     <td>
-                        @if(filled($project->liveCpanel->name))
-                        <span class="text-info">Active</span>
+                        @if(filled($project->liveCpanel->site_url))
+                        <span class="text-primary">Active</span>
                         @endif
                     </td>
                     <td>{{ $project->getCreatedAt() }}</td>

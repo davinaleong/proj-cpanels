@@ -5,7 +5,7 @@
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('projects.index') }}">Projectss</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('projects.index') }}">Projects</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Projects</li>
 @endsection
 
@@ -68,7 +68,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <!-- Demo Tab -->
-            <div class="tab-pane fade show active" id="demo" role="tabpanel" aria-labelledby="demo-tab">
+            <div class="tab-pane text-secondary p-3 fade show active" id="demo" role="tabpanel" aria-labelledby="demo-tab">
                 <fieldset>
                     <legend>URLs</legend>
 
@@ -183,7 +183,7 @@
             </div>
             <!-- Demo Tab -->
             <!-- Live Tab -->
-            <div class="tab-pane fade" id="live" role="tabpanel" aria-labelledby="live-tab">
+            <div class="tab-pane text-primary p-3 fade" id="live" role="tabpanel" aria-labelledby="live-tab">
                 <fieldset>
                     <legend>URLs</legend>
 
