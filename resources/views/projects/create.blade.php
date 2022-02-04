@@ -42,7 +42,7 @@
         <div class="mb-3">
             <label for="project_executive" class="form-label">Project Executive</label>
             <input type="text" class="form-control" name="project_executive" id="project_executive"
-                value="{{ old('project_executive') }}" placeholder="Project Executive" required>
+                value="{{ old('project_executive') }}" placeholder="Project Executive">
         </div>
 
         <div class="mb-3">
@@ -271,6 +271,22 @@
                         <label for="live_backend_password" class="form-label">Backend Password</label>
                         <input type="text" class="form-control" name="live[backend_password]" id="live_backend_password"
                             value="{{ old('live.backend_password') }}" placeholder="Backend Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Noreply Credentials</legend>
+
+                    <div class="mb-3">
+                        <label for="live_noreply_email" class="form-label">Noreply Email</label>
+                        <input type="text" class="form-control" name="live[noreply_email]" id="live_noreply_email"
+                            value="{{ old('live.noreply_email') }}" placeholder="Noreply Email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="live_noreply_password" class="form-label">Noreply Password</label>
+                        <input type="text" class="form-control" name="live[noreply_password]" id="live_noreply_password"
+                            value="{{ old('live.noreply_password') }}" placeholder="Noreply Password">
                     </div>
                 </fieldset>
 

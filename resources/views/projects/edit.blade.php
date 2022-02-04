@@ -277,6 +277,22 @@
                 </fieldset>
 
                 <fieldset>
+                    <legend>Noreply Credentials</legend>
+
+                    <div class="mb-3">
+                        <label for="live_noreply_email" class="form-label">Noreply Email</label>
+                        <input type="text" class="form-control" name="live[noreply_email]" id="live_noreply_email"
+                            value="{{ old('live.noreply_email') ? old('live.noreply_email') : $project->liveCpanel->noreply_email }}" placeholder="Noreply Email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="live_noreply_password" class="form-label">Noreply Password</label>
+                        <input type="text" class="form-control" name="live[noreply_password]" id="live_noreply_password"
+                            value="{{ old('live.noreply_password') ? old('live.noreply_password') : $project->liveCpanel->noreply_password }}" placeholder="Noreply Password">
+                    </div>
+                </fieldset>
+
+                <fieldset>
                     <legend>Timestamps</legend>
 
                     <div class="mb-3">

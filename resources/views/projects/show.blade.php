@@ -270,6 +270,20 @@
                 </div>
             </div>
 
+            <div class="mb-3">
+                <h3 class="mb-1">Noreply Credentials</h3>
+
+                <div class="details">
+                    <div class="key">Noreply Email</div>
+                    <div class="value">{{ $project->liveCpanel->noreply_email }}</div>
+                </div>
+
+                <div class="details">
+                    <div class="key">Noreply Password</div>
+                    <div class="value">{{ $project->liveCpanel->noreply_password }}</div>
+                </div>
+            </div>
+
             <div>
                 <h3 class="mb-1">Timestamps</h3>
 

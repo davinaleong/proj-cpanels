@@ -35,6 +35,8 @@ class LiveCpanelFactory extends Factory
             'admin_panel' => $this->faker->word(),
             'backend_username' => $this->faker->word(),
             'backend_password' => $this->faker->word(),
+            'noreply_email' => $this->faker->email(),
+            'noreply_password' => $this->faker->word(),
             'lived_at' => $this->faker->date('j M Y'),
         ];
     }

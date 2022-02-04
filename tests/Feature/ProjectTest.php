@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
+/** @group modified */
 class ProjectTest extends TestCase
 {
     use RefreshDatabase;
@@ -109,6 +110,9 @@ class ProjectTest extends TestCase
                     'admin_panel' => $live_cpanel->admin_panel,
                     'backend_username' => $live_cpanel->backend_username,
                     'backend_password' => $live_cpanel->backend_password,
+
+                    'noreply_email' => $live_cpanel->noreply_email,
+                    'noreply_password' => $live_cpanel->noreply_password,
 
                     'lived_at' => $live_cpanel->lived_at,
                 ]
@@ -293,6 +297,9 @@ class ProjectTest extends TestCase
                     'admin_panel' => $edit_project->liveCpanel->admin_panel,
                     'backend_username' => $edit_project->liveCpanel->backend_username,
                     'backend_password' => $edit_project->liveCpanel->backend_password,
+
+                    'noreply_email' => $edit_project->liveCpanel->noreply_email,
+                    'noreply_password' => $edit_project->liveCpanel->noreply_password,
 
                     'lived_at' => $edit_project->liveCpanel->lived_at,
                 ]

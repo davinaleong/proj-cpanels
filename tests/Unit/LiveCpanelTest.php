@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/** @group modified */
 class LiveCpanelTest extends TestCase
 {
     use RefreshDatabase;
