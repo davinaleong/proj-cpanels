@@ -232,4 +232,141 @@ class ProjectTest extends TestCase
             ->get('/projects/' . $project->id . '/edit')
             ->assertOk();
     }
+
+    /** @group new */
+    public function test_admin_can_update_a_project()
+    {
+        $user = User::factory()->create();
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+        $edit_project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Modified ' . $edit_project->name . ' project.',
+            'link' => route('projects.show', ['project' => $project->id]),
+            'label' => 'View record'
+        ]);
+
+        $this->actingAs($user)
+            ->patch('projects/' . $project->id, [
+                'project_type_id' => $edit_project->project_type_id,
+                'image_id' => $edit_project->image_id,
+                'name' => $edit_project->name,
+                'project_executive' => $edit_project->project_executive,
+                'is_full_project' => $edit_project->is_full_project ? 'yes': '',
+                'notes' => $edit_project->notes,
+                'demo' => [
+                    'site_url' => $edit_project->demoCpanel->site_url,
+                    'admin_url' => $edit_project->demoCpanel->admin_url,
+                    'cpanel_url' => $edit_project->demoCpanel->cpanel_url,
+                    'design_url' => $edit_project->demoCpanel->design_url,
+                    'programming_brief_url' => $edit_project->demoCpanel->programming_brief_url,
+
+                    'cpanel_username' => $edit_project->demoCpanel->cpanel_username,
+                    'cpanel_password' => $edit_project->demoCpanel->cpanel_password,
+
+                    'db_username' => $edit_project->demoCpanel->db_username,
+                    'db_password' => $edit_project->demoCpanel->db_password,
+                    'db_name' => $edit_project->demoCpanel->db_name,
+
+                    'backend_username' => $edit_project->demoCpanel->backend_username,
+                    'backend_password' => $edit_project->demoCpanel->backend_password,
+
+                    'started_at' => $edit_project->demoCpanel->started_at,
+                    'ended_at' => $edit_project->demoCpanel->ended_at
+                ],
+                'live' => [
+                    'site_url' => $edit_project->liveCpanel->site_url,
+                    'admin_url' => $edit_project->liveCpanel->admin_url,
+                    'cpanel_url' => $edit_project->liveCpanel->cpanel_url,
+
+                    'cpanel_username' => $edit_project->liveCpanel->cpanel_username,
+                    'cpanel_password' => $edit_project->liveCpanel->cpanel_password,
+
+                    'db_username' => $edit_project->liveCpanel->db_username,
+                    'db_password' => $edit_project->liveCpanel->db_password,
+                    'db_name' => $edit_project->liveCpanel->db_name,
+
+                    'admin_panel' => $edit_project->liveCpanel->admin_panel,
+                    'backend_username' => $edit_project->liveCpanel->backend_username,
+                    'backend_password' => $edit_project->liveCpanel->backend_password,
+
+                    'lived_at' => $edit_project->liveCpanel->lived_at,
+                ]
+            ])
+            ->assertStatus(302)
+            ->assertSessionHas('message', 'Project modified.')
+            ->assertRedirect('projects/' . $project->id);
+
+        $this->assertDatabaseHas('projects', [
+            'id' => $project->id,
+            'name' => $edit_project->name,
+            'image_id' => $project->image_id,
+            'project_type_id' => $project->project_type_id
+        ]);
+
+        $this->assertDatabaseHas('demo_cpanels', [
+            'project_id' => $project->id,
+            'site_url' => $edit_project->demoCpanel->site_url,
+        ]);
+
+        $this->assertDatabaseHas('live_cpanels', [
+            'project_id' => $project->id,
+            'site_url' => $edit_project->liveCpanel->site_url,
+        ]);
+
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log,
+            'link' => $activity->link,
+            'label' => $activity->label
+        ]);
+    }
+
+    /** @group new */
+    public function test_update_project_validation()
+    {
+        $user = User::factory()->create();
+        $project = Project::factory()->create();
+
+        $this->actingAs($user)
+            ->patch('projects/' . $project->id, [
+                'name' => '',
+                'project_type_id' => '',
+                'image_id' => ''
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'project_type_id',
+                'image_id'
+            ]);
+
+        $this->actingAs($user)
+            ->patch('projects/' . $project->id, [
+                'name' => Str::random(256),
+                'project_type_id' => 'project',
+                'image_id' => 'image',
+                'is_full_project' => 'hello'
+            ])
+            ->assertSessionHasErrors([
+                'name',
+                'project_type_id',
+                'image_id',
+                'is_full_project'
+            ]);
+
+        $this->actingAs($user)
+            ->patch('projects/' . $project->id, [
+                'name' => $this->faker->name,
+                'project_type_id' => 99,
+                'image_id' => 99
+            ])
+            ->assertSessionHasErrors([
+                'project_type_id',
+                'image_id'
+            ]);
+    }
 }
