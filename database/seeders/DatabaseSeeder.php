@@ -42,6 +42,10 @@ class DatabaseSeeder extends Seeder
             [
                 'key' => OtherSettings::$KEY_IMAGE_PLACEHOLDER,
                 'value' => 'placeholder.png'
+            ],
+            [
+                'key' => OtherSettings::$KEY_SEARCH_RESULTS_LIMIT,
+                'value' => '10'
             ]
         ]);
 
