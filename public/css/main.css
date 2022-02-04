@@ -1,0 +1,123 @@
+.clickable:hover {
+  cursor: pointer;
+}
+
+/** Authenticate Pages **/
+body.authenticate {
+  display: block;
+}
+
+body.authenticate>main {
+  width: 100vw;
+  height: 100vh;
+}
+
+body.authenticate>main>form {
+  border-radius: 10px;
+  border: thin solid #ddd;
+  width: 50vw;
+  height: auto;
+}
+
+@media screen and (max-width: 540px) {
+  body.authenticate>main>form {
+    border-radius: 0;
+    border: none;
+    width: auto;
+  }
+}
+/** Authenticate Pages - End **/
+
+/** Dashboard Page **/
+body {
+  display: grid;
+  grid-template-areas:
+    'nav nav nav nav nav'
+    'aside main main main main';
+}
+
+body>nav {
+  grid-area: nav;
+}
+
+body>nav form input {
+  width: 80%;
+}
+
+body>nav form button,
+body>nav form a {
+  width: 20%;
+}
+
+body>aside {
+  grid-area: aside;
+  min-height: calc(100vw - 56px);
+  padding-bottom: 1em;
+}
+
+body:not(.authenticate)>main {
+  grid-area: main;
+  min-height: calc(100vw - 56px);
+  padding-bottom: 1em;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+}
+
+.setting-links {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.setting-links>* {
+  display: block;
+}
+
+.setting-links>*:not(:last-child) {
+  margin-right: 1em;
+}
+
+#btn-top {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  z-index: 1;
+}
+
+.nav-link a {
+    text-decoration: none;
+}
+
+.img-table {
+    width: 150px;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.details {
+    display: flex;
+    margin-bottom: 1em;
+    align-items: center;
+}
+
+.details > .key {
+    margin-right: 1em;
+    width: calc(30% - 1em);
+}
+
+.h200 {
+    height: 200px;
+}
+
+#search-nav {
+    width: 150px;
+    right: 1em;
+    bottom: 4em;
+    z-index: 1;
+}
+/** Dashboard Page - End **/
