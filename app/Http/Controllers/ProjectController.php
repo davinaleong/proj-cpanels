@@ -280,6 +280,16 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        //
+        $project_name = $project->name;
+        $project->demoCpanel->delete();
+        $project->liveCpanel->delete();
+        $project->delete();
+
+        Activity::create([
+            'log' => 'Deleted ' . $project_name . ' project.'
+        ]);
+
+        return redirect(route('projects.index'))
+            ->with('message', 'Project deleted.');
     }
 }

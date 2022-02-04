@@ -367,4 +367,35 @@ class ProjectTest extends TestCase
                 'image_id'
             ]);
     }
+
+    public function test_admin_can_delete_a_cpanel()
+    {
+        $user = User::factory()->create();
+        $project = Project::factory()
+            ->has(DemoCpanel::factory()->count(1))
+            ->has(LiveCpanel::factory()->count(1))
+            ->create();
+        $activity = Activity::factory()->make([
+            'log' => 'Deleted ' . $project->name . ' project.'
+        ]);
+
+        $this->actingAs($user)
+            ->delete('projects/' . $project->id)
+            ->assertRedirect('projects/')
+            ->assertSessionHas('message', 'Project deleted.');
+
+        $this->assertSoftDeleted('projects', [
+            'id' => $project->id
+        ]);
+        $this->assertSoftDeleted('demo_cpanels', [
+            'project_id' => $project->id
+        ]);
+        $this->assertSoftDeleted('live_cpanels', [
+            'project_id' => $project->id
+        ]);
+
+        $this->assertDatabaseHas('activities', [
+            'log' => $activity->log
+        ]);
+    }
 }
