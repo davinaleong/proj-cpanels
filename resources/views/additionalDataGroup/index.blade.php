@@ -20,7 +20,7 @@
             </h2>
             <div class="additional-data">
                 @foreach($additionalDataGroup->additionalData as $additionalData)
-                <div><strong>{{ $additionalData->key }}:</strong> {{ $additionalData->value }}</div>
+                <div class="text-break"><strong>{{ $additionalData->key }}:</strong> {{ $additionalData->value }}</div>
                 @endforeach
             </div>
             <hr>
