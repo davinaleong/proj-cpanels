@@ -82,6 +82,9 @@ class ProjectController extends Controller
             'live.backend_username' => 'nullable|string|max:255',
             'live.backend_password' => 'nullable|string|max:255',
 
+            'live.noreply_email' => 'nullable|string|max:255',
+            'live.noreply_password' => 'nullable|string|max:255',
+
             'live.lived_at' => 'nullable|string|max:255',
         ]);
 
@@ -134,6 +137,9 @@ class ProjectController extends Controller
             'admin_panel' => trim(request('live.admin_panel')),
             'backend_username' => trim(request('live.backend_username')),
             'backend_password' => trim(request('live.backend_password')),
+
+            'noreply_email' => trim(request('live.noreply_email')),
+            'noreply_password' => trim(request('live.noreply_password')),
 
             'lived_at' => trim(request('live.lived_at'))
         ]);
@@ -215,6 +221,9 @@ class ProjectController extends Controller
             'live.backend_username' => 'nullable|string|max:255',
             'live.backend_password' => 'nullable|string|max:255',
 
+            'live.noreply_email' => 'nullable|string|max:255',
+            'live.noreply_password' => 'nullable|string|max:255',
+
             'live.lived_at' => 'nullable|string|max:255',
         ]);
 
@@ -264,6 +273,9 @@ class ProjectController extends Controller
         $project->liveCpanel->admin_panel = trim(request('live.admin_panel'));
         $project->liveCpanel->backend_username = trim(request('live.backend_username'));
         $project->liveCpanel->backend_password = trim(request('live.backend_password'));
+
+        $project->liveCpanel->noreply_email = trim(request('live.noreply_email'));
+        $project->liveCpanel->noreply_password = trim(request('live.noreply_password'));
 
         $project->liveCpanel->lived_at = trim(request('live.lived_at'));
         $project->liveCpanel->save();
