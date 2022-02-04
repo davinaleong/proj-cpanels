@@ -28,7 +28,7 @@ class ProjectFactory extends Factory
             'image_id' => Image::factory(),
             'name' => $this->faker->name(),
             'project_executive' => $this->faker->name(),
-            'is_full_project' => false,
+            'is_full_project' => $this->faker->boolean(50),
             'notes' => $this->faker->paragraph(3)
         ];
     }

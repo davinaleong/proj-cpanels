@@ -24,18 +24,18 @@ class LiveCpanelFactory extends Factory
     {
         return [
             'project_id' => Project::factory(),
-            'site_url' => 'https://www.exampledemo.com/',
-            'admin_url' => 'https://www.exampledemo.com/admin/',
-            'cpanel_url' => 'https://www.exampledemo.com:2083',
-            'cpanel_username' => 'example_cpanel',
-            'cpanel_password' => 'cp password 123',
-            'db_username' => 'example_db',
-            'db_password' => 'db password 123',
-            'db_name' => 'demo_db',
-            'admin_panel' => 'admin',
-            'backend_username' => 'example',
-            'backend_password' => 'admin password 123',
-            'lived_at' => '11 Jan 2021',
+            'site_url' => $this->faker->url(),
+            'admin_url' => $this->faker->url(),
+            'cpanel_url' => $this->faker->url(),
+            'cpanel_username' => $this->faker->word(),
+            'cpanel_password' => $this->faker->word(),
+            'db_username' => $this->faker->word(),
+            'db_password' => $this->faker->word(),
+            'db_name' => $this->faker->word(),
+            'admin_panel' => $this->faker->word(),
+            'backend_username' => $this->faker->word(),
+            'backend_password' => $this->faker->word(),
+            'lived_at' => $this->faker->date('j M Y'),
         ];
     }
 }

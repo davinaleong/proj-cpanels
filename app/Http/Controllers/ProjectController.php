@@ -171,7 +171,12 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        //
+        // TODO: Validate request
+        // TODO: Update project
+        // TODO: Update project's demo cpanel
+        // TODO: Update project's live cpanel
+        // TODO: Create update activity
+        // TODO: Redirect to show page with session message
     }
 
     public function destroy(Project $project)

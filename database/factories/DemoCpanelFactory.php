@@ -24,20 +24,20 @@ class DemoCpanelFactory extends Factory
     {
         return [
             'project_id' => Project::factory(),
-            'site_url' => 'https://www.exampledemo.com/',
-            'admin_url' => 'https://www.exampledemo.com/admin/',
-            'cpanel_url' => 'https://www.exampledemo.com:2083',
-            'design_url' => 'https://www.exampledemo.com/design/',
-            'programming_brief_url' => 'https://www.exampledemo.com/brief/',
-            'cpanel_username' => 'example_cpanel',
-            'cpanel_password' => 'cp password 123',
-            'db_username' => 'example_db',
-            'db_password' => 'db password 123',
-            'db_name' => 'demo_db',
-            'backend_username' => 'example',
-            'backend_password' => 'admin password 123',
-            'started_at' => '2 Jan 2021',
-            'ended_at' => '9 Jan 2021'
+            'site_url' => $this->faker->url(),
+            'admin_url' => $this->faker->url(),
+            'cpanel_url' => $this->faker->url(),
+            'design_url' => $this->faker->url(),
+            'programming_brief_url' => $this->faker->url(),
+            'cpanel_username' => $this->faker->word(),
+            'cpanel_password' => $this->faker->word(),
+            'db_username' => $this->faker->word(),
+            'db_password' => $this->faker->word(),
+            'db_name' => $this->faker->word(),
+            'backend_username' => $this->faker->word(),
+            'backend_password' => $this->faker->word(),
+            'started_at' => $this->faker->date('j M Y'),
+            'ended_at' => $this->faker->date('j M Y')
         ];
     }
 }
