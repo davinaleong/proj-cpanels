@@ -6,6 +6,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CpanelController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AdditionalDataController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('additionalDataGroup', AdditionalDataController::class)
         ->except(['show']);
     Route::resource('projects', ProjectController::class);
+
+    Route::post('/search', [SearchController::class, 'post'])->name('search.post');
+    Route::get('/search/results', [SearchController::class, 'results'])->name('search.results');
 });
 
 require __DIR__.'/auth.php';

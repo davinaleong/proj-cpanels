@@ -19,7 +19,7 @@
 @include('components.sidebar')
 
 <main>
-    <div class="container-fluid">
+    <div class="container-fluid position-relative">
         @yield('heading')
 
         <nav aria-label="breadcrumb">

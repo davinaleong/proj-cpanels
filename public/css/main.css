@@ -40,6 +40,10 @@ body>nav {
   grid-area: nav;
 }
 
+body>nav form input {
+  width: 80%;
+}
+
 body>nav form button,
 body>nav form a {
   width: 20%;
@@ -108,5 +112,12 @@ td {
 
 .h200 {
     height: 200px;
+}
+
+#search-nav {
+    width: 150px;
+    right: 1em;
+    bottom: 4em;
+    z-index: 1;
 }
 /** Dashboard Page - End **/
