@@ -70,7 +70,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <!-- Demo Tab -->
-            <div class="tab-pane text-secondary p-3 fade show active" id="demo" role="tabpanel" aria-labelledby="demo-tab">
+            <div class="tab-pane text-info p-3 fade show active" id="demo" role="tabpanel" aria-labelledby="demo-tab">
                 <fieldset>
                     <legend>URLs</legend>
 
@@ -185,7 +185,7 @@
             </div>
             <!-- Demo Tab -->
             <!-- Live Tab -->
-            <div class="tab-pane text-info p-3 fade" id="live" role="tabpanel" aria-labelledby="live-tab">
+            <div class="tab-pane text-warning p-3 fade" id="live" role="tabpanel" aria-labelledby="live-tab">
                 <fieldset>
                     <legend>URLs</legend>
 

@@ -38,12 +38,12 @@
                     <td>{{ $project->getProjectTypeName() }}</td>
                     <td>
                         @if(filled($project->demoCpanel->site_url))
-                        <span class="text-secondary">Active</span>
+                        <span class="text-info">Active</span>
                         @endif
                     </td>
                     <td>
                         @if(filled($project->liveCpanel->site_url))
-                        <span class="text-info">Active</span>
+                        <span class="text-warning">Active</span>
                         @endif
                     </td>
                     <td>{{ $project->getCreatedAt() }}</td>
