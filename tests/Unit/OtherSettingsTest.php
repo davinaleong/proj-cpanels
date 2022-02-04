@@ -18,6 +18,7 @@ class OtherSettingsTest extends TestCase
             OtherSettings::$KEY_LIST_PER_PAGE,
             OtherSettings::$KEY_CARD_PER_PAGE,
             OtherSettings::$KEY_IMAGE_PLACEHOLDER,
+            OtherSettings::$KEY_SEARCH_RESULTS_LIMIT
         ];
         $this->assertEquals($expected, OtherSettings::getStaticKeys());
     }
@@ -123,5 +124,15 @@ class OtherSettingsTest extends TestCase
         ]);
 
         $this->assertEquals($expected->value, OtherSettings::getImagePlaceholder());
+    }
+
+    public function test_can_search_results_limit()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => OtherSettings::$KEY_SEARCH_RESULTS_LIMIT,
+            'value' => 10
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getSearchResultsLimit());
     }
 }
