@@ -233,7 +233,6 @@ class ProjectTest extends TestCase
             ->assertOk();
     }
 
-    /** @group new */
     public function test_admin_can_update_a_project()
     {
         $user = User::factory()->create();
@@ -303,19 +302,19 @@ class ProjectTest extends TestCase
             ->assertRedirect('projects/' . $project->id);
 
         $this->assertDatabaseHas('projects', [
-            'id' => $project->id,
+            'id' => (string) $project->id,
             'name' => $edit_project->name,
-            'image_id' => $project->image_id,
-            'project_type_id' => $project->project_type_id
+            'image_id' => (string) $edit_project->image_id,
+            'project_type_id' => (string) $edit_project->project_type_id
         ]);
 
         $this->assertDatabaseHas('demo_cpanels', [
-            'project_id' => $project->id,
+            'project_id' => (string) $project->id,
             'site_url' => $edit_project->demoCpanel->site_url,
         ]);
 
         $this->assertDatabaseHas('live_cpanels', [
-            'project_id' => $project->id,
+            'project_id' => (string) $project->id,
             'site_url' => $edit_project->liveCpanel->site_url,
         ]);
 
@@ -326,7 +325,6 @@ class ProjectTest extends TestCase
         ]);
     }
 
-    /** @group new */
     public function test_update_project_validation()
     {
         $user = User::factory()->create();
