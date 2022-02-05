@@ -48,14 +48,5 @@ class DatabaseSeeder extends Seeder
                 'value' => '10'
             ]
         ]);
-
-        DB::table('folders')->insert([
-            [
-                'name' => 'cpanels'
-            ],
-            [
-                'name' => 'projects'
-            ]
-        ]);
     }
 }
