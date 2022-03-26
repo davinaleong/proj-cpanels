@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <div class="d-flex">
+    <div class="d-flex flex-wrap">
     @foreach($additionalDataGroups as $additionalDataGroup)
         <div class="w-50 px-2 mb-3">
             <h2 class="h4">
