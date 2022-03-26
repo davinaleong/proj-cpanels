@@ -67,7 +67,12 @@ class ProjectTest extends TestCase
             ->for($image)
             ->create();
 
-        $this->assertEquals(asset($filepath), $project->getImage());
+        $expected_url = asset($filepath);
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            $expected_url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+
+        $this->assertEquals($expected_url, $project->getImage());
     }
 
     public function test_can_get_formatted_created_at()

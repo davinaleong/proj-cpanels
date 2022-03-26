@@ -60,7 +60,6 @@ class ImageTest extends TestCase
         $this->assertEquals($expected_url, $image->getFile());
     }
 
-    /** @group new */
     public function test_can_get_file()
     {
         $folder = Folder::factory()->create([
