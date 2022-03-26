@@ -105,13 +105,12 @@ class SettingsController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $folder = Folder::create([
-            'name' => Str::slug($request->input(['name']))
-        ]);
-
         if (env('APP_ENV') !== 'testing') {
-            Storage::makeDirectory('images/' . $folder->name . '/');
+            Storage::makeDirectory('images/' . $request->input('name') . '/');
         }
+        $folder = Folder::create([
+            'name' => Str::slug($request->input('name'))
+        ]);
 
         Activity::create([
             'log' => 'Created ' . $folder->name . ' folder.',
@@ -134,12 +133,16 @@ class SettingsController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
+        if (env('APP_ENV') !== 'testing') {
+            Storage::deleteDirectory('images/' . $folder->name . '/');
+        }
         $folder->name = Str::slug($request->input('name'));
-        $folder->save();
 
         if (env('APP_ENV') !== 'testing') {
             Storage::makeDirectory('images/' . $folder->name . '/');
         }
+
+        $folder->save();
 
         Activity::create([
             'log' => 'Modified ' . $folder->name . ' folder.',
@@ -155,6 +158,9 @@ class SettingsController extends Controller
     {
         $folderName = $folder->name;
 
+        if (env('APP_ENV') !== 'testing') {
+            Storage::deleteDirectory('images/' . $folderName . '/');
+        }
         $folder->delete();
 
         Activity::create([
