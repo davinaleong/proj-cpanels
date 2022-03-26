@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Folder;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\OtherSettings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -53,7 +54,7 @@ class ImageTest extends TestCase
 
     public function test_admin_can_create_an_image()
     {
-        Storage::fake('public');
+        Storage::fake(OtherSettings::getFilesystemDriver());
 
         $user = User::factory()->create();
         $image = Image::factory()->make([
@@ -75,7 +76,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images/')
             ->assertSessionHas('message', 'Image created.');
 
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
 
         $this->assertDatabaseHas('images', [
             'folder_id' => $image->folder_id,
@@ -147,7 +148,7 @@ class ImageTest extends TestCase
 
     public function test_admin_can_update_an_image()
     {
-        Storage::fake('public');
+        Storage::fake(OtherSettings::getFilesystemDriver());
 
         $user = User::factory()->create();
 
@@ -165,8 +166,8 @@ class ImageTest extends TestCase
             'label' => 'View record'
         ]);
 
-        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->put(Image::getParentFolder() . $image->getFolderName() . $image->filename, $this->faker->image());
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . $image->filename);
 
         $this->actingAs($user)
             ->patch('/settings/images/' . $folder->id, [
@@ -177,8 +178,8 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image modified.');
 
-        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertMissing(Image::getParentFolder() . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
 
         $this->assertDatabaseHas('images', [
             'id' => $folder->id,
@@ -218,7 +219,7 @@ class ImageTest extends TestCase
 
     public function test_admin_can_delete_an_image()
     {
-        Storage::fake('public');
+        Storage::fake(OtherSettings::getFilesystemDriver());
 
         $user = User::factory()->create();
         $image = Image::factory()->create();
@@ -226,8 +227,9 @@ class ImageTest extends TestCase
             'log' => 'Deleted ' . $image->name . ' image.'
         ]);
 
-        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        $filepath = Image::getParentFolder() . $image->getFolderName() . $image->filename;
+        Storage::disk(OtherSettings::getFilesystemDriver())->put($filepath, $this->faker->image());
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists($filepath);
 
         $this->actingAs($user)
             ->delete('/settings/images/' . $image->id)
@@ -235,7 +237,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image deleted.');
 
-        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertMissing($filepath);
 
         $this->assertSoftDeleted('images', [
             'id' => $image->id

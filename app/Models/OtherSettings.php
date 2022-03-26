@@ -15,6 +15,9 @@ class OtherSettings extends Model
     public static $KEY_CARD_PER_PAGE = 'Card per page';
     public static $KEY_IMAGE_PLACEHOLDER = 'Image placeholder';
     public static $KEY_SEARCH_RESULTS_LIMIT = 'Search results limit';
+    public static $KEY_IMAGES_FOLDER = 'Images Folder';
+    public static $KEY_FILESYSTEM_DRIVER = 'Filesystem Driver';
+
     protected $table = 'other_settings';
 
     protected $guarded = [
@@ -42,7 +45,9 @@ class OtherSettings extends Model
             OtherSettings::$KEY_LIST_PER_PAGE,
             OtherSettings::$KEY_CARD_PER_PAGE,
             OtherSettings::$KEY_IMAGE_PLACEHOLDER,
-            OtherSettings::$KEY_SEARCH_RESULTS_LIMIT
+            OtherSettings::$KEY_SEARCH_RESULTS_LIMIT,
+            OtherSettings::$KEY_IMAGES_FOLDER,
+            OtherSettings::$KEY_FILESYSTEM_DRIVER
         ];
     }
 
@@ -110,6 +115,30 @@ class OtherSettings extends Model
     {
         $value = env('SEARCH_RESULTS_LIMIT');
         $settings = OtherSettings::getByKey(OtherSettings::$KEY_SEARCH_RESULTS_LIMIT);
+
+        if (filled($settings)) {
+            $value = $settings->value;
+        }
+
+        return $value;
+    }
+
+    public static function getImagesFolder()
+    {
+        $value = env('IMAGES_FOLDER');
+        $settings = OtherSettings::getByKey(OtherSettings::$KEY_IMAGES_FOLDER);
+
+        if (filled($settings)) {
+            $value = $settings->value;
+        }
+
+        return $value;
+    }
+
+    public static function getFilesystemDriver()
+    {
+        $value = env('FILESYSTEM_DRIVER');
+        $settings = OtherSettings::getByKey(OtherSettings::$KEY_FILESYSTEM_DRIVER);
 
         if (filled($settings)) {
             $value = $settings->value;

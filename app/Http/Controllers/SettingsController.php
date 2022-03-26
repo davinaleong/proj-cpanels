@@ -105,13 +105,12 @@ class SettingsController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $folder = Folder::create([
-            'name' => Str::slug($request->input(['name']))
-        ]);
-
         if (env('APP_ENV') !== 'testing') {
-            Storage::makeDirectory('images/' . $folder->name . '/');
+            Storage::makeDirectory(OtherSettings::getImagesFolder() . '/' . $request->input('name') . '/');
         }
+        $folder = Folder::create([
+            'name' => Str::slug($request->input('name'))
+        ]);
 
         Activity::create([
             'log' => 'Created ' . $folder->name . ' folder.',
@@ -134,12 +133,16 @@ class SettingsController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
+        if (env('APP_ENV') !== 'testing') {
+            Storage::deleteDirectory(OtherSettings::getImagesFolder() . '/' . $folder->name . '/');
+        }
         $folder->name = Str::slug($request->input('name'));
-        $folder->save();
 
         if (env('APP_ENV') !== 'testing') {
-            Storage::makeDirectory('images/' . $folder->name . '/');
+            Storage::makeDirectory(OtherSettings::getImagesFolder() . '/' . $folder->name . '/');
         }
+
+        $folder->save();
 
         Activity::create([
             'log' => 'Modified ' . $folder->name . ' folder.',
@@ -155,6 +158,9 @@ class SettingsController extends Controller
     {
         $folderName = $folder->name;
 
+        if (env('APP_ENV') !== 'testing') {
+            Storage::deleteDirectory(OtherSettings::getImagesFolder() . '/' . $folderName . '/');
+        }
         $folder->delete();
 
         Activity::create([
@@ -183,13 +189,13 @@ class SettingsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'folder_id' => 'required|integer|exists:folders,id',
-            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:2048'
+            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:5120'
         ]);
 
         if ($request->file()) {
             $folder = Folder::find($request->input('folder_id'));
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
-            $request->file('file')->storeAs(Image::$FOLDER . $folder->name . '/', $filename, 'public');
+            $request->file('file')->storeAs(OtherSettings::getImagesFolder() . '/' . $folder->name . '/', $filename, OtherSettings::getFilesystemDriver());
 
             $image = Image::create([
                 'name' => $request->input('name'),
@@ -217,16 +223,16 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'file' => 'nullable|file|mimes:jpg,bmp,png,gif|max:2048'
+            'file' => 'nullable|file|mimes:jpg,bmp,png,gif|max:5120'
         ]);
 
         $image->name = $request->input('name');
 
         if ($request->file()) {
-            $folder = Image::$FOLDER . $image->getFolderName();
-            Storage::disk('public')->delete($folder . $image->filename);
+            $folder = OtherSettings::getImagesFolder() . '/' . $image->getFolderName();
+            Storage::disk(OtherSettings::getFilesystemDriver())->delete($folder . $image->filename);
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
-            $request->file('file')->storeAs($folder, $filename, 'public');
+            $request->file('file')->storeAs($folder, $filename, OtherSettings::getFilesystemDriver());
 
             $image->filename = $filename;
         }
@@ -245,7 +251,7 @@ class SettingsController extends Controller
 
     public function imageDestroy(Image $image)
     {
-        Storage::disk('public')->delete(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->delete(OtherSettings::getImagesFolder() . '/' . $image->getFolderName() . $image->filename);
 
         $imageName = $image->name;
         $image->delete();

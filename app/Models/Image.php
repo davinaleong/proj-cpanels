@@ -13,14 +13,25 @@ class Image extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public static $FOLDER = 'images/';
-
     protected $guarded = [
         'id',
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+
+    public static function getParentFolder() {
+        return OtherSettings::getImagesFolder() . '/';
+    }
+
+    public static function getPlaceholder() {
+        $filepath = Image::getParentFolder() . OtherSettings::getImagePlaceholder();
+
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            return $url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+        return asset($filepath);
+    }
 
     public function folder()
     {
@@ -34,11 +45,15 @@ class Image extends Model
 
     public function getFile()
     {
-        $url = asset(Image::$FOLDER . OtherSettings::getImagePlaceholder());
-        $filepath = Image::$FOLDER . $this->getFolderName() . $this->filename;
+        $url = Image::getPlaceholder();
+        $filepath = Image::getParentFolder() . $this->getFolderName() . $this->filename;
 
-        if (filled($this->filename) && Storage::disk('public')->exists($filepath)) {
+        if (filled($this->filename) && Storage::disk(OtherSettings::getFilesystemDriver())->exists($filepath)) {
             $url = asset($filepath);
+
+            if (env('FILESYSTEM_DRIVER') == 's3') {
+                $url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+            }
         }
 
         return $url;
