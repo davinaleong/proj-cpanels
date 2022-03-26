@@ -106,7 +106,7 @@ class SettingsController extends Controller
         ]);
 
         if (env('APP_ENV') !== 'testing') {
-            Storage::makeDirectory('images/' . $request->input('name') . '/');
+            Storage::makeDirectory(OtherSettings::getImagesFolder() . '/' . $request->input('name') . '/');
         }
         $folder = Folder::create([
             'name' => Str::slug($request->input('name'))
@@ -134,12 +134,12 @@ class SettingsController extends Controller
         ]);
 
         if (env('APP_ENV') !== 'testing') {
-            Storage::deleteDirectory('images/' . $folder->name . '/');
+            Storage::deleteDirectory(OtherSettings::getImagesFolder() . '/' . $folder->name . '/');
         }
         $folder->name = Str::slug($request->input('name'));
 
         if (env('APP_ENV') !== 'testing') {
-            Storage::makeDirectory('images/' . $folder->name . '/');
+            Storage::makeDirectory(OtherSettings::getImagesFolder() . '/' . $folder->name . '/');
         }
 
         $folder->save();
@@ -159,7 +159,7 @@ class SettingsController extends Controller
         $folderName = $folder->name;
 
         if (env('APP_ENV') !== 'testing') {
-            Storage::deleteDirectory('images/' . $folderName . '/');
+            Storage::deleteDirectory(OtherSettings::getImagesFolder() . '/' . $folderName . '/');
         }
         $folder->delete();
 
@@ -195,7 +195,7 @@ class SettingsController extends Controller
         if ($request->file()) {
             $folder = Folder::find($request->input('folder_id'));
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
-            $request->file('file')->storeAs(Image::$FOLDER . $folder->name . '/', $filename, 'public');
+            $request->file('file')->storeAs(OtherSettings::getImagesFolder() . '/' . $folder->name . '/', $filename, 'public');
 
             $image = Image::create([
                 'name' => $request->input('name'),
@@ -229,7 +229,7 @@ class SettingsController extends Controller
         $image->name = $request->input('name');
 
         if ($request->file()) {
-            $folder = Image::$FOLDER . $image->getFolderName();
+            $folder = OtherSettings::getImagesFolder() . '/' . $image->getFolderName();
             Storage::disk('public')->delete($folder . $image->filename);
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
             $request->file('file')->storeAs($folder, $filename, 'public');
@@ -251,7 +251,7 @@ class SettingsController extends Controller
 
     public function imageDestroy(Image $image)
     {
-        Storage::disk('public')->delete(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk('public')->delete(OtherSettings::getImagesFolder() . '/' . $image->getFolderName() . $image->filename);
 
         $imageName = $image->name;
         $image->delete();

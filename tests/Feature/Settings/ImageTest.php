@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
+/** @group new */
 class ImageTest extends TestCase
 {
     use RefreshDatabase;
@@ -75,7 +76,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images/')
             ->assertSessionHas('message', 'Image created.');
 
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
+        Storage::disk('public')->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
 
         $this->assertDatabaseHas('images', [
             'folder_id' => $image->folder_id,
@@ -165,8 +166,8 @@ class ImageTest extends TestCase
             'label' => 'View record'
         ]);
 
-        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk('public')->put(Image::getParentFolder() . $image->getFolderName() . $image->filename, $this->faker->image());
+        Storage::disk('public')->assertExists(Image::getParentFolder() . $image->getFolderName() . $image->filename);
 
         $this->actingAs($user)
             ->patch('/settings/images/' . $folder->id, [
@@ -177,8 +178,8 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image modified.');
 
-        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
+        Storage::disk('public')->assertMissing(Image::getParentFolder() . $image->getFolderName() . $image->filename);
+        Storage::disk('public')->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
 
         $this->assertDatabaseHas('images', [
             'id' => $folder->id,
@@ -226,8 +227,8 @@ class ImageTest extends TestCase
             'log' => 'Deleted ' . $image->name . ' image.'
         ]);
 
-        Storage::disk('public')->put(Image::$FOLDER . $image->getFolderName() . $image->filename, $this->faker->image());
-        Storage::disk('public')->assertExists(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk('public')->put(Image::getParentFolder() . $image->getFolderName() . $image->filename, $this->faker->image());
+        Storage::disk('public')->assertExists(Image::getParentFolder() . $image->getFolderName() . $image->filename);
 
         $this->actingAs($user)
             ->delete('/settings/images/' . $image->id)
@@ -235,7 +236,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image deleted.');
 
-        Storage::disk('public')->assertMissing(Image::$FOLDER . $image->getFolderName() . $image->filename);
+        Storage::disk('public')->assertMissing(Image::getParentFolder() . $image->getFolderName() . $image->filename);
 
         $this->assertSoftDeleted('images', [
             'id' => $image->id

@@ -13,14 +13,16 @@ class Image extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public static $FOLDER = 'images/';
-
     protected $guarded = [
         'id',
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+
+    public static function getParentFolder() {
+        return OtherSettings::getImagesFolder() . '/';
+    }
 
     public function folder()
     {
@@ -34,8 +36,8 @@ class Image extends Model
 
     public function getFile()
     {
-        $url = asset(Image::$FOLDER . OtherSettings::getImagePlaceholder());
-        $filepath = Image::$FOLDER . $this->getFolderName() . $this->filename;
+        $url = asset(Image::getParentFolder() . OtherSettings::getImagePlaceholder());
+        $filepath = Image::getParentFolder() . $this->getFolderName() . $this->filename;
 
         if (filled($this->filename) && Storage::disk('public')->exists($filepath)) {
             $url = asset($filepath);

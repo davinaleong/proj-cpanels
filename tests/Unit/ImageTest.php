@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/** @group new */
 class ImageTest extends TestCase
 {
     use RefreshDatabase;
@@ -20,6 +21,11 @@ class ImageTest extends TestCase
         $image = Image::factory()->create();
 
         $this->assertInstanceOf(Folder::class, $image->folder);
+    }
+
+    public function test_can_get_parent_folder()
+    {
+        $this->assertEquals(OtherSettings::getImagesFolder() . '/', Image::getParentFolder());
     }
 
     public function test_can_get_folder_name()
@@ -33,7 +39,7 @@ class ImageTest extends TestCase
     {
         $image = Image::factory()->create();
 
-        $this->assertEquals(asset(Image::$FOLDER . env('IMAGE_PLACEHOLDER')), $image->getFile());
+        $this->assertEquals(asset(Image::getParentFolder() . env('IMAGE_PLACEHOLDER')), $image->getFile());
     }
 
     public function test_can_get_file()
@@ -48,7 +54,7 @@ class ImageTest extends TestCase
                 'filename' => 'test.png'
             ]);
 
-        $filepath = Image::$FOLDER . $folder->name . '/' . $image->filename;
+        $filepath = Image::getParentFolder() . $folder->name . '/' . $image->filename;
 
         $this->assertEquals(asset($filepath), $image->getFile());
     }
