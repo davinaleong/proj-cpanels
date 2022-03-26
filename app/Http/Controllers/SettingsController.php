@@ -195,7 +195,7 @@ class SettingsController extends Controller
         if ($request->file()) {
             $folder = Folder::find($request->input('folder_id'));
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
-            $request->file('file')->storeAs(OtherSettings::getImagesFolder() . '/' . $folder->name . '/', $filename, 'public');
+            $request->file('file')->storeAs(OtherSettings::getImagesFolder() . '/' . $folder->name . '/', $filename, 's3');
 
             $image = Image::create([
                 'name' => $request->input('name'),
@@ -230,9 +230,9 @@ class SettingsController extends Controller
 
         if ($request->file()) {
             $folder = OtherSettings::getImagesFolder() . '/' . $image->getFolderName();
-            Storage::disk('public')->delete($folder . $image->filename);
+            Storage::disk('s3')->delete($folder . $image->filename);
             $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
-            $request->file('file')->storeAs($folder, $filename, 'public');
+            $request->file('file')->storeAs($folder, $filename, 's3');
 
             $image->filename = $filename;
         }
