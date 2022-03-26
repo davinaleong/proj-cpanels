@@ -46,6 +46,10 @@ class DatabaseSeeder extends Seeder
             [
                 'key' => OtherSettings::$KEY_SEARCH_RESULTS_LIMIT,
                 'value' => '10'
+            ],
+            [
+                'key' => OtherSettings::$KEY_IMAGES_FOLDER,
+                'value' => 'images'
             ]
         ]);
     }
