@@ -189,7 +189,7 @@ class SettingsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'folder_id' => 'required|integer|exists:folders,id',
-            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:2048'
+            'file' => 'required|file|mimes:jpg,bmp,png,gif|max:5120'
         ]);
 
         if ($request->file()) {
@@ -223,7 +223,7 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'file' => 'nullable|file|mimes:jpg,bmp,png,gif|max:2048'
+            'file' => 'nullable|file|mimes:jpg,bmp,png,gif|max:5120'
         ]);
 
         $image->name = $request->input('name');

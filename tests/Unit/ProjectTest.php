@@ -62,7 +62,7 @@ class ProjectTest extends TestCase
                 'filename' => 'test.png'
             ]);
 
-        $filepath = Image::$FOLDER . $image->folder->name . '/' . $image->filename;
+        $filepath = Image::getParentFolder() . $image->folder->name . '/' . $image->filename;
         $project = Project::factory()
             ->for($image)
             ->create();
