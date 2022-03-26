@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/** @group new */
 class ImageTest extends TestCase
 {
     use RefreshDatabase;
@@ -26,6 +25,12 @@ class ImageTest extends TestCase
     public function test_can_get_parent_folder()
     {
         $this->assertEquals(OtherSettings::getImagesFolder() . '/', Image::getParentFolder());
+    }
+
+    public function test_can_get_placeholder()
+    {
+        $placeholder_url = OtherSettings::getImagesFolder() . '/' . OtherSettings::getImagePlaceholder();
+        $this->assertEquals(asset($placeholder_url), Image::getPlaceholder());
     }
 
     public function test_can_get_folder_name()

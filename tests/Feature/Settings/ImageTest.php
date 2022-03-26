@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-/** @group new */
 class ImageTest extends TestCase
 {
     use RefreshDatabase;

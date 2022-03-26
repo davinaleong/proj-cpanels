@@ -24,6 +24,10 @@ class Image extends Model
         return OtherSettings::getImagesFolder() . '/';
     }
 
+    public static function getPlaceholder() {
+        return asset(Image::getParentFolder() . OtherSettings::getImagePlaceholder());
+    }
+
     public function folder()
     {
         return $this->belongsTo('App\Models\Folder');
@@ -36,7 +40,7 @@ class Image extends Model
 
     public function getFile()
     {
-        $url = asset(Image::getParentFolder() . OtherSettings::getImagePlaceholder());
+        $url = Image::getPlaceholder();
         $filepath = Image::getParentFolder() . $this->getFolderName() . $this->filename;
 
         if (filled($this->filename) && Storage::disk('public')->exists($filepath)) {
