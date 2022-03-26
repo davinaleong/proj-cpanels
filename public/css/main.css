@@ -1,90 +1,91 @@
 .clickable:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /** Authenticate Pages **/
 body.authenticate {
-  display: block;
+    display: block;
 }
 
-body.authenticate>main {
-  width: 100vw;
-  height: 100vh;
+body.authenticate > main {
+    width: 100vw;
+    height: 100vh;
 }
 
-body.authenticate>main>form {
-  border-radius: 10px;
-  border: thin solid #ddd;
-  width: 50vw;
-  height: auto;
+body.authenticate > main > form {
+    border-radius: 10px;
+    border: thin solid #ddd;
+    width: 50vw;
+    height: auto;
 }
 
 @media screen and (max-width: 540px) {
-  body.authenticate>main>form {
-    border-radius: 0;
-    border: none;
-    width: auto;
-  }
+    body.authenticate > main > form {
+        border-radius: 0;
+        border: none;
+        width: auto;
+    }
 }
 /** Authenticate Pages - End **/
 
 /** Dashboard Page **/
 body {
-  display: grid;
-  grid-template-areas:
-    'nav nav nav nav nav'
-    'aside main main main main';
+    display: grid;
+    grid-template-areas:
+        "nav nav nav nav nav"
+        "aside main main main main";
+    position: relative;
 }
 
-body>nav {
-  grid-area: nav;
+body > nav {
+    grid-area: nav;
 }
 
-body>nav form input {
-  width: 80%;
+body > nav form input {
+    width: 80%;
 }
 
-body>nav form button,
-body>nav form a {
-  width: 20%;
+body > nav form button,
+body > nav form a {
+    width: 20%;
 }
 
-body>aside {
-  grid-area: aside;
-  min-height: calc(100vw - 56px);
-  padding-bottom: 1em;
+body > aside {
+    grid-area: aside;
+    min-height: calc(100vw - 56px);
+    padding-bottom: 1em;
 }
 
-body:not(.authenticate)>main {
-  grid-area: main;
-  min-height: calc(100vw - 56px);
-  padding-bottom: 1em;
+body:not(.authenticate) > main {
+    grid-area: main;
+    min-height: calc(100vw - 56px);
+    padding-bottom: 1em;
 }
 
 .projects {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em;
 }
 
 .setting-links {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.setting-links>* {
-  display: block;
+.setting-links > * {
+    display: block;
 }
 
-.setting-links>*:not(:last-child) {
-  margin-right: 1em;
+.setting-links > *:not(:last-child) {
+    margin-right: 1em;
 }
 
 #btn-top {
-  position: fixed;
-  bottom: 1em;
-  right: 1em;
-  z-index: 1;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    z-index: 1;
 }
 
 .nav-link a {
@@ -119,5 +120,18 @@ td {
     right: 1em;
     bottom: 4em;
     z-index: 1;
+}
+
+.btn-skip-navigation {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 2;
+    transform: translateY(calc(-100% - 0.5rem));
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-skip-navigation:focus {
+    transform: translateY(0);
 }
 /** Dashboard Page - End **/
