@@ -194,7 +194,7 @@ class SettingsController extends Controller
 
         if ($request->file()) {
             $folder = Folder::find($request->input('folder_id'));
-            $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
+            $filename = now()->format('YmdHis') . '-' . urlencode(Str::snake($request->file->getClientOriginalName()));
             $request->file('file')->storeAs(OtherSettings::getImagesFolder() . '/' . $folder->name . '/', $filename, OtherSettings::getFilesystemDriver());
 
             $image = Image::create([
@@ -231,7 +231,7 @@ class SettingsController extends Controller
         if ($request->file()) {
             $folder = OtherSettings::getImagesFolder() . '/' . $image->getFolderName();
             Storage::disk(OtherSettings::getFilesystemDriver())->delete($folder . $image->filename);
-            $filename = now()->format('YmdHis') . '-' . urlencode($request->file->getClientOriginalName());
+            $filename = now()->format('YmdHis') . '-' . urlencode(Str::snake($request->file->getClientOriginalName()));
             $request->file('file')->storeAs($folder, $filename, OtherSettings::getFilesystemDriver());
 
             $image->filename = $filename;

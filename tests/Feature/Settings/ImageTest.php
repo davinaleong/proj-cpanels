@@ -76,12 +76,13 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images/')
             ->assertSessionHas('message', 'Image created.');
 
-        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($image->filename));
+        $filename = now()->format('YmdHis') . '-' . urlencode(Str::snake($image->filename));
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . $filename);
 
         $this->assertDatabaseHas('images', [
             'folder_id' => $image->folder_id,
             'name' => $image->name,
-            'filename' => now()->format('YmdHis') . '-' . urlencode($image->filename)
+            'filename' => $filename
         ]);
         $this->assertDatabaseHas('activities', [
             'log' => $activity->log,
@@ -178,13 +179,14 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image modified.');
 
+        $updated_filename = now()->format('YmdHis') . '-' . urlencode(Str::snake($editedImage->filename));
         Storage::disk(OtherSettings::getFilesystemDriver())->assertMissing(Image::getParentFolder() . $image->getFolderName() . $image->filename);
-        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . now()->format('YmdHis') . '-' . urlencode($editedImage->filename));
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . $updated_filename);
 
         $this->assertDatabaseHas('images', [
             'id' => $folder->id,
             'name' => $editedImage->name,
-            'filename' => now()->format('YmdHis') . '-' . urlencode($editedImage->filename)
+            'filename' => $updated_filename
         ]);
         $this->assertDatabaseHas('activities', [
             'log' => $activity->log,
