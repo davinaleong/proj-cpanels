@@ -12,8 +12,9 @@
 @endsection
 
 @section('content')
+    <div class="d-flex">
     @foreach($additionalDataGroups as $additionalDataGroup)
-        <div class="mb-3">
+        <div class="w-50 px-2 mb-3">
             <h2 class="h4">
                 {{ $additionalDataGroup->name }}
                 <a href="{{ route('additionalDataGroup.edit', ['additionalDataGroup' => $additionalDataGroup]) }}" class="btn btn-outline-primary"><i class="fas fa-pen fa-fw"></i></a>
@@ -26,6 +27,7 @@
             <hr>
         </div>
     @endforeach
+    </div>
 
     {{ $additionalDataGroups->links() }}
 @endsection

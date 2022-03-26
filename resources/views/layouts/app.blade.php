@@ -14,11 +14,13 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('logo/favicon.png') }}"/>
 </head>
 <body id="top">
+<a href="#main" class="btn btn-outline-secondary btn-skip-navigation">Skip Navigation</a>
+
 @include('components.navbar')
 
 @include('components.sidebar')
 
-<main>
+<main id="main">
     <div class="container-fluid position-relative">
         @yield('heading')
 
