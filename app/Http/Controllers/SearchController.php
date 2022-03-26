@@ -29,10 +29,10 @@ class SearchController extends Controller
 
         return view('search.results', [
             'term' => $term,
-            'projects' => Project::whereRaw("LOWER(`name`) LIKE LOWER('%$term%')")
+            'projects' => Project::whereRaw("LOWER(name) LIKE LOWER('%$term%')")
                 ->take($searchResultsLimit)
                 ->get(),
-            'cpanels' => Cpanel::whereRaw("LOWER(`name`) LIKE LOWER('%$term%')")
+            'cpanels' => Cpanel::whereRaw("LOWER(name) LIKE LOWER('%$term%')")
                 ->take($searchResultsLimit)
                 ->get()
             // 'projects' => Project::where('name', 'like', "%$lower%")->take($searchResultsLimit)->get(),
