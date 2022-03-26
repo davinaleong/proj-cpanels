@@ -24,13 +24,19 @@ class SearchController extends Controller
     public function results(Request $request)
     {
         $term = $request->query('term');
-        $lower = Str::lower($term);
+        //$lower = Str::lower($term);
         $searchResultsLimit = OtherSettings::getSearchResultsLimit();
 
         return view('search.results', [
             'term' => $term,
-            'projects' => Project::where('name', 'like', "%$lower%")->take($searchResultsLimit)->get(),
-            'cpanels' => Cpanel::where('name', 'like', "%$lower%")->take($searchResultsLimit)->get()
+            'projects' => Project::whereRaw("LOWER(`name`) LIKE LOWER('%$term%')")
+                ->take($searchResultsLimit)
+                ->get(),
+            'cpanels' => Cpanel::whereRaw("LOWER(`name`) LIKE LOWER('%$term%')")
+                ->take($searchResultsLimit)
+                ->get()
+            // 'projects' => Project::where('name', 'like', "%$lower%")->take($searchResultsLimit)->get(),
+            // 'cpanels' => Cpanel::where('name', 'like', "%$lower%")->take($searchResultsLimit)->get()
         ]);
     }
 }
