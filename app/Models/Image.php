@@ -25,7 +25,12 @@ class Image extends Model
     }
 
     public static function getPlaceholder() {
-        return asset(Image::getParentFolder() . OtherSettings::getImagePlaceholder());
+        $filepath = Image::getParentFolder() . OtherSettings::getImagePlaceholder();
+
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            return $url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+        return asset($filepath);
     }
 
     public function folder()
@@ -43,8 +48,12 @@ class Image extends Model
         $url = Image::getPlaceholder();
         $filepath = Image::getParentFolder() . $this->getFolderName() . $this->filename;
 
-        if (filled($this->filename) && Storage::disk('public')->exists($filepath)) {
+        if (filled($this->filename) && Storage::disk(OtherSettings::getFilesystemDriver())->exists($filepath)) {
             $url = asset($filepath);
+
+            if (env('FILESYSTEM_DRIVER') == 's3') {
+                $url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+            }
         }
 
         return $url;

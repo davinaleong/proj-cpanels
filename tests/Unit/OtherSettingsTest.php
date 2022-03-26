@@ -19,7 +19,8 @@ class OtherSettingsTest extends TestCase
             OtherSettings::$KEY_CARD_PER_PAGE,
             OtherSettings::$KEY_IMAGE_PLACEHOLDER,
             OtherSettings::$KEY_SEARCH_RESULTS_LIMIT,
-            OtherSettings::$KEY_IMAGES_FOLDER
+            OtherSettings::$KEY_IMAGES_FOLDER,
+            OtherSettings::$KEY_FILESYSTEM_DRIVER,
         ];
         $this->assertEquals($expected, OtherSettings::getStaticKeys());
     }
@@ -145,5 +146,15 @@ class OtherSettingsTest extends TestCase
         ]);
 
         $this->assertEquals($expected->value, OtherSettings::getImagesFolder());
+    }
+
+    public function test_can_get_filesystem_driver()
+    {
+        $expected = OtherSettings::factory()->create([
+            'key' => OtherSettings::$KEY_FILESYSTEM_DRIVER,
+            'value' => 10
+        ]);
+
+        $this->assertEquals($expected->value, OtherSettings::getFilesystemDriver());
     }
 }

@@ -29,8 +29,14 @@ class ImageTest extends TestCase
 
     public function test_can_get_placeholder()
     {
-        $placeholder_url = OtherSettings::getImagesFolder() . '/' . OtherSettings::getImagePlaceholder();
-        $this->assertEquals(asset($placeholder_url), Image::getPlaceholder());
+        $filepath = OtherSettings::getImagesFolder() . '/' . OtherSettings::getImagePlaceholder();
+
+        $expected_url = asset($filepath);
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            $expected_url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+
+        $this->assertEquals($expected_url, Image::getPlaceholder());
     }
 
     public function test_can_get_folder_name()
@@ -44,9 +50,17 @@ class ImageTest extends TestCase
     {
         $image = Image::factory()->create();
 
-        $this->assertEquals(asset(Image::getParentFolder() . env('IMAGE_PLACEHOLDER')), $image->getFile());
+        $filepath = OtherSettings::getImagesFolder() . '/' . OtherSettings::getImagePlaceholder();
+
+        $expected_url = asset($filepath);
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            $expected_url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+
+        $this->assertEquals($expected_url, $image->getFile());
     }
 
+    /** @group new */
     public function test_can_get_file()
     {
         $folder = Folder::factory()->create([
@@ -61,7 +75,12 @@ class ImageTest extends TestCase
 
         $filepath = Image::getParentFolder() . $folder->name . '/' . $image->filename;
 
-        $this->assertEquals(asset($filepath), $image->getFile());
+        $expected_url = asset($filepath);
+        if (env('FILESYSTEM_DRIVER') == 's3') {
+            $expected_url = 'https://' . env('AWS_BUCKET', 'davina-cpanels') . '.s3.' . env('AWS_DEFAULT_REGION', 'ap-southeast-1') . '.amazonaws.com/' . $filepath;
+        }
+
+        $this->assertEquals($expected_url, $image->getFile());
     }
 
     public function test_can_get_formatted_created_at()

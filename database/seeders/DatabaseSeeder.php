@@ -50,6 +50,10 @@ class DatabaseSeeder extends Seeder
             [
                 'key' => OtherSettings::$KEY_IMAGES_FOLDER,
                 'value' => 'images'
+            ],
+            [
+                'key' => OtherSettings::$KEY_FILESYSTEM_DRIVER,
+                'value' => 's3'
             ]
         ]);
     }
