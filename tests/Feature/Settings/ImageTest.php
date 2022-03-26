@@ -227,8 +227,9 @@ class ImageTest extends TestCase
             'log' => 'Deleted ' . $image->name . ' image.'
         ]);
 
-        Storage::disk(OtherSettings::getFilesystemDriver())->put(Image::getParentFolder() . $image->getFolderName() . $image->filename, $this->faker->image());
-        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists(Image::getParentFolder() . $image->getFolderName() . $image->filename);
+        $filepath = Image::getParentFolder() . $image->getFolderName() . $image->filename;
+        Storage::disk(OtherSettings::getFilesystemDriver())->put($filepath, $this->faker->image());
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertExists($filepath);
 
         $this->actingAs($user)
             ->delete('/settings/images/' . $image->id)
@@ -236,7 +237,7 @@ class ImageTest extends TestCase
             ->assertRedirect('/settings/images')
             ->assertSessionHas('message', 'Image deleted.');
 
-        Storage::disk(OtherSettings::getFilesystemDriver())->assertMissing(Image::getParentFolder() . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->assertMissing($filepath);
 
         $this->assertSoftDeleted('images', [
             'id' => $image->id

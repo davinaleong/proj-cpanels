@@ -251,7 +251,7 @@ class SettingsController extends Controller
 
     public function imageDestroy(Image $image)
     {
-        Storage::disk('public')->delete(OtherSettings::getImagesFolder() . '/' . $image->getFolderName() . $image->filename);
+        Storage::disk(OtherSettings::getFilesystemDriver())->delete(OtherSettings::getImagesFolder() . '/' . $image->getFolderName() . $image->filename);
 
         $imageName = $image->name;
         $image->delete();
