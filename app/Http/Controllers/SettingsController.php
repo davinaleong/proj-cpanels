@@ -32,11 +32,15 @@ class SettingsController extends Controller
     public function projectTypeStore(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'text_color' => 'nullable|string|max:255',
+            'bg_color' => 'nullable|string|max:255',
         ]);
 
         $projectType = ProjectType::create([
-            'name' => $request->input(['name'])
+            'name' => $request->input(['name']),
+            'text_color' => $request->input(['text_color']),
+            'bg_color' => $request->input(['bg_color']),
         ]);
 
         Activity::create([
@@ -57,10 +61,14 @@ class SettingsController extends Controller
     public function projectTypeUpdate(Request $request, ProjectType $projectType)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'text_color' => 'nullable|string|max:255',
+            'bg_color' => 'nullable|string|max:255',
         ]);
 
         $projectType->name = $request->input('name');
+        $projectType->text_color = $request->input('text_color');
+        $projectType->bg_color = $request->input('bg_color');
         $projectType->save();
 
         Activity::create([
@@ -275,14 +283,17 @@ class SettingsController extends Controller
     {
         $otherSettings = OtherSettings::all();
 
-        return view('settings.other-settings.edit',
+        return view(
+            'settings.other-settings.edit',
             [
                 'otherSettings' => $otherSettings,
                 'otherSettingsCount' => $otherSettings->count()
-            ]);
+            ]
+        );
     }
 
-    public function otherSettingsUpdate(Request $request) {
+    public function otherSettingsUpdate(Request $request)
+    {
         $request->validate([
             'otherSettings' => 'required|array',
             'otherSettings.*.key' => 'required|string',
