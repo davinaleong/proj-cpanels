@@ -7,7 +7,7 @@
             Edit <i class="fas fa-pen"></i>
         </a>
         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-          Delete <i class="fas fa-trash-alt fa-fw"></i>
+            Delete <i class="fas fa-trash-alt fa-fw"></i>
         </button>
     </h1>
 @endsection
@@ -21,10 +21,12 @@
     <div class="details">
         <div class="key">Project Type</div>
         <div class="value">
-            @if($cpanel->projectType)
-            <a href="{{ route('settings.project-types.edit', ['projectType' => $cpanel->projectType]) }}">
-                {{ $cpanel->projectType->name }}
-            </a>
+            @if ($cpanel->projectType)
+                <a href="{{ route('settings.project-types.edit', ['projectType' => $cpanel->projectType]) }}"
+                    class="label"
+                    style="color: {{ $cpanel->projectType->text_color }}; background-color: {{ $cpanel->projectType->bg_color }}">
+                    {{ $cpanel->projectType->name }}
+                </a>
             @endif
         </div>
     </div>
@@ -32,10 +34,11 @@
     <div class="details">
         <div class="key">Image</div>
         <div class="value">
-            @if($cpanel->image)
-            <a href="{{ route('settings.images.edit', ['image' => $cpanel->image]) }}">
-                <img src="{{ $cpanel->image->getFile() }}" alt="{{ $cpanel->name }}" class="img-fluid img-thumbnail h200">
-            </a>
+            @if ($cpanel->image)
+                <a href="{{ route('settings.images.edit', ['image' => $cpanel->image]) }}">
+                    <img src="{{ $cpanel->image->getFile() }}" alt="{{ $cpanel->name }}"
+                        class="img-fluid img-thumbnail h200">
+                </a>
             @endif
         </div>
     </div>
@@ -109,7 +112,8 @@
                     <p>This action cannot be undone!</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel <i class="fas fa-ban fa-fw"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel <i
+                            class="fas fa-ban fa-fw"></i></button>
                     <button type="submit" class="btn btn-danger">Delete <i class="fas fa-trash-alt fa-fw"></i></button>
                 </div>
             </form>

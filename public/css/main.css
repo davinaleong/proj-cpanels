@@ -134,4 +134,11 @@ td {
 .btn-skip-navigation:focus {
     transform: translateY(0);
 }
+
+.label {
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: 0.1em 0.3em;
+    border-radius: 0.1rem;
+}
 /** Dashboard Page - End **/
