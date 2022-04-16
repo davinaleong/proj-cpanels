@@ -59,7 +59,9 @@ class ProjectTypeTest extends TestCase
 
         $this->actingAs($user)
             ->post('/settings/project-types', [
-                'name' => $projectType->name
+                'name' => $projectType->name,
+                'text_color' => $projectType->text_color,
+                'bg_color' => $projectType->bg_color
             ])
             ->assertStatus(302)
             ->assertRedirect('/settings/project-types/')
@@ -132,7 +134,9 @@ class ProjectTypeTest extends TestCase
 
         $this->actingAs($user)
             ->patch('/settings/project-types/' . $projectType->id, [
-                'name' => $editedProjectType->name
+                'name' => $editedProjectType->name,
+                'text_color' => $editedProjectType->text_color,
+                'bg_color' => $editedProjectType->bg_color,
             ])
             ->assertRedirect('/settings/project-types')
             ->assertSessionHas('message', 'Project type modified.');
